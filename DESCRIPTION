@@ -1,0 +1,9 @@
+Package: rmapzen
+Type: Package
+Title: R client for the Mapzen API
+Version: 0.1.0.9001
+Author: Tarak Shah
+Maintainer: Tarak Shah <tarak_shah@berkeley.edu>
+Description:
+License: What license is it under?
+LazyData: TRUE
