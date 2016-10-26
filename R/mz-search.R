@@ -14,19 +14,29 @@ mz_search_url <- function(search_term, ..., api_key = mz_key()) {
     httr::build_url(url)
 }
 
+check_search_term <- function(search_term) {
+    if (!inherits(search_term, "character"))
+        stop("Invalid search term: search term should be a string")
+    if (length(search_term) > 1L)
+        stop("Multiple search terms entered, only one is allowed")
+    if (trimws(search_term) == "")
+        stop("No text in the search term")
+}
+
 mz_search <- function(search_term, ..., api_key = mz_key()) {
+    check_search_term(search_term)
     url <- mz_search_url(search_term, ..., api_key = api_key)
     raw_response <- httr::GET(url)
     mz_search_process(raw_response)
 }
 
-mz_search_process <- function(raw_response) {
+mz_resp_to_list <- function(raw_response) {
     txt <- httr::content(raw_response, as = "text")
-    lst <- jsonlite::fromJSON(txt, simplifyVector = FALSE)
-    structure(lst, class = "geo_list")
+    jsonlite::fromJSON(txt, simplifyVector = FALSE)
 }
 
-# geocode <- function(location, api_key = mz_key()) {
-#     result <- mz_search(location, size = 1, api_key = api_key)
-#     as.numeric(result$features[[1]]$geometry$coordinates)
-# }
+mz_search_process <- function(raw_response) {
+    httr::stop_for_status(raw_response)
+    lst <- mz_resp_to_list(raw_response)
+    structure(lst, class = "geo_list")
+}
