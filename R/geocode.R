@@ -1,3 +1,4 @@
+#' @export
 geocode <- function(location, api_key = mz_key()) {
     result <- mz_search(location, size = 1, api_key = api_key)
     confidence <- as.numeric(result$features[[1]]$properties$confidence[[1]])

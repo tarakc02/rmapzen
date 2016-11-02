@@ -9,5 +9,6 @@ License: What license is it under?
 LazyData: TRUE
 Imports:
     tibble,
-    httr
+    httr,
+    jsonlite
 RoxygenNote: 5.0.1

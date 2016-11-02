@@ -3,6 +3,7 @@ boundary_check <- function(obj, components) {
 }
 
 #' @import assertthat
+#' @export
 mz_search <- function(
     text, size = 10,
     boundary.country = NULL, boundary.rect = NULL,
