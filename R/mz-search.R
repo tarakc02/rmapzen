@@ -1,42 +1,28 @@
-mz_search_url <- function(search_term, ..., api_key = mz_key()) {
-    query <- list(...)
-    query <- c(
-        api_key = api_key,
-        text = search_term,
-        query
+boundary_check <- function(obj, components) {
+    assert_that(is.null(obj) || setequal(names(obj), components))
+}
+
+#' @import assertthat
+mz_search <- function(
+    text, size = 10,
+    boundary.country = NULL, boundary.rect = NULL,
+    boundary.circle = NULL, focus.point = NULL,
+    sources = NULL, layers = NULL, api_key = mz_key())
+{
+    boundary_check(boundary.rect, c("min.lat", "min.lon", "max.lat", "max.lon"))
+    boundary_check(boundary.circle, c("lat", "lon", "radius"))
+    boundary_check(focus.point, c("lat", "lon"))
+
+    if (!is.null(sources)) sources <- paste(sources, collapse = ",")
+    if (!is.null(layers)) layers <- paste(layers, collapse = ",")
+
+    query <- list(
+        text = text, size = size,
+        boundary.country = boundary.country, boundary.rect = boundary.rect,
+        boundary.circle = boundary.circle, focus.point = focus.point,
+        sources = sources, layers = layers,
+        api_key = api_key
     )
-    url <- structure(
-        list(
-            scheme = "https",
-            hostname = "search.mapzen.com",
-            path = "v1/search",
-            query = query), class = "url")
-    httr::build_url(url)
-}
 
-check_search_term <- function(search_term) {
-    if (!inherits(search_term, "character"))
-        stop("Invalid search term: search term should be a string")
-    if (length(search_term) > 1L)
-        stop("Multiple search terms entered, only one is allowed")
-    if (trimws(search_term) == "")
-        stop("No text in the search term")
-}
-
-mz_search <- function(search_term, ..., api_key = mz_key()) {
-    check_search_term(search_term)
-    url <- mz_search_url(search_term, ..., api_key = api_key)
-    raw_response <- httr::GET(url)
-    mz_search_process(raw_response)
-}
-
-mz_resp_to_list <- function(raw_response) {
-    txt <- httr::content(raw_response, as = "text")
-    jsonlite::fromJSON(txt, simplifyVector = FALSE)
-}
-
-mz_search_process <- function(raw_response) {
-    httr::stop_for_status(raw_response)
-    lst <- mz_resp_to_list(raw_response)
-    structure(lst, class = "geo_list")
+    do.call(mz_search_main, c(endpoint = "search", query))
 }
