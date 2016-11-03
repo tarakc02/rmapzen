@@ -27,6 +27,8 @@ All of the search functions return a `geo_list` object. These can be used direct
 
 Additionally, `mz_geocode` is convenient function to geocode an address, utilizing the more general `mz_search` function.
 
-## Convenience functions
+## Convenience features
 
-Several of the search functions take, optionally, the arguments 
+Several of the search functions take, optionally, the arguments `layers`, `sources`, and `boundary.country` (the latter requires [ISO-3166] codes). If you're using an IDE with auto-complete, the objects `mz_layers`, `mz_sources`, and `mz_countries` should make it easier to get the correct codes.
+
+![Easy lookup for ISO-3166 codes](fig/mz-countries.png)
