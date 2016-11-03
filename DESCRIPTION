@@ -1,14 +1,16 @@
 Package: rmapzen
 Type: Package
 Title: R client for the Mapzen API
-Version: 0.1.0.9002
+Version: 0.2.0.9001
 Author: Tarak Shah
 Maintainer: Tarak Shah <tarak_shah@berkeley.edu>
 Description: 
-License: What license is it under?
+License: MIT + file LICENSE
 LazyData: TRUE
 Imports:
     tibble,
     httr,
-    jsonlite
+    jsonlite,
+    maps,
+    dplyr
 RoxygenNote: 5.0.1
