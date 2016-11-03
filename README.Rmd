@@ -48,6 +48,12 @@ This is a very young package, things may break or change. To install:
 devtools::install_github("tarakc02/rmapzen")
 ```
 
+You'll also need to [acquire an API key](https://mapzen.com/developers), and then set the `MAPZEN_KEY` environment variable:
+
+```
+Sys.setenv(MAPZEN_KEY = "mapzen-xxxxxx")
+```
+
 ## To-do
 
 * Write documentation pages
