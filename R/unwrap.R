@@ -1,6 +1,12 @@
 #' @import assertthat
 unwrap <- function(obj, objname, components) {
     assert_that(has_components(obj, components))
+
+    lengths <- vapply(obj, length, FUN.VALUE = integer(1))
+    if (any(lengths != 1L))
+        stop("The following components are invalid for ", objname, "\n",
+             paste(names(obj[lengths != 1L]), collapse = ", "), sep = "")
+
     names(obj) <- paste0(objname, ".", names(obj))
     as.list(obj)
 }
