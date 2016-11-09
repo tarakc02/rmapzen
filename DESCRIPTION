@@ -12,5 +12,7 @@ Imports:
     httr,
     jsonlite,
     maps,
-    dplyr
+    dplyr,
+    assertthat,
+    ratelimitr
 RoxygenNote: 5.0.1
