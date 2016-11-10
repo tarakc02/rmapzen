@@ -5,6 +5,10 @@ build_search_url <- function(
     boundary.circle = NULL, focus.point = NULL,
     sources = NULL, layers = NULL, api_key = mz_key())
 {
+    assert_that(is.string(text))
+    assert_that(is.count(size))
+    assert_that(is.null(boundary.country) || is.string(boundary.country))
+
     if (!is.null(boundary.rect))
         boundary.rect <- unwrap(boundary.rect, "boundary.rect",
                                 c("min.lat", "min.lon", "max.lat", "max.lon"))
