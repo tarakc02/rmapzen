@@ -31,6 +31,11 @@ search_get <- function(url) {
 
 search_process <- function(response) {
     httr::stop_for_status(response)
+
+    # update the usage statistics
+    header <- httr::headers(response)
+    mz_update_usage(header)
+
     txt <- httr::content(response, as = "text")
     lst <- jsonlite::fromJSON(txt, simplifyVector = FALSE)
     structure(lst, class = c("mapzen_geo_list", "geo_list"))

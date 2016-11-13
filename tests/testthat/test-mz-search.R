@@ -72,4 +72,70 @@ test_that("search urls built correctly", {
             boundary.circle.radius = 35
         )
     ))
+
+    ymca_aus <- build_search_url(
+        "YMCA",
+        focus.point = c(
+            lat = -33.856680,
+            lon = 151.215281
+        ),
+        boundary.country = "AUS",
+        api_key = "abc"
+    )
+
+    expect_true(setequal(
+        ymca_aus$query, list(
+            api_key = "abc",
+            text = "YMCA",
+            size = 10,
+            boundary.country = "AUS",
+            focus.point.lon = 151.215281,
+            focus.point.lat = -33.856680
+        )
+    ))
+
+    ymca_oa <- build_search_url(
+        text = "YMCA",
+        source = "oa",
+        api_key = "abc"
+    )
+
+    expect_true(setequal(
+        ymca_oa$query, list(
+            api_key = "abc",
+            source = "oa",
+            size = 10,
+            text = "YMCA"
+        )
+    ))
+
+    ymca_2sources <- build_search_url(
+        text = "YMCA",
+        sources = c("osm", mz_sources$gn),
+        api_key = "abc"
+    )
+
+    expect_true(setequal(
+        ymca_2sources$query, list(
+            api_key = "abc",
+            sources = "osm,gn",
+            size = 10,
+            text = "YMCA"
+        )
+    ))
+
+    ymca_2layers <- build_search_url(
+        text = "YMCA",
+        layers = c(mz_layers$venue, mz_layers$address),
+        api_key = "abc"
+    )
+
+    expect_true(setequal(
+        ymca_2layers$query, list(
+            api_key = "abc",
+            sources = "venue,address",
+            size = 10,
+            text = "YMCA"
+        )
+    ))
 })
