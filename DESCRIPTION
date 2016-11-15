@@ -1,7 +1,7 @@
 Package: rmapzen
 Type: Package
 Title: R client for the Mapzen API
-Version: 0.2.0.9001
+Version: 0.2.0.9002
 Author: Tarak Shah
 Maintainer: Tarak Shah <tarak_shah@berkeley.edu>
 Description: 
@@ -14,7 +14,6 @@ Imports:
     maps,
     dplyr,
     assertthat,
-    ratelimitr,
-    broom
+    ratelimitr
 RoxygenNote: 5.0.1
 Suggests: testthat

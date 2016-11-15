@@ -7,6 +7,9 @@ mz_bbox <- function(geo) UseMethod("mz_bbox")
 #' @export
 mz_attribution <- function(geo) UseMethod("mz_attribution")
 
+#' @export
+mz_coordinates <- function(geo) UseMethod("mz_coordinates")
+
 mz_type.mapzen_geo_list <- function(geo) geo$type
 
 mz_bbox.mapzen_geo_list <- function(geo) {
