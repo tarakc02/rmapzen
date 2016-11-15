@@ -21,7 +21,7 @@ usage_recorder <- function() {
     function(r)
         switch(
             r,
-            "update" = function(hdr) update(header),
+            "update" = function(hdr) update(hdr),
             "view" = function() query()
         )
 }
