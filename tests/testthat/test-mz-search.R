@@ -30,10 +30,10 @@ test_that("search urls built correctly", {
     # example from mapzen documentation
     ymca_tx <- build_search_url(text = "YMCA",
         boundary.rect = c(
-            min.lat = 25.84,
-            min.lon = -106.65,
-            max.lat = 36.5,
-            max.lon = -93.51),
+            min_lat = 25.84,
+            min_lon = -106.65,
+            max_lat = 36.5,
+            max_lon = -93.51),
         api_key = "zzz"
     )
 
@@ -43,10 +43,10 @@ test_that("search urls built correctly", {
                 api_key = "zzz",
                 text = "YMCA",
                 size = 10,
-                boundary.rect.min.lat=25.84,
-                boundary.rect.min.lon=-106.65,
-                boundary.rect.max.lat=36.5,
-                boundary.rect.max.lon=-93.51
+                boundary.rect.min_lat=25.84,
+                boundary.rect.min_lon=-106.65,
+                boundary.rect.max_lat=36.5,
+                boundary.rect.max_lon=-93.51
             )
         )
     )

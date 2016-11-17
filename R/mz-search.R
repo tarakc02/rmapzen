@@ -11,7 +11,7 @@ build_search_url <- function(
 
     if (!is.null(boundary.rect))
         boundary.rect <- unwrap(boundary.rect, "boundary.rect",
-                                c("min.lat", "min.lon", "max.lat", "max.lon"))
+                                c("min_lat", "min_lon", "max_lat", "max_lon"))
     if (!is.null(boundary.circle))
         boundary.circle <- unwrap(boundary.circle, "boundary.circle",
                                   c("lat", "lon", "radius"))
@@ -37,6 +37,12 @@ build_search_url <- function(
     do.call(search_url, c(endpoint = "search", query))
 }
 
+#' Mapzen search API
+#'
+#' Functions to access the various endpoints from the Mapzen Search API.
+#' For more details, see \url{https://mapzen.com/documentation/search/}.
+#'
+#' @name search
 #' @export
 mz_search <- function(
     text, size = 10,
