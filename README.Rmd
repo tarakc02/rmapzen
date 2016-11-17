@@ -74,13 +74,6 @@ pieces from a search response:
 mz_coordinates(hard_rock)
 ```
 
-## Other services and related projects
-
-The package does not yet support [other Mapzen API services](https://mapzen.com/documentation/). But do check out these related R packages:
-
-* [elevatr](https://github.com/jhollist/elevatr) for accessing elevation data, including Mapzen Terrain and Elevation
-* [postr](https://github.com/Ironholds/poster) for address parsing and normalization using the [libpostal](https://github.com/openvenues/libpostal) library
-
 ## Rate limits
 
 Mapzen's published rate limits (6 requests per second) are automatically observed, using the [ratelimitr package](https://github.com/tarakc02/ratelimitr). You can check usage statistics at any time using the function `mz_check_usage`.
@@ -90,6 +83,13 @@ Mapzen's published rate limits (6 requests per second) are automatically observe
 Several of the search functions take, optionally, the arguments `layers`, `sources`, and `boundary.country` (the latter requires [ISO-3166](https://en.wikipedia.org/wiki/ISO_3166) codes). If you're using an IDE with auto-complete, the objects `mz_layers`, `mz_sources`, and `mz_countries` should make it easier to get the correct codes.
 
 ![Easy lookup for ISO-3166 codes](fig/mz-countries.png)
+
+## Other services and related projects
+
+The package does not yet support [other Mapzen API services](https://mapzen.com/documentation/). But do check out these related R packages:
+
+* [elevatr](https://github.com/jhollist/elevatr) for accessing elevation data, including Mapzen Terrain and Elevation
+* [postr](https://github.com/Ironholds/poster) for address parsing and normalization using the [libpostal](https://github.com/openvenues/libpostal) library
 
 ## Installation
 
