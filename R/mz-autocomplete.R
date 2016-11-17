@@ -38,6 +38,7 @@ build_autocomplete_url <- function(
     do.call(search_url, c(endpoint = "autocomplete", query))
 }
 
+#' @rdname search
 #' @export
 mz_autocomplete <- function(
     text,

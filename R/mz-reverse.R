@@ -21,6 +21,7 @@ build_reverse_url <- function(
     do.call(search_url, c(endpoint = "reverse", query))
 }
 
+#' @rdname search
 #' @export
 mz_reverse_geocode <- function(
     point, size = NULL, layers = NULL, sources = NULL,

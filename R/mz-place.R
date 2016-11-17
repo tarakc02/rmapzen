@@ -1,3 +1,4 @@
+#' @rdname search
 #' @export
 mz_place <- function(ids, ..., api_key) UseMethod("mz_place")
 
