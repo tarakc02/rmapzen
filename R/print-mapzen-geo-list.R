@@ -1,9 +1,10 @@
 #' @export
-print.mapzen_geo_list <- function(geo) {
+print.mapzen_geo_list <- function(geo, ..., n = 5) {
+    assert_that(is.count(n) && n > 0)
     cat("GeoJSON response from Mapzen\n")
     cat("Attribution info:", mz_attribution(geo), "\n")
 
-    n <- length(geo$features)
+    nlocs <- length(geo$features)
 
     bbox <- mz_bbox(geo)
     min_lat <- round(bbox$min_lat, 2)
@@ -17,7 +18,13 @@ print.mapzen_geo_list <- function(geo) {
         max_lon, ", ",
         max_lat, ")\n", sep = "")
 
-    cat(n, "locations:\n")
+    cat(nlocs, "locations")
+    if (nlocs > 0)
+        cat(":\n")
+    else {
+        cat("\n")
+        return(invisible(geo))
+    }
 
     getname <- function(feature) {
         nm <- feature$properties$name
@@ -31,9 +38,12 @@ print.mapzen_geo_list <- function(geo) {
         paste("(", res, ")", sep = "")
     }
 
-    places <- vapply(geo$features, getname, FUN.VALUE = character(1))
-    coords <- vapply(geo$features, getcoords, FUN.VALUE = character(1))
+    printlen <- pmin(n, length(geo$features))
+
+    places <- vapply(geo$features[1:printlen], getname, FUN.VALUE = character(1))
+    coords <- vapply(geo$features[1:printlen], getcoords, FUN.VALUE = character(1))
 
     cat(paste("  ", places, coords), sep = "\n")
-    geo
+    if (printlen < length(geo$features)) cat("  ...\n")
+    invisible(geo)
 }
