@@ -34,11 +34,20 @@ mz_type.mapzen_geo_list <- function(geo) geo$type
 #' @export
 mz_bbox.mapzen_geo_list <- function(geo) {
     bbox <- geo$bbox
+    if (is.null(bbox) || length(bbox) != 4L) return(
+        tibble::data_frame(
+            min_lon = NA_real_,
+            min_lat = NA_real_,
+            max_lon = NA_real_,
+            max_lat = NA_real_
+        )
+    )
+
     tibble::data_frame(
-        min_lon = bbox[[1]],
-        min_lat = bbox[[2]],
-        max_lon = bbox[[3]],
-        max_lat = bbox[[4]]
+        min_lon = as.numeric(bbox[[1]]),
+        min_lat = as.numeric(bbox[[2]]),
+        max_lon = as.numeric(bbox[[3]]),
+        max_lat = as.numeric(bbox[[4]])
     )
 }
 
