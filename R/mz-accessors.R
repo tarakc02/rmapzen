@@ -52,7 +52,12 @@ mz_bbox.mapzen_geo_list <- function(geo) {
 }
 
 #' @export
-mz_attribution.mapzen_geo_list <- function(geo) geo$geocoding$attribution
+mz_attribution.mapzen_geo_list <- function(geo) {
+    attribution <- geo$geocoding$attribution
+    if (is.null(attribution)) return(NA_character_)
+    if (!assertthat::is.string(attribution)) return(NA_character_)
+    attribution
+}
 
 #' @export
 mz_coordinates.mapzen_geo_list <- function(geo) {
