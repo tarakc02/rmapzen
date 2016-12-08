@@ -4,7 +4,7 @@ usage_recorder <- function() {
     remaining_second <- NULL
 
     update <- function(header) {
-        if (!is.null(header$`x-cache`) & header$`x-cache` == "MISS") {
+        if (!is.null(header$`x-cache`) && header$`x-cache` == "MISS") {
             last_updated <<- header$date
             remaining_day <<- header$`x-apiaxleproxy-qpd-left`
             remaining_second <<- header$`x-apiaxleproxy-qps-left`

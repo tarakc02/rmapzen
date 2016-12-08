@@ -18,14 +18,14 @@ search_url <- function(endpoint, ..., api_key = mz_key()) {
     )
 }
 
-limit_get_61 <- ratelimitr::limit_rate(
+search_GET <- ratelimitr::limit_rate(
     httr::GET,
     ratelimitr::rate(n = 6, period = 1)
 )
 
 #' @import assertthat
 search_get <- function(url) {
-    response <- limit_get_61(httr::build_url(url))
+    response <- search_GET(httr::build_url(url))
     search_process(response)
 }
 
