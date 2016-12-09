@@ -13,7 +13,7 @@ location <- function(lat, lon) {
 contours <- function(times, colors = NULL) {
     assert_that(is.numeric(times))
     if (is.null(colors)) {
-        colors <- c('edf8fb','b2e2e2','66c2a4','238b45')
+        colors <- c('feedde','fdbe85','fd8d3c','d94701')
         colors <- colors[1:length(times)]
     }
 
@@ -25,7 +25,7 @@ contours <- function(times, colors = NULL) {
 
     structure(
         data.frame(
-            times = times, colors = colors,
+            time = times, color = colors,
             stringsAsFactors = FALSE
         ),
         class = c("mz_contours", "data.frame")

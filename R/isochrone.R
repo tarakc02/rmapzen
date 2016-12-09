@@ -89,16 +89,9 @@ isochrone_get <- function(url) {
 }
 
 mz_isochrone <- function(
-    locations = c(lat = 37.87238, lon = -122.25420),
-    costing = "pedestrian",
-    costing_options = list(
-        pedestrian = data.frame(
-            walkway_factor = .2,
-            alley_factor = 3
-        )),
-    contours = data.frame(time = seq(10, 30, 10),
-                          color = c("440154", "21908C", "FDE725"),
-                          stringsAsFactors = FALSE),
+    locations,
+    costing_model,
+    contours,
     date_time = NULL,
     polygon = FALSE,
     denoise = NULL,
@@ -106,6 +99,8 @@ mz_isochrone <- function(
     id = "my-iso",
     api_key = mz_key()
 ) {
+    costing <- costing_model$costing
+    costing_options <- costing_model$costing_options
     url <- build_isochrone_url(
         locations = locations,
         costing = costing,
