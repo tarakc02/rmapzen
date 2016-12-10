@@ -1,3 +1,4 @@
+#' @export
 location <- function(lat, lon) {
     assert_that(
         is.number(lat),
@@ -10,6 +11,7 @@ location <- function(lat, lon) {
     )
 }
 
+#' @export
 contours <- function(times, colors = NULL) {
     assert_that(is.numeric(times))
     if (is.null(colors)) {

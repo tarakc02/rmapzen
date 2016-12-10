@@ -7,9 +7,16 @@ costing_model <- function(type, ...) {
     else list(costing = costing)
 }
 
+#' @export
 pedestrian <- function(...) costing_model("pedestrian", pedestrian = data.frame(...))
+
+#' @export
 auto <- function(...) costing_model("auto", auto = data.frame(...))
+
+#' @export
 bicycle <- function(...) costing_model("bicycle", bicycle = data.frame(...))
+
+#' @export
 multimodal <- function(transit = NULL, pedestrian = NULL) {
     transit <- data.frame(transit)
     pedestrian <- data.frame(pedestrian)
@@ -22,6 +29,7 @@ costopt <- function(x, validate = assertthat::is.number) {
     jsonlite::unbox(x)
 }
 
+#' @export
 costing <- list(
     pedestrian = list(
         walking_speed = function(speed) list(walking_speed = costopt(speed)),
@@ -59,17 +67,5 @@ costing <- list(
         use_transfers = function(value) list(use_transfers = costopt(value)),
         transit_start_end_max_distance = function(distance) list(transit_start_end_max_distance = costopt(distance)),
         transit_transfer_max_distance = function(distance) list(transit_transfer_max_distance = costopt(distance))
-    )
-)
-
-jsonlite::toJSON(
-    multimodal(
-        transit = list(
-            costing$transit$use_bus(1),
-            costing$transit$use_rail(0)
-        ),
-        pedestrian = list(
-            costing$pedestrian$walking_speed(4.1)
-        )
     )
 )

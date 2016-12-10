@@ -88,6 +88,7 @@ isochrone_get <- function(url) {
     iso_process(response)
 }
 
+#' @export
 mz_isochrone <- function(
     locations,
     costing_model,
