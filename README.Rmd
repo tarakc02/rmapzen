@@ -67,8 +67,6 @@ pieces from a search response:
 
 * `mz_coordinates`
 * `mz_bbox`
-* `mz_attribution`
-* `mz_type`
 
 ```{r ex-accessors}
 mz_coordinates(hard_rock)

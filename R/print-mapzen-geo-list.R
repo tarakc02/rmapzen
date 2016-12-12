@@ -1,8 +1,13 @@
 #' @export
 print.mapzen_geo_list <- function(geo, ..., n = 5) {
     assert_that(is.count(n) && n > 0)
+
+    attribution <- geo$geocoding$attribution
+    if (is.null(attribution)) attribution <- NA_character_
+    if (!assertthat::is.string(attribution)) attribution <- NA_character_
+
     cat("GeoJSON response from Mapzen\n")
-    cat("Attribution info:", mz_attribution(geo), "\n")
+    cat("Attribution info:", attribution, "\n")
 
     nlocs <- length(geo$features)
 
