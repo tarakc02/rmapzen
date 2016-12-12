@@ -25,5 +25,5 @@ mz_geocode <- function(location, api_key = mz_key()) {
     )
     if (nrow(res) > 1)
         stop("There was an error while geocoding")
-    res
+    structure(res, class = c("mz_geocode_result", class(res)))
 }
