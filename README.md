@@ -40,13 +40,9 @@ hard_rock
 #>    Hard Rock Café (18.05, 59.34)
 #>    Hard Rock Cafe (11.97, 57.7)
 #>    Rock'n Roll Café (13.83, 55.93)
-#>    Cafeteria (14.13, 57.58)
-#>    Cafe Charm (17.3, 62.39)
-#>    Cafe capri (17.95, 59.4)
 #>    Carolas Cafe (13.1, 55.78)
-#>    CaféHarpaviljongen (18.08, 59.35)
-#>    Cafékoppen (17.96, 59.29)
-#>    Cafe Columbia (15.63, 57.99)
+#>    Cafe Charm (17.3, 62.39)
+#>   ...
 ```
 
 All of the search functions return a `geo_list` object. These are R list representations of valid geojson (which is also valid json), and can be converted to `SpatialPointsDataFrame` objects via the package [geojsonio](https://github.com/ropensci/geojsonio) -- for example:
@@ -56,26 +52,26 @@ hard_rock_sp <- geojsonio::geojson_sp(hard_rock)
 str(hard_rock_sp)
 #> Formal class 'SpatialPointsDataFrame' [package "sp"] with 5 slots
 #>   ..@ data       :'data.frame':  10 obs. of  18 variables:
-#>   .. ..$ id               : Factor w/ 10 levels "node:1233020660",..: 7 3 6 10 1 2 8 4 9 5
-#>   .. ..$ gid              : Factor w/ 10 levels "openstreetmap:venue:node:1233020660",..: 7 3 6 10 1 2 8 4 9 5
+#>   .. ..$ id               : Factor w/ 10 levels "node:1233020660",..: 7 3 6 8 1 2 10 4 5 9
+#>   .. ..$ gid              : Factor w/ 10 levels "openstreetmap:venue:node:1233020660",..: 7 3 6 8 1 2 10 4 5 9
 #>   .. ..$ layer            : Factor w/ 1 level "venue": 1 1 1 1 1 1 1 1 1 1
 #>   .. ..$ source           : Factor w/ 1 level "openstreetmap": 1 1 1 1 1 1 1 1 1 1
-#>   .. ..$ source_id        : Factor w/ 10 levels "node:1233020660",..: 7 3 6 10 1 2 8 4 9 5
-#>   .. ..$ name             : Factor w/ 10 levels "CafÃ©Harpaviljongen",..: 8 9 10 6 4 3 7 1 2 5
+#>   .. ..$ source_id        : Factor w/ 10 levels "node:1233020660",..: 7 3 6 8 1 2 10 4 5 9
+#>   .. ..$ name             : Factor w/ 10 levels "Cafe capri","Cafe Charm",..: 9 8 10 7 2 1 6 4 3 5
 #>   .. ..$ confidence       : num [1:10] 0.902 0.962 0.662 0.661 0.661 0.661 0.661 0.661 0.661 0.661
 #>   .. ..$ accuracy         : Factor w/ 1 level "point": 1 1 1 1 1 1 1 1 1 1
 #>   .. ..$ country          : Factor w/ 1 level "Sweden": 1 1 1 1 1 1 1 1 1 1
 #>   .. ..$ country_gid      : Factor w/ 1 level "whosonfirst:country:85633789": 1 1 1 1 1 1 1 1 1 1
 #>   .. ..$ country_a        : Factor w/ 1 level "SWE": 1 1 1 1 1 1 1 1 1 1
-#>   .. ..$ region           : Factor w/ 6 levels "ÃstergÃ¶tland",..: 4 6 3 2 5 4 3 4 4 1
-#>   .. ..$ region_gid       : Factor w/ 6 levels "whosonfirst:region:85688377",..: 5 4 1 2 6 5 1 5 5 3
-#>   .. ..$ locality         : Factor w/ 6 levels "Furulund","GÃ¶teborg",..: 4 2 NA NA 5 6 1 4 4 3
-#>   .. ..$ locality_gid     : Factor w/ 6 levels "whosonfirst:locality:101752295",..: 2 1 NA NA 3 4 6 2 2 5
-#>   .. ..$ neighbourhood    : Factor w/ 5 levels "FruÃ¤nge","Hjorthagen",..: 5 4 NA NA NA 3 NA 2 1 NA
-#>   .. ..$ neighbourhood_gid: Factor w/ 5 levels "whosonfirst:neighbourhood:85902171",..: 5 4 NA NA NA 2 NA 1 3 NA
-#>   .. ..$ label            : Factor w/ 10 levels "CafÃ©Harpaviljongen, Stockholm, Sweden",..: 8 9 10 6 4 3 7 1 2 5
+#>   .. ..$ region           : Factor w/ 6 levels "Jönköping","Östergötland",..: 4 6 3 3 5 4 1 4 2 4
+#>   .. ..$ region_gid       : Factor w/ 6 levels "whosonfirst:region:85688377",..: 5 4 1 1 6 5 2 5 3 5
+#>   .. ..$ locality         : Factor w/ 6 levels "Furulund","Göteborg",..: 4 2 NA 1 5 6 NA 4 3 4
+#>   .. ..$ locality_gid     : Factor w/ 6 levels "whosonfirst:locality:101752295",..: 2 1 NA 6 3 4 NA 2 5 2
+#>   .. ..$ neighbourhood    : Factor w/ 5 levels "Fruänge","Hjorthagen",..: 5 4 NA NA NA 3 NA 2 NA 1
+#>   .. ..$ neighbourhood_gid: Factor w/ 5 levels "whosonfirst:neighbourhood:85902171",..: 5 4 NA NA NA 2 NA 1 NA 3
+#>   .. ..$ label            : Factor w/ 10 levels "Cafe capri, Upplands Väsby, Sweden",..: 9 8 10 7 2 1 6 4 3 5
 #>   ..@ coords.nrs : num(0) 
-#>   ..@ coords     : num [1:10, 1:2] 18.1 12 13.8 14.1 17.3 ...
+#>   ..@ coords     : num [1:10, 1:2] 18.1 12 13.8 13.1 17.3 ...
 #>   .. ..- attr(*, "dimnames")=List of 2
 #>   .. .. ..$ : NULL
 #>   .. .. ..$ : chr [1:2] "coords.x1" "coords.x2"
@@ -93,7 +89,7 @@ Additionally, `mz_geocode` is a convenient function to geocode an address, utili
 mz_geocode("UC Berkeley, Berkeley, CA")
 #> # A tibble: 1 × 4
 #>                  geocode_address geocode_longitude geocode_latitude
-#>                            <chr>             <dbl>            <dbl>
+#> *                          <chr>             <dbl>            <dbl>
 #> 1 UC Berkeley, Berkeley, CA, USA         -122.2542         37.87238
 #> # ... with 1 more variables: geocode_confidence <dbl>
 ```
@@ -113,13 +109,13 @@ as.data.frame(hard_rock) %>%
 #> 1      Hard Rock Café      0.902  Sweden       Stockholm      Stockholm
 #> 2      Hard Rock Cafe      0.962  Sweden Västra Götaland       Göteborg
 #> 3    Rock'n Roll Café      0.662  Sweden           Skåne           <NA>
-#> 4           Cafeteria      0.661  Sweden       Jönköping           <NA>
+#> 4        Carolas Cafe      0.661  Sweden           Skåne       Furulund
 #> 5          Cafe Charm      0.661  Sweden  Västernorrland      Sundsvall
 #> 6          Cafe capri      0.661  Sweden       Stockholm Upplands Väsby
-#> 7        Carolas Cafe      0.661  Sweden           Skåne       Furulund
+#> 7           Cafeteria      0.661  Sweden       Jönköping           <NA>
 #> 8  CaféHarpaviljongen      0.661  Sweden       Stockholm      Stockholm
-#> 9          Cafékoppen      0.661  Sweden       Stockholm      Stockholm
-#> 10      Cafe Columbia      0.661  Sweden    Östergötland           Kisa
+#> 9       Cafe Columbia      0.661  Sweden    Östergötland           Kisa
+#> 10         Cafékoppen      0.661  Sweden       Stockholm      Stockholm
 #> # ... with 1 more variables: neighbourhood <chr>
 ```
 
@@ -130,8 +126,6 @@ Currently, the following accessors are available to pull out commonly used piece
 
 -   `mz_coordinates`
 -   `mz_bbox`
--   `mz_attribution`
--   `mz_type`
 
 ``` r
 mz_coordinates(hard_rock)
@@ -141,13 +135,13 @@ mz_coordinates(hard_rock)
 #> 1  18.05484 59.34408
 #> 2  11.97425 57.70123
 #> 3  13.83493 55.93419
-#> 4  14.13232 57.58279
+#> 4  13.09754 55.77635
 #> 5  17.30462 62.38921
 #> 6  17.94834 59.39728
-#> 7  13.09754 55.77635
+#> 7  14.13232 57.58279
 #> 8  18.08074 59.34991
-#> 9  17.96348 59.28589
-#> 10 15.63464 57.98744
+#> 9  15.63464 57.98744
+#> 10 17.96348 59.28589
 ```
 
 Rate limits
