@@ -1,7 +1,6 @@
 build_isochrone_url <- function(
     locations,
-    costing,
-    costing_options,
+    costing_model,
     contours,
     date_time,
     polygon,
@@ -10,6 +9,9 @@ build_isochrone_url <- function(
     id,
     api_key = mz_key()
 ) {
+    costing <- costing_model$costing
+    costing_options <- costing_model$costing_options
+
     json <- build_isochrone_json(
         locations = locations,
         costing = costing,
@@ -40,9 +42,7 @@ build_isochrone_json <- function(
 
     # locations should have lon/lat. for now, only one location
     # is supported
-    assert_that(is.numeric(locations))
-    assert_that(length(locations) == 2L)
-    assert_that(has_components(locations, c("lon", "lat")))
+    locations <- as.mz_location(locations)
 
     assert_that(is.null(polygon) || is.flag(polygon))
     assert_that(is.null(denoise) || is.number(denoise))
@@ -63,12 +63,24 @@ build_isochrone_json <- function(
         res <- c(res, costing_options = list(costing_options))
 
     if (!is.null(date_time)) {
-        assert_that(is.time(date_time))
-        date_time <- format(date_time, "%Y-%m-%dT%H:%M")
+        assert_that(inherits(date_time, "mz_date_time"))
         res <- c(res, date_time = list(jsonlite::unbox(date_time)))
     }
 
     res <- c(res, contours = list(contours))
+
+    if (!is.null(polygon))
+        res <- c(res, polygon = list(jsonlite::unbox(polygon)))
+
+    if (!is.null(denoise)) {
+        assert_that(denoise >= 0, denoise <= 1)
+        res <- c(res,
+                 denoise = list(jsonlite::unbox(denoise)))
+    }
+
+    if (!is.null(generalize))
+        res <- c(res, generalize = list(jsonlite::unbox(generalize)))
+
     jsonlite::toJSON(res)
 }
 
@@ -94,18 +106,16 @@ mz_isochrone <- function(
     costing_model,
     contours,
     date_time = NULL,
-    polygon = FALSE,
+    polygon = NULL,
     denoise = NULL,
     generalize = NULL,
     id = "my-iso",
     api_key = mz_key()
 ) {
-    costing <- costing_model$costing
     costing_options <- costing_model$costing_options
     url <- build_isochrone_url(
         locations = locations,
-        costing = costing,
-        costing_options = costing_options,
+        costing_model = costing_model,
         contours = contours,
         date_time = date_time,
         polygon = polygon,

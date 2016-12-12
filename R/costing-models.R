@@ -2,9 +2,21 @@ costing_model <- function(type, ...) {
     costing <- jsonlite::unbox(type)
     costing_options <- list(...)
     costing_options <- Filter(function(df) nrow(df) > 0L, costing_options)
-    if (length(costing_options) > 0L)
-        list(costing = costing, costing_options = costing_options)
-    else list(costing = costing)
+
+    if (length(costing_options) == 0L)
+        return(list(costing = costing))
+
+    costing_options <- lapply(
+        costing_options,
+        jsonlite::unbox
+    )
+
+    structure(
+        list(
+            costing = costing,
+            costing_options = costing_options),
+        class = "mz_costing_model"
+    )
 }
 
 #' @export
