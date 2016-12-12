@@ -86,7 +86,15 @@ build_isochrone_json <- function(
 
 
 iso_process <- function(response) {
-    httr::stop_for_status(response)
+    tryCatch(
+        httr::stop_for_status(response),
+        http_400 = function(e) {
+            txt <- httr::content(response, as = "text")
+            lst <- jsonlite::fromJSON(txt, simplifyVector = FALSE)
+            stop(e$message, "\n", lst$error, " (", lst$error_code, ")",
+                 call. = FALSE)
+        }
+    )
     header <- httr::headers(response)
     txt <- httr::content(response, as = "text")
     lst <- jsonlite::fromJSON(txt, simplifyVector = FALSE)
