@@ -1,10 +1,10 @@
 Package: rmapzen
 Type: Package
-Title: R client for the Mapzen API
+Title: R Client for the Mapzen API
 Version: 0.3.0.9000
 Author: Tarak Shah
 Maintainer: Tarak Shah <tarak_shah@berkeley.edu>
-Description: 
+Description: Provides an interface to the Mapzen API.
 License: MIT + file LICENSE
 LazyData: TRUE
 Imports:
