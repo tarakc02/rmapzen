@@ -40,8 +40,8 @@ mz_bbox.mapzen_geo_list <- function(geo) {
     )
 }
 
+#' @export
 mz_bbox.mazpen_isochrone_list <- function(geo) {
-    features <- geo$features
     default <- function() {
         warning("Unable to read bounding box, returning NA")
         return(tibble::data_frame(
@@ -51,6 +51,7 @@ mz_bbox.mazpen_isochrone_list <- function(geo) {
             max_lat = NA_real_
         ))
     }
+    features <- geo$features
     if (is.null(features) || length(features) <= 0L) return(default())
 
     bbox <- sp::bbox(as_sp(geo))
@@ -61,7 +62,6 @@ mz_bbox.mazpen_isochrone_list <- function(geo) {
         max_lon = bbox["x", "max"],
         max_lat = bbox["y", "max"]
     )
-
 }
 
 #' @export
