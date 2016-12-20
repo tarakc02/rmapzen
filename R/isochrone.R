@@ -96,6 +96,7 @@ iso_process <- function(response) {
         }
     )
     header <- httr::headers(response)
+    mz_update_usage(header, "matrix")
     txt <- httr::content(response, as = "text")
     lst <- jsonlite::fromJSON(txt, simplifyVector = FALSE)
     structure(lst,

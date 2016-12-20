@@ -34,7 +34,7 @@ search_process <- function(response) {
 
     # update the usage statistics
     header <- httr::headers(response)
-    mz_update_usage(header)
+    mz_update_usage(header, "search")
 
     txt <- httr::content(response, as = "text")
     lst <- jsonlite::fromJSON(txt, simplifyVector = FALSE)

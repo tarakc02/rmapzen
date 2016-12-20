@@ -1,27 +1,38 @@
 usage_recorder <- function() {
-    last_updated <- NULL
-    remaining_day <- NULL
-    remaining_second <- NULL
+    search_usage <- list(
+        last_updated = NULL,
+        remaining_day = NULL,
+        remaining_second = NULL
+    )
 
-    update <- function(header) {
+    matrix_usage <- list(
+        last_updated = NULL,
+        remaining_day = NULL,
+        remaining_second = NULL
+    )
+
+    update_search <- function(header) {
         if (!is.null(header$`x-cache`) && header$`x-cache` == "MISS") {
-            last_updated <<- header$date
-            remaining_day <<- header$`x-apiaxleproxy-qpd-left`
-            remaining_second <<- header$`x-apiaxleproxy-qps-left`
+            search_usage$last_updated <<- header$date
+            search_usage$remaining_day <<- header$`x-apiaxleproxy-qpd-left`
+            search_usage$remaining_second <<- header$`x-apiaxleproxy-qps-left`
         }
     }
 
+    update_matrix <- function(header) {
+        matrix_usage$last_updated <<- header$date
+        matrix_usage$remaining_day <<- header$`x-apiaxleproxy-qpd-left`
+        matrix_usage$remaining_second <<- header$`x-apiaxleproxy-qps-left`
+    }
+
     query <- function()
-        list(
-            last_updated = last_updated,
-            remaining_day = remaining_day,
-            remaining_second = remaining_second
-        )
+        list(search = search_usage, matrix = matrix_usage)
 
     function(r)
         switch(
             r,
-            "update" = function(hdr) update(hdr),
+            "update_search" = function(hdr) update_search(hdr),
+            "update_matrix" = function(hdr) update_matrix(hdr),
             "view" = function() query()
         )
 }
@@ -31,4 +42,11 @@ usage_statistics <- usage_recorder()
 #' @export
 mz_check_usage <- function() usage_statistics("view")()
 
-mz_update_usage <- function(header) usage_statistics("update")(header)
+mz_update_usage <- function(header, type) {
+    switch(
+        type,
+        search = usage_statistics("update_search")(header),
+        matrix = usage_statistics("update_matrix")(header),
+        stop("Unable to update usage statistics for ", type)
+    )
+}
