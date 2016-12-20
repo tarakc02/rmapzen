@@ -20,21 +20,20 @@ costing_model <- function(type, ...) {
 }
 
 #' @export
-pedestrian <- function(...) costing_model("pedestrian", pedestrian = data.frame(...))
+mz_costing <- list(
+    pedestrian = function(...) {
+        costing_model("pedestrian", pedestrian = data.frame(...))},
+    auto = function(...) {
+        costing_model("auto", auto = data.frame(...))},
+    bicycle = function(...) {
+        costing_model("bicycle", bicycle = data.frame(...))},
+    multimodal = function(transit = NULL, pedestrian = NULL) {
+        transit <- data.frame(transit)
+        pedestrian <- data.frame(pedestrian)
+        costing_model("multimodal", transit = transit, pedestrian = pedestrian)
+    }
 
-#' @export
-auto <- function(...) costing_model("auto", auto = data.frame(...))
-
-#' @export
-bicycle <- function(...) costing_model("bicycle", bicycle = data.frame(...))
-
-#' @export
-multimodal <- function(transit = NULL, pedestrian = NULL) {
-    transit <- data.frame(transit)
-    pedestrian <- data.frame(pedestrian)
-    costing_model("multimodal", transit = transit, pedestrian = pedestrian)
-}
-
+)
 
 costopt <- function(x, validate = assertthat::is.number) {
     assertthat::assert_that(validate(x))
@@ -42,7 +41,7 @@ costopt <- function(x, validate = assertthat::is.number) {
 }
 
 #' @export
-costing <- list(
+mz_costing_options <- list(
     pedestrian = list(
         walking_speed = function(speed) list(walking_speed = costopt(speed)),
         walkway_factor = function(factor) list(walkway_factor = costopt(factor)),

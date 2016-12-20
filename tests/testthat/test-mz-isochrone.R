@@ -3,7 +3,7 @@ context("mz-isochrone")
 test_that("isochrone urls built correctly", {
     test1 <- build_isochrone_url(
         locations = c(lat = 37, lon = -122),
-        costing_model = pedestrian(),
+        costing_model = mz_costing$pedestrian(),
         contours = mz_contours(
             times = seq(10, 30, 10),
             colors = c("440154", "21908C", "FDE725")
@@ -32,9 +32,9 @@ test_that("isochrone urls built correctly", {
 
     test2 <- build_isochrone_url(
         locations = mz_location(lat = 37, lon = -122),
-        costing_model = pedestrian(
-            costing$pedestrian$walkway_factor(.2),
-            costing$pedestrian$alley_factor(3)
+        costing_model = mz_costing$pedestrian(
+            mz_costing_options$pedestrian$walkway_factor(.2),
+            mz_costing_options$pedestrian$alley_factor(3)
         ),
         contours = mz_contours(
             times = seq(10, 30, 10),
@@ -57,9 +57,9 @@ test_that("isochrone urls built correctly", {
 
     test3 <- build_isochrone_url(
         locations = mz_location(lat = 37, lon = -122),
-        costing_model = pedestrian(
-            costing$pedestrian$walking_speed(7.0),
-            costing$pedestrian$walkway_factor(10)
+        costing_model = mz_costing$pedestrian(
+            mz_costing_options$pedestrian$walking_speed(7.0),
+            mz_costing_options$pedestrian$walkway_factor(10)
         ),
         contours = mz_contours(seq(10, 40, 10)),
         date_time = mz_date_time(as.POSIXct("2016-12-11 17:41:51 PST"), "departure"),
@@ -91,13 +91,13 @@ test_that("isochrone urls built correctly", {
 
     test4 <- build_isochrone_url(
         locations = mz_location(lat = 37, lon = -122),
-        costing_model = multimodal(
+        costing_model = mz_costing$multimodal(
             transit = list(
-                costing$transit$use_bus(1.0),
-                costing$transit$use_rail(.7)
+                mz_costing_options$transit$use_bus(1.0),
+                mz_costing_options$transit$use_rail(.7)
             ),
             pedestrian = list(
-                costing$pedestrian$alley_factor(3)
+                mz_costing_options$pedestrian$alley_factor(3)
             )
         ),
         contours = mz_contours(10, 'ffffff'),
@@ -110,5 +110,3 @@ test_that("isochrone urls built correctly", {
     )
 
 })
-
-
