@@ -6,17 +6,11 @@
 #' @param geo A mapzen geo list
 #'
 #' @return A tibble
+#' @name mz_bbox
 #' @export
 mz_bbox <- function(geo) UseMethod("mz_bbox")
 
-#' Extract a data frame of coordinates from a \code{mapzen_geo_list}
-#'
-#' @param geo A mapzen geo list
-#'
-#' @return A tibble, with columns \code{lon} and \code{lat}
-#' @export
-mz_coordinates <- function(geo) UseMethod("mz_coordinates")
-
+#' @rdname mz_bbox
 #' @export
 mz_bbox.mapzen_geo_list <- function(geo) {
     bbox <- geo$bbox
@@ -40,6 +34,7 @@ mz_bbox.mapzen_geo_list <- function(geo) {
     )
 }
 
+#' @rdname mz_bbox
 #' @export
 mz_bbox.mazpen_isochrone_list <- function(geo) {
     default <- function() {
@@ -62,20 +57,4 @@ mz_bbox.mazpen_isochrone_list <- function(geo) {
         max_lon = bbox["x", "max"],
         max_lat = bbox["y", "max"]
     )
-}
-
-#' @export
-mz_coordinates.mapzen_geo_list <- function(geo) {
-    features <- geo$features
-    lon <- vapply(features,
-                  function(feature) {
-                      feature$geometry$coordinates[[1]]
-                  }, FUN.VALUE = numeric(1))
-
-    lat <- vapply(features,
-                  function(feature) {
-                      feature$geometry$coordinates[[2]]
-                  }, FUN.VALUE = numeric(1))
-
-    tibble::data_frame(lon = lon, lat = lat)
 }
