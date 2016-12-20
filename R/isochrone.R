@@ -109,6 +109,8 @@ isochrone_get <- function(url) {
     iso_process(response)
 }
 
+#' Retrieve isochrones
+#' @name mz_isochrone
 #' @export
 mz_isochrone <- function(
     locations,
