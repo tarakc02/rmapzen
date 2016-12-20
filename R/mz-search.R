@@ -57,7 +57,7 @@ mz_search <- function(
         boundary.rect = boundary.rect,
         boundary.circle = boundary.circle,
         focus.point = focus.point,
-        source = sources,
+        sources = sources,
         layers = layers,
         api_key = api_key
     )

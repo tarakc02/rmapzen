@@ -54,7 +54,7 @@ mz_autocomplete <- function(
         boundary.country = boundary.country,
         boundary.rect = boundary.rect,
         focus.point = focus.point,
-        source = sources,
+        sources = sources,
         layers = layers,
         api_key = api_key
     )
