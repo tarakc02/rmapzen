@@ -1,3 +1,20 @@
+#' Create/extract lat/lon location information
+#'
+#' \code{mz_location} constructs a new \code{mz_location} object, which can be
+#' used with functions such as \code{\link{mz_isochrone}} or
+#' \code{\link{mz_reverse_geocode}}. \code{as.mz_location} coerces eligible
+#' objects to \code{mz_location}s.
+#'
+#' @param lat Latitude
+#' @param lon Longitude
+#' @param x An object that has location information
+#' @param ... Not currently used
+#'
+#' @name mz_location
+#' @seealso
+#' \code{\link{mz_isochrone}} For using the Mapzen isochrone service
+#' \code{\link{mz_contours}}, \code{\link{mz_costing}}, and
+#' \code{\link{mz_costing_options}} for other argument constructors
 #' @export
 mz_location <- function(lat, lon) {
     assert_that(
@@ -11,9 +28,11 @@ mz_location <- function(lat, lon) {
     )
 }
 
+#' @rdname mz_location
 #' @export
 as.mz_location <- function(x, ...) UseMethod("as.mz_location")
 
+#' @rdname mz_location
 #' @export
 as.mz_location.default <- function(x, ...) {
     lat <- x[["lat"]]
@@ -21,12 +40,14 @@ as.mz_location.default <- function(x, ...) {
     mz_location(lat = lat, lon = lon)
 }
 
+#' @rdname mz_location
 #' @export
 as.mz_location.mz_geocode_result <- function(x, ...) {
     lat <- x[["geocode_latitude"]]
     lon <- x[["geocode_longitude"]]
     mz_location(lat = lat, lon = lon)
 }
+
 
 #' @export
 mz_contours <- function(times, colors = NULL) {

@@ -1,9 +1,11 @@
-#' Get the bounding box for a \code{mapzen_geo_list}
+#' Get the bounding box
 #'
-#' The returned value can be used directly as the \code{boundary.rect}
-#' parameter for \link{search} functions
+#' Returns the bottom left and top right corners of the box that contains a
+#' mapzen object (mz_geo_list or mz_isochrone_list). The returned value can be
+#' used directly as the \code{boundary.rect} parameter for
+#' \code{\link{search}} functions.
 #'
-#' @param geo A mapzen geo list
+#' @param geo A mapzen geo list or isochrone list
 #'
 #' @return A tibble
 #' @name mz_bbox

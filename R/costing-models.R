@@ -19,6 +19,39 @@ costing_model <- function(type, ...) {
     )
 }
 
+#' Costing model constructors and helpers
+#'
+#' Mapzen's Isochrone service (\code{\link{mz_isochrone}}) as well as other
+#' mobility services (currently not implemented in this package, read more at
+#' \url{https://mapzen.com/documentation/mobility/}) require users to specify a
+#' "costing model." See \url{https://mapzen.com/documentation/mobility/turn-by-turn/api-reference/#costing-models}
+#' for details. These can be difficult to construct correctly, so the objects
+#' \code{mz_costing} and \code{mz_costing_options} exist to make that process
+#' less error-prone and more convenient.
+#'
+#' @examples
+#' ## creates a pedestrian costing model with walking speed of 2 km/hr
+#' ## that also avoids alleys.
+#' ## non-multimodal costing models will accept 0 or more options from the
+#' ## appropriate list.
+#' mz_costing$pedestrian(
+#'     mz_costing_options$pedestrian$walking_speed(2.0),
+#'     mz_costing_options$pedestrian$alley_factor(0)
+#' )
+#'
+#' ## creates a multimodal costing model that favors buses over rails, and
+#' ## has a slower than default walking speed
+#' ## (note multimodal has named arguments requiring list inputs)
+#' mz_costing$multimodal(
+#'     transit = list(
+#'         mz_costing_options$transit$use_bus(1.0),
+#'         mz_costing_options$transit$use_rail(5)
+#'     ),
+#'     pedestrian = list(
+#'         mz_costing_options$pedestrian$walking_speed(4.1)
+#'     )
+#' )
+#' @name costing_models
 #' @export
 mz_costing <- list(
     pedestrian = function(...) {
@@ -40,6 +73,7 @@ costopt <- function(x, validate = assertthat::is.number) {
     jsonlite::unbox(x)
 }
 
+#' @rdname costing_models
 #' @export
 mz_costing_options <- list(
     pedestrian = list(
