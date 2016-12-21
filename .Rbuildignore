@@ -5,4 +5,4 @@
 fig/*
 ^\.travis\.yml$
 ^codecov\.yml$
-*_cache/*
+.*_cache/.*
