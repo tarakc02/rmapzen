@@ -1,3 +1,13 @@
+#' Geocode an address or other location
+#'
+#' This is a convenience function that calls \code{\link{mz_search}} to retrieve
+#' latitude and longitude.
+#'
+#' @param location An address or other suitably specific search string
+#' @param api_key Your Mapzen API key, defaults to the value of the MAPZEN_KEY environment variable
+#'
+#' @return A tibble, with the parsed address used to retrieve the geocode, lat/lon,
+#' and the confidence (between 0 and 1)
 #' @export
 mz_geocode <- function(location, api_key = mz_key()) {
     result <- tryCatch(
