@@ -48,7 +48,14 @@ as.mz_location.mz_geocode_result <- function(x, ...) {
     mz_location(lat = lat, lon = lon)
 }
 
-
+#' Create an mz_contours object
+#'
+#' Contours are given as inputs to \code{\link{mz_isochrone}}. This function
+#' makes it convenient to construct them.
+#'
+#' @param times Times in minutes for the contour. Up to a maximum of 4 numbers.
+#' @param colors Colors for the contours. By default, a palette will be constructed
+#' from the Colorbrewer 4-class oranges palette.
 #' @export
 mz_contours <- function(times, colors = NULL) {
     assert_that(is.numeric(times),
