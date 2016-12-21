@@ -19,7 +19,7 @@ service currently can only accept a single location}
 \item{contours}{Up to 4 contours, see \code{\link{mz_contours}}}
 
 \item{date_time}{The local date and time at the location, and whether it is
-the departure or arrival time. See \code{\link{date_time}}}
+the departure or arrival time. See \code{\link{mz_date_time}}}
 
 \item{polygons}{Whether to return polygons (TRUE) or linestrings (FALSE, default)}
 

@@ -120,7 +120,7 @@ isochrone_get <- function(url) {
 #' @param costing_model The costing model, see \code{\link{mz_costing}}
 #' @param contours Up to 4 contours, see \code{\link{mz_contours}}
 #' @param date_time The local date and time at the location, and whether it is
-#' the departure or arrival time. See \code{\link{date_time}}
+#' the departure or arrival time. See \code{\link{mz_date_time}}
 #' @param polygons Whether to return polygons (TRUE) or linestrings (FALSE, default)
 #' @param denoise A value between 0 and 1 (default 1) to remove smaller contours.
 #' A value of 1 will only return the largest contour for a given time value. A
