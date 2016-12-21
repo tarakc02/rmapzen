@@ -52,7 +52,8 @@ mz_bbox.mapzen_isochrone_list <- function(geo) {
     if (is.null(features) || length(features) <= 0L) return(default())
 
     bbox <- sp::bbox(as_sp(geo))
-    if (dim(bbox) != c(2L, 2L) | rownames(bbox) != c("x", "y")) return(default())
+    if (!all.equal(dim(bbox), c(2L, 2L)) | !all.equal(rownames(bbox), c("x", "y")))
+        return(default())
     tibble::data_frame(
         min_lon = bbox["x", "min"],
         min_lat = bbox["y", "min"],
