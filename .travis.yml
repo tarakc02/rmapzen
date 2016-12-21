@@ -1,19 +1,11 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
-language: R
+language: r
 sudo: required
-cache: packages
+dist: trusty
 
 addons:
   apt:
     packages:
-      - libhdf5-7
-      - libhdf5-dev
-      - libhdf5-serial-dev
-      - libgdal1h
-      - gdal-bin
-      - libnetcdf-dev
-      - libhdf4-alt-dev
       - libgdal-dev
-      - libgdal1-dev
       - libproj-dev
