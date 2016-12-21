@@ -10,3 +10,6 @@ addons:
       - libgdal-dev
       - libproj-dev
       - libv8-dev
+
+after_success:
+  - Rscript -e 'covr::codecov()'
