@@ -7,6 +7,7 @@ cache: packages
 addons:
   apt:
     packages:
+      - libhdf5-serial-dev
       - gdal-bin
       - libgdal-dev
       - libgdal1-dev
