@@ -1,3 +1,11 @@
+#' Reference lists
+#'
+#' Lists of sources, layers, and countries, as they are expected to appear in
+#' the \code{\link{mz_search}} functions.
+#' @name mapzen_references
+NULL
+
+#' @rdname mapzen_references
 #' @export
 mz_sources <- list(
     openstreetmap = "osm",
@@ -10,6 +18,7 @@ mz_sources <- list(
     gn = "gn"
 )
 
+#' @rdname mapzen_references
 #' @export
 mz_layers <- list(
     venue = "venue",
@@ -41,5 +50,6 @@ make_mz_countries <- function() {
     structure(as.list(v$code), names = v$desc)
 }
 
+#' @rdname mapzen_references
 #' @export
 mz_countries <- make_mz_countries()
