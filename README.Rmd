@@ -31,7 +31,7 @@ So far, all of the services in [Mapzen search](https://mapzen.com/documentation/
 
 For example, to search for Hard Rock Cafes in Sweden (see [Additional convenience features](#additional-convenience-features) below for more ways to get the correct ISO-3166 country code):
 
-```{r ex-search-2}
+```{r ex-search-2, cache = TRUE}
 library(rmapzen)
 
 hard_rock <- mz_search("Hard Rock Cafe", boundary.country = "SE")
@@ -47,7 +47,7 @@ str(hard_rock_sp)
 
 Additionally, `mz_geocode` is a convenient function to geocode an address, utilizing the more general `mz_search` function.
 
-```{r ex-geocode}
+```{r ex-geocode, cache = TRUE}
 mz_geocode("UC Berkeley, Berkeley, CA")
 ```
 
