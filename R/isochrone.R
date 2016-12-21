@@ -3,7 +3,7 @@ build_isochrone_url <- function(
     costing_model,
     contours,
     date_time,
-    polygon,
+    polygons,
     denoise,
     generalize,
     id,
@@ -18,7 +18,7 @@ build_isochrone_url <- function(
         costing_options = costing_options,
         date_time = date_time,
         contours = contours,
-        polygon = polygon,
+        polygons = polygons,
         denoise = denoise,
         generalize = generalize
     )
@@ -36,7 +36,7 @@ build_isochrone_json <- function(
     costing_options,
     date_time,
     contours,
-    polygon,
+    polygons,
     denoise,
     generalize) {
 
@@ -44,7 +44,7 @@ build_isochrone_json <- function(
     # is supported
     locations <- as.mz_location(locations)
 
-    assert_that(is.null(polygon) || is.flag(polygon))
+    assert_that(is.null(polygons) || is.flag(polygons))
     assert_that(is.null(denoise) || is.number(denoise))
     assert_that(is.null(generalize) || is.number(generalize))
 
@@ -69,8 +69,8 @@ build_isochrone_json <- function(
 
     res <- c(res, contours = list(contours))
 
-    if (!is.null(polygon))
-        res <- c(res, polygon = list(jsonlite::unbox(polygon)))
+    if (!is.null(polygons))
+        res <- c(res, polygons = list(jsonlite::unbox(polygons)))
 
     if (!is.null(denoise)) {
         assert_that(denoise >= 0, denoise <= 1)
@@ -110,6 +110,25 @@ isochrone_get <- function(url) {
 }
 
 #' Retrieve isochrones
+#'
+#' See \url{https://mapzen.com/documentation/mobility/isochrone/api-reference/}.
+#'
+#' @param locations An \code{mz_location}, or something that can be coerced to an
+#' \code{\link{mz_location}}, as the departure point for the isochrone. This can be the
+#' result of \code{\link{mz_geocode}}. Despite the argument name, the isochrone
+#' service currently can only accept a single location
+#' @param costing_model The costing model, see \code{\link{mz_costing}}
+#' @param contours Up to 4 contours, see \code{\link{mz_contours}}
+#' @param date_time The local date and time at the location, and whether it is
+#' the departure or arrival time. See \code{\link{date_time}}
+#' @param polygons Whether to return polygons (TRUE) or linestrings (FALSE, default)
+#' @param denoise A value between 0 and 1 (default 1) to remove smaller contours.
+#' A value of 1 will only return the largest contour for a given time value. A
+#' value of 0.5 drops any contours that are less than half the area of the
+#' largest contour.
+#' @param generalize Tolerance in meters for the Douglas-Peucker generalization.
+#' @param id A descriptive identifier, the response will contain the id as an element.
+#' @param api_key Your Mapzen API key, defaults to the MAPZEN_KEY environment variable.
 #' @name mz_isochrone
 #' @export
 mz_isochrone <- function(
@@ -117,7 +136,7 @@ mz_isochrone <- function(
     costing_model,
     contours,
     date_time = NULL,
-    polygon = NULL,
+    polygons = NULL,
     denoise = NULL,
     generalize = NULL,
     id = "my-iso",
@@ -129,7 +148,7 @@ mz_isochrone <- function(
         costing_model = costing_model,
         contours = contours,
         date_time = date_time,
-        polygon = polygon,
+        polygons = polygons,
         denoise = denoise,
         generalize = generalize,
         id = id,

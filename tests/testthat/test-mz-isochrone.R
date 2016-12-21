@@ -9,7 +9,7 @@ test_that("isochrone urls built correctly", {
             colors = c("440154", "21908C", "FDE725")
         ),
         date_time = NULL,
-        polygon = NULL,
+        polygons = NULL,
         denoise = NULL,
         generalize = NULL,
         id = "test1",
@@ -41,7 +41,7 @@ test_that("isochrone urls built correctly", {
             colors = c("440154", "21908C", "FDE725")
         ),
         date_time = NULL,
-        polygon = NULL,
+        polygons = NULL,
         denoise = NULL,
         generalize = NULL,
         id = "test2",
@@ -63,7 +63,7 @@ test_that("isochrone urls built correctly", {
         ),
         contours = mz_contours(seq(10, 40, 10)),
         date_time = mz_date_time(as.POSIXct("2016-12-11 17:41:51 PST"), "departure"),
-        polygon = FALSE,
+        polygons = FALSE,
         denoise = .7,
         generalize = 4773,
         id = "my-id",
@@ -73,7 +73,7 @@ test_that("isochrone urls built correctly", {
     test3 <- jsonlite::fromJSON(test3$query$json,
                                 simplifyVector = FALSE)
     expect_equal(
-        test3$polygon, FALSE
+        test3$polygons, FALSE
     )
     expect_equal(
         test3$denoise, .7
@@ -102,7 +102,7 @@ test_that("isochrone urls built correctly", {
         ),
         contours = mz_contours(10, 'ffffff'),
         date_time = NULL,
-        polygon = NULL,
+        polygons = NULL,
         denoise = NULL,
         generalize = NULL,
         id = NULL,
