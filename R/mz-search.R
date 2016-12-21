@@ -42,6 +42,28 @@ build_search_url <- function(
 #' Functions to access the various endpoints from the Mapzen Search API.
 #' For more details, see \url{https://mapzen.com/documentation/search/}.
 #'
+#' @param text Search string
+#' @param point For reverse geocoding, the location to reverse geocode. Can be
+#' created with \code{\link{mz_location}} or \code{\link{mz_geocode}},
+#' otherwise should have names "lat" and "lon"
+#' @param size Number of search results requested
+#' @param boundary.country ISO-3166 country code to narrow the search.
+#' See \code{\link{mz_countries}}
+#' @param boundary.rect 4 corners that define a box to narrow the search. Can
+#' be the result of \code{\link{mz_bbox}}. Should have named elements with names
+#' "min_lon", "min_lat", "max_lon", "max_lat"
+#' @param boundary.circle A circle to narrow the search. Should have named elements
+#' with names "lon", "lat", and "radius"
+#' @param focus.point A point to "focus" the search. Can be created with
+#' \code{\link{mz_location}} or \code{\link{mz_geocode}}, otherwise should have
+#'  names "lat" and "lon"
+#' @param sources The originating source of the data (to filter/narrow search
+#' results). See \code{\link{mz_sources}}
+#' @param layers Which layers (types of places) to search. See
+#' \url{https://mapzen.com/documentation/search/search/#filter-by-data-type}
+#' for definitions, and use \code{\link{mz_sources}} for convenience
+#' @param api_key Your Mapzen API key. The default is to look for the value in
+#' the MAPZEN_KEY environment variable.
 #' @name search
 #' @export
 mz_search <- function(
