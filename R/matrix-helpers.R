@@ -81,6 +81,14 @@ mz_contours <- function(times, colors = NULL) {
     )
 }
 
+#' Create mz_date_time objects
+#'
+#' Mobility services (such as \code{mz_isochrone}) take, optionally, a date_time
+#' argument that specifies the date and time along with type (departure/arrival).
+#' This function constructs the appropriate objects to use as date_time arguments.
+#'
+#' @param date_time A POSIXt date-time object
+#' @param type "departure" or "arrival"
 mz_date_time <- function(date_time, type = "departure") {
     assert_that(is.time(date_time), is.string(type))
     types <- c("current", "departure", "arrival")
