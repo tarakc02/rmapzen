@@ -15,12 +15,12 @@ rmapzen
 Introduction
 ------------
 
-rmapzen is a client for the Mapzen API. For more information, see <https://mapzen.com/documentation/>.
+rmapzen is a client for the Mapzen API. For more information, see <https://mapzen.com/documentation/>. So far, all of the services in [Mapzen search](https://mapzen.com/documentation/search/) have been implemented, as has the [isochrone service](https://mapzen.com/documentation/mobility/isochrone/api-reference/)
 
 Search
 ------
 
-So far, all of the services in [Mapzen search](https://mapzen.com/documentation/search/) have been implemented. Search functions:
+All of the services in [Mapzen search](https://mapzen.com/documentation/search/) have been implemented. Search functions:
 
 -   `mz_search`
 -   `mz_reverse_geocode`
@@ -46,8 +46,27 @@ hard_rock
 #>   ...
 ```
 
-All of the search functions return a `geo_list` object. These are R list representations of valid geojson (which is also valid json), and can be converted to `SpatialPointsDataFrame` objects via the package [geojsonio](https://github.com/ropensci/geojsonio) -- for example:
+All of the search functions return a `geo_list` object. These are R list representations of valid geojson (which is also valid json), and can be converted to `sp` objects via the `as_sp` function:
 
+``` r
+library(leaflet)
+leaflet(as_sp(hard_rock)) %>%
+    addProviderTiles("CartoDB.DarkMatter") %>%
+    addCircleMarkers(
+        radius = 5, 
+        weight = 1, 
+        color = "#FFF", 
+        popup = ~paste(
+            name, "<br>", 
+            dplyr::coalesce(locality, region)
+        )
+    )
+```
+
+<!--html_preserve-->
+
+<script type="application/json" data-for="htmlwidget-d888151b205a439314a6">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["CartoDB.DarkMatter",null,null,{"errorTileUrl":"","noWrap":false,"zIndex":null,"unloadInvisibleTiles":null,"updateWhenIdle":null,"detectRetina":false,"reuseTiles":false}]},{"method":"addCircleMarkers","args":[[59.344078,57.701228,55.93419,55.776346,62.389207,59.397277,57.582785,59.349908,57.987438,59.285891],[18.054836,11.974252,13.834926,13.097539,17.304617,17.948336,14.13232,18.080741,15.63464,17.963484],5,null,null,{"lineCap":null,"lineJoin":null,"clickable":true,"pointerEvents":null,"className":"","stroke":true,"color":"#FFF","weight":1,"opacity":0.5,"fill":true,"fillColor":"#FFF","fillOpacity":0.2,"dashArray":null},null,null,["Hard Rock CafÃ© <br> Stockholm","Hard Rock Cafe <br> GÃ¶teborg","Rock'n Roll CafÃ© <br> SkÃ¥ne","Carolas Cafe <br> Furulund","Cafe Charm <br> Sundsvall","Cafe capri <br> Upplands VÃ¤sby","Cafeteria <br> JÃ¶nkÃ¶ping","CafÃ©Harpaviljongen <br> Stockholm","Cafe Columbia <br> Kisa","CafÃ©koppen <br> Stockholm"],null,null,null]}],"limits":{"lat":[55.776346,62.389207],"lng":[11.974252,18.080741]}},"evals":[],"jsHooks":[]}</script>
+<!--/html_preserve-->
 ``` r
 hard_rock_sp <- geojsonio::geojson_sp(hard_rock)
 str(hard_rock_sp)

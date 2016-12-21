@@ -3,6 +3,7 @@ title: rmapzen
 output: 
     github_document:
         toc: true
+always_allow_html: yes        
 ---
 [![Travis-CI Build Status](https://travis-ci.org/tarakc02/rmapzen.svg?branch=master)](https://travis-ci.org/tarakc02/rmapzen)
 [![Coverage Status](https://img.shields.io/codecov/c/github/tarakc02/rmapzen/master.svg)](https://codecov.io/github/tarakc02/rmapzen?branch=master)
@@ -18,11 +19,11 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-rmapzen is a client for the Mapzen API. For more information, see [https://mapzen.com/documentation/](https://mapzen.com/documentation/). 
+rmapzen is a client for the Mapzen API. For more information, see [https://mapzen.com/documentation/](https://mapzen.com/documentation/). So far, all of the services in [Mapzen search](https://mapzen.com/documentation/search/) have been implemented, as has the [isochrone service](https://mapzen.com/documentation/mobility/isochrone/api-reference/)
 
 ## Search
 
-So far, all of the services in [Mapzen search](https://mapzen.com/documentation/search/) have been implemented. Search functions:
+All of the services in [Mapzen search](https://mapzen.com/documentation/search/) have been implemented. Search functions:
 
 * `mz_search`
 * `mz_reverse_geocode`
@@ -31,6 +32,10 @@ So far, all of the services in [Mapzen search](https://mapzen.com/documentation/
 
 For example, to search for Hard Rock Cafes in Sweden (see [Additional convenience features](#additional-convenience-features) below for more ways to get the correct ISO-3166 country code):
 
+```{r loadmapzen, echo = FALSE}
+library(rmapzen)
+```
+
 ```{r ex-search-2, cache = TRUE}
 library(rmapzen)
 
@@ -38,7 +43,23 @@ hard_rock <- mz_search("Hard Rock Cafe", boundary.country = "SE")
 hard_rock
 ```
 
-All of the search functions return a `geo_list` object. These are R list representations of valid geojson (which is also valid json), and can be converted to `SpatialPointsDataFrame` objects via the package [geojsonio](https://github.com/ropensci/geojsonio) -- for example:
+All of the search functions return a `geo_list` object. These are R list representations of valid geojson (which is also valid json), and can be converted to `sp` objects via the `as_sp` function:
+
+```{r showleaflet}
+library(leaflet)
+leaflet(as_sp(hard_rock)) %>%
+    addProviderTiles("CartoDB.DarkMatter") %>%
+    addCircleMarkers(
+        radius = 5, 
+        weight = 1, 
+        color = "#FFF", 
+        popup = ~paste(
+            name, "<br>", 
+            dplyr::coalesce(locality, region)
+        )
+    )
+```
+
 
 ```{r ex-search-1}
 hard_rock_sp <- geojsonio::geojson_sp(hard_rock)
