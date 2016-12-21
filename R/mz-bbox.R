@@ -38,7 +38,7 @@ mz_bbox.mapzen_geo_list <- function(geo) {
 
 #' @rdname mz_bbox
 #' @export
-mz_bbox.mazpen_isochrone_list <- function(geo) {
+mz_bbox.mapzen_isochrone_list <- function(geo) {
     default <- function() {
         warning("Unable to read bounding box, returning NA")
         return(tibble::data_frame(

@@ -3,14 +3,14 @@
 \name{mz_bbox}
 \alias{mz_bbox}
 \alias{mz_bbox.mapzen_geo_list}
-\alias{mz_bbox.mazpen_isochrone_list}
+\alias{mz_bbox.mapzen_isochrone_list}
 \title{Get the bounding box}
 \usage{
 mz_bbox(geo)
 
 \method{mz_bbox}{mapzen_geo_list}(geo)
 
-\method{mz_bbox}{mazpen_isochrone_list}(geo)
+\method{mz_bbox}{mapzen_isochrone_list}(geo)
 }
 \arguments{
 \item{geo}{A mapzen geo list or isochrone list}
