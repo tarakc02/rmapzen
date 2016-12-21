@@ -10,7 +10,8 @@ rmapzen
 -   [Other services and related projects](#other-services-and-related-projects)
 -   [Installation](#installation)
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+[![Travis-CI Build Status](https://travis-ci.org/tarakc02/rmapzen.svg?branch=master)](https://travis-ci.org/tarakc02/rmapzen) <!-- README.md is generated from README.Rmd. Please edit that file -->
+
 Introduction
 ------------
 
@@ -57,19 +58,19 @@ str(hard_rock_sp)
 #>   .. ..$ layer            : Factor w/ 1 level "venue": 1 1 1 1 1 1 1 1 1 1
 #>   .. ..$ source           : Factor w/ 1 level "openstreetmap": 1 1 1 1 1 1 1 1 1 1
 #>   .. ..$ source_id        : Factor w/ 10 levels "node:1233020660",..: 7 3 6 8 1 2 10 4 5 9
-#>   .. ..$ name             : Factor w/ 10 levels "Cafe capri","Cafe Charm",..: 9 8 10 7 2 1 6 4 3 5
+#>   .. ..$ name             : Factor w/ 10 levels "CafÃ©Harpaviljongen",..: 8 9 10 7 4 3 6 1 5 2
 #>   .. ..$ confidence       : num [1:10] 0.902 0.962 0.662 0.661 0.661 0.661 0.661 0.661 0.661 0.661
 #>   .. ..$ accuracy         : Factor w/ 1 level "point": 1 1 1 1 1 1 1 1 1 1
 #>   .. ..$ country          : Factor w/ 1 level "Sweden": 1 1 1 1 1 1 1 1 1 1
 #>   .. ..$ country_gid      : Factor w/ 1 level "whosonfirst:country:85633789": 1 1 1 1 1 1 1 1 1 1
 #>   .. ..$ country_a        : Factor w/ 1 level "SWE": 1 1 1 1 1 1 1 1 1 1
-#>   .. ..$ region           : Factor w/ 6 levels "Jönköping","Östergötland",..: 4 6 3 3 5 4 1 4 2 4
+#>   .. ..$ region           : Factor w/ 6 levels "ÃstergÃ¶tland",..: 4 6 3 3 5 4 2 4 1 4
 #>   .. ..$ region_gid       : Factor w/ 6 levels "whosonfirst:region:85688377",..: 5 4 1 1 6 5 2 5 3 5
-#>   .. ..$ locality         : Factor w/ 6 levels "Furulund","Göteborg",..: 4 2 NA 1 5 6 NA 4 3 4
+#>   .. ..$ locality         : Factor w/ 6 levels "Furulund","GÃ¶teborg",..: 4 2 NA 1 5 6 NA 4 3 4
 #>   .. ..$ locality_gid     : Factor w/ 6 levels "whosonfirst:locality:101752295",..: 2 1 NA 6 3 4 NA 2 5 2
-#>   .. ..$ neighbourhood    : Factor w/ 5 levels "Fruänge","Hjorthagen",..: 5 4 NA NA NA 3 NA 2 NA 1
+#>   .. ..$ neighbourhood    : Factor w/ 5 levels "FruÃ¤nge","Hjorthagen",..: 5 4 NA NA NA 3 NA 2 NA 1
 #>   .. ..$ neighbourhood_gid: Factor w/ 5 levels "whosonfirst:neighbourhood:85902171",..: 5 4 NA NA NA 2 NA 1 NA 3
-#>   .. ..$ label            : Factor w/ 10 levels "Cafe capri, Upplands Väsby, Sweden",..: 9 8 10 7 2 1 6 4 3 5
+#>   .. ..$ label            : Factor w/ 10 levels "CafÃ©Harpaviljongen, Stockholm, Sweden",..: 8 9 10 7 4 3 6 1 5 2
 #>   ..@ coords.nrs : num(0) 
 #>   ..@ coords     : num [1:10, 1:2] 18.1 12 13.8 13.1 17.3 ...
 #>   .. ..- attr(*, "dimnames")=List of 2
