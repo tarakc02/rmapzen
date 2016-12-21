@@ -39,6 +39,16 @@ usage_recorder <- function() {
 
 usage_statistics <- usage_recorder()
 
+#' Check usage statistics
+#'
+#' Prints out remaining queries for various time periods. \code{rmapzen} manages
+#' rate limiting for the per-second limits, but does not keep track of the daily
+#' limits.
+#'
+#' This function is populated from the headers of responses to various API requests.
+#' If no queries have been made, or if the only queries so far have hit cache servers,
+#' then no information will be available.
+#'
 #' @export
 mz_check_usage <- function() usage_statistics("view")()
 
