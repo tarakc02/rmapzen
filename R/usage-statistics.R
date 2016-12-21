@@ -25,8 +25,26 @@ usage_recorder <- function() {
         matrix_usage$remaining_second <<- header$`x-apiaxleproxy-qps-left`
     }
 
-    query <- function()
-        list(search = search_usage, matrix = matrix_usage)
+    query <- function() {
+        if (!is.null(search_usage$last_updated)) {
+            cat("for the search endpoint:\n",
+                "  updated on: ", search_usage$last_updated, "\n",
+                "  remaining queries today: ", search_usage$remaining_day, "\n",
+                "  remaining queries this second: ", search_usage$remaining_second, "\n",
+                sep = "")
+        } else cat("No data for the search endpoint\n")
+        if (!is.null(matrix_usage$last_updated)) {
+            cat("for the matrix endpoint:\n",
+                "  updated on: ", matrix_usage$last_updated, "\n",
+                "  remaining queries today: ", matrix_usage$remaining_day, "\n",
+                "  remaining queries this second: ", matrix_usage$remaining_second, "\n",
+                sep = "")
+        } else cat("No data for the matrix endpoint\n")
+
+        invisible(
+            list(search = search_usage, matrix = matrix_usage)
+        )
+    }
 
     function(r)
         switch(
