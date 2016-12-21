@@ -67,7 +67,7 @@ test_that("isochrone urls built correctly", {
         denoise = .7,
         generalize = 4773,
         id = "my-id",
-        api_key = mz_key()
+        api_key = "mz-key"
     )
 
     test3 <- jsonlite::fromJSON(test3$query$json,
