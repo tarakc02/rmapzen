@@ -1,5 +1,6 @@
 #' @export
-print.mapzen_geo_list <- function(geo, ..., n = 5) {
+print.mapzen_geo_list <- function(x, ..., n = 5) {
+    geo <- x
     assert_that(is.count(n) && n > 0)
 
     attribution <- geo$geocoding$attribution
