@@ -1,0 +1,125 @@
+---
+title: "rmapzen"
+author: "Tarak Shah"
+date: "December 21, 2016"
+output: 
+    html_document:
+        toc: true
+---
+
+## Introduction
+
+rmapzen is a client for the Mapzen API. For more information, see [https://mapzen.com/documentation/](https://mapzen.com/documentation/). So far, all of the services in [Mapzen search](https://mapzen.com/documentation/search/) have been implemented, as has the [isochrone service](https://mapzen.com/documentation/mobility/isochrone/api-reference/)
+
+## Search
+
+All of the services in [Mapzen search](https://mapzen.com/documentation/search/) have been implemented. Search functions:
+
+* `mz_search`
+* `mz_reverse_geocode`
+* `mz_autocomplete`
+* `mz_place`
+
+For example, to search for Hard Rock Cafes in Sweden (see [Additional convenience features](#additional-convenience-features) below for more ways to get the correct ISO-3166 country code):
+
+```{r loadmapzen, echo = FALSE}
+library(rmapzen)
+```
+
+```{r ex-search-2, cache = TRUE}
+library(rmapzen)
+
+hard_rock <- mz_search("Hard Rock Cafe", boundary.country = "SE")
+hard_rock
+```
+
+Additionally, `mz_geocode` is a convenient function to geocode an address, utilizing the more general `mz_search` function.
+
+```{r ex-geocode, cache = TRUE}
+mz_geocode("UC Berkeley, Berkeley, CA")
+```
+
+## Isochrones
+
+The [isochrone service](https://mapzen.com/documentation/mobility/isochrone/api-reference/) allows you to "computes areas that are reachable within specified time intervals from a location, and returns the reachable regions as contours of polygons or lines that you can display on a map".
+
+```{r isochrone-example, cache = TRUE}
+ucb <- mz_geocode("UC Berkeley")
+isos <- mz_isochrone(
+    ucb,
+    costing_model = mz_costing$auto(),
+    contours = mz_contours(c(10, 20, 30))
+)
+
+library(leaflet)
+leaflet(as_sp(isos)) %>%
+    addProviderTiles("CartoDB.DarkMatter") %>%
+    addPolygons(color = ~paste0("#", color), weight = 1) %>%
+    addLegend(colors = ~paste0("#", color), 
+              labels = ~paste(contour, "minutes"),
+              title = "Drive times from <br/> UC Berkeley Campus")
+```
+
+## Tidy-friendly
+
+All of the search functions return a `geo_list` object. These are R list representations of valid geojson (which is also valid json), and can be converted to `sp` objects via the `as_sp` function:
+
+```{r ex-search-1}
+str(as_sp(hard_rock))
+```
+
+
+
+`as.data.frame` makes it easy to include search responses in tidy pipelines:
+
+```{r ex-tidy, warning = FALSE, message = FALSE}
+library(dplyr)
+as.data.frame(hard_rock) %>%
+    select(name, confidence, region, locality, neighbourhood)
+```
+
+
+## Accessors
+
+Currently, the following accessors are available to pull out commonly used 
+pieces from a search response:
+
+* `mz_coordinates`
+* `mz_bbox`
+
+```{r ex-accessors}
+mz_coordinates(hard_rock)
+```
+
+## Rate limits
+
+Mapzen's published rate limits (6 requests per second) are automatically observed, using the [ratelimitr package](https://github.com/tarakc02/ratelimitr). You can check usage statistics at any time using the function `mz_check_usage`.
+
+## Additional convenience features
+
+Several of the search functions take, optionally, the arguments `layers`, `sources`, and `boundary.country` (the latter requires [ISO-3166](https://en.wikipedia.org/wiki/ISO_3166) codes). If you're using an IDE with auto-complete, the objects `mz_layers`, `mz_sources`, and `mz_countries` should make it easier to get the correct codes.
+
+![Easy lookup for ISO-3166 codes](fig/mz-countries.png)
+
+## Other services and related projects
+
+The package does not yet support [other Mapzen API services](https://mapzen.com/documentation/). But do check out these related R packages:
+
+* [elevatr](https://github.com/jhollist/elevatr) for accessing elevation data, including Mapzen Terrain and Elevation
+* [postr](https://github.com/Ironholds/poster) for address parsing and normalization using the [libpostal](https://github.com/openvenues/libpostal) library
+
+## Installation
+
+This is a very young package, things may break or change. To install:
+
+```
+# rate-limits are enforced using the ratelimitr package
+devtools::install_github("tarakc02/ratelimitr")
+devtools::install_github("tarakc02/rmapzen")
+```
+
+You'll also need to [acquire an API key](https://mapzen.com/developers), and then set the `MAPZEN_KEY` environment variable:
+
+```
+Sys.setenv(MAPZEN_KEY = "mapzen-xxxxxx")
+```

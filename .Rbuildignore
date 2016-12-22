@@ -6,3 +6,5 @@ fig/*
 ^\.travis\.yml$
 ^codecov\.yml$
 .*_cache/.*
+index\.Rmd
+index\.html
