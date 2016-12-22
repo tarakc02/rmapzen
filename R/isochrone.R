@@ -156,6 +156,7 @@ mz_isochrone <- function(
     isochrone_get(url)
 }
 
+#' @export
 print.mapzen_isochrone_list <- function(x, ...) {
     cat("GeoJSON response from Mapzen\n")
     cat("Isochrones: ", length(x$features), sep = "")
