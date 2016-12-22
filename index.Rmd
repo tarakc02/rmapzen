@@ -1,11 +1,15 @@
 ---
-title: "rmapzen"
-author: "Tarak Shah"
-date: "December 21, 2016"
+title: "rmapzen: a Mapzen API client for R"
 output: 
     html_document:
         toc: true
+        toc_float:
+            collapsed: false
+            smooth_scroll: true
+        theme: flatly
 ---
+[![Travis-CI Build Status](https://travis-ci.org/tarakc02/rmapzen.svg?branch=master)](https://travis-ci.org/tarakc02/rmapzen)
+[![Coverage Status](https://img.shields.io/codecov/c/github/tarakc02/rmapzen/master.svg)](https://codecov.io/github/tarakc02/rmapzen?branch=master)
 
 ## Introduction
 
@@ -41,7 +45,11 @@ mz_geocode("UC Berkeley, Berkeley, CA")
 
 ## Isochrones
 
-The [isochrone service](https://mapzen.com/documentation/mobility/isochrone/api-reference/) allows you to "computes areas that are reachable within specified time intervals from a location, and returns the reachable regions as contours of polygons or lines that you can display on a map".
+The [isochrone service](https://mapzen.com/documentation/mobility/isochrone/api-reference/) allows you to "[compute] areas that are reachable within specified time intervals from a location, and returns the reachable regions as contours of polygons or lines that you can display on a map". Below is an example of finding places within driving distance of UC Berkeley, and plotting them using the [leaflet package](http://rstudio.github.io/leaflet/).
+
+```{r load-leaflet, echo = FALSE}
+library(leaflet)
+```
 
 ```{r isochrone-example, cache = TRUE}
 ucb <- mz_geocode("UC Berkeley")
@@ -60,17 +68,9 @@ leaflet(as_sp(isos)) %>%
               title = "Drive times from <br/> UC Berkeley Campus")
 ```
 
-## Tidy-friendly
+## Tidiness/Interoperability
 
-All of the search functions return a `geo_list` object. These are R list representations of valid geojson (which is also valid json), and can be converted to `sp` objects via the `as_sp` function:
-
-```{r ex-search-1}
-str(as_sp(hard_rock))
-```
-
-
-
-`as.data.frame` makes it easy to include search responses in tidy pipelines:
+As the above example illustrates, any object returned by a Mapzen service can be converted to the appropriate Spatial* object using the generic function `as_sp`, for easy interoperability with other packages. Specifically, search results are converted to SpatialPointsDataFrames, while isochrone results are converted to SpatialLinesDataFrames. You can also convert objects directly to data frames, allowing for use within tidy pipelines:
 
 ```{r ex-tidy, warning = FALSE, message = FALSE}
 library(dplyr)
@@ -78,30 +78,81 @@ as.data.frame(hard_rock) %>%
     select(name, confidence, region, locality, neighbourhood)
 ```
 
+## Mapzen list methods
 
-## Accessors
+Currently, the following methods are available to pull out commonly used 
+pieces of a response:
 
-Currently, the following accessors are available to pull out commonly used 
-pieces from a search response:
-
-* `mz_coordinates`
-* `mz_bbox`
+* `mz_coordinates` (only available for search results)
+* `mz_bbox` (for either search or isochrone results)
 
 ```{r ex-accessors}
 mz_coordinates(hard_rock)
 ```
 
+## A more detailed example
+
+Say you have an afternoon meeting at the TransAmerica center in San Francisco, and would like to visit a local museum afterwards. Here's how to make a map of museums within walking distance:
+
+```{r detailed-example, cache = TRUE}
+# first geocode the TransAmerica Center
+trans_america <- mz_geocode("TransAmerica Center, San Francisco CA")
+
+# then identify the area that is within 15 minutes walking distance
+walkable <- mz_isochrone(
+    trans_america,
+    costing_model = mz_costing$pedestrian(),
+    contours = mz_contours(15))
+
+# now search for museums, but limit the search to areas within "walkable"
+museums <- mz_search(
+    "Museum", 
+    boundary.rect = mz_bbox(walkable), 
+    layers = mz_layers$venue, 
+    size = 15
+)
+
+# use the leaflet package to draw the map
+leaflet(as_sp(walkable)) %>%
+    addProviderTiles("CartoDB.DarkMatter") %>%
+    addPolygons(color = "#ffffff", weight = 1) %>%
+    addMarkers(
+        data = trans_america, 
+        lat = ~geocode_latitude, 
+        lng = ~geocode_longitude,
+        popup = "TransAmerica Center") %>%
+    addCircleMarkers(
+        data = as_sp(museums), 
+        weight = 1,
+        radius = 7,
+        opacity = 1,
+        popup = ~name,
+        color = "#ff0000")
+```
+
 ## Rate limits
 
-Mapzen's published rate limits (6 requests per second) are automatically observed, using the [ratelimitr package](https://github.com/tarakc02/ratelimitr). You can check usage statistics at any time using the function `mz_check_usage`.
+Mapzen's per-second [published rate limits](https://mapzen.com/documentation/overview/#search-and-mobility-products) are automatically observed, using the [ratelimitr package](https://github.com/tarakc02/ratelimitr). The package does not manage daily limits for you, but you can check usage statistics at any time using the function `mz_check_usage`.
 
-## Additional convenience features
+```{r mz-check-usage, cache = TRUE}
+mz_check_usage()
+```
+
+## Convenience features
 
 Several of the search functions take, optionally, the arguments `layers`, `sources`, and `boundary.country` (the latter requires [ISO-3166](https://en.wikipedia.org/wiki/ISO_3166) codes). If you're using an IDE with auto-complete, the objects `mz_layers`, `mz_sources`, and `mz_countries` should make it easier to get the correct codes.
 
 ![Easy lookup for ISO-3166 codes](fig/mz-countries.png)
 
-## Other services and related projects
+Similarly, argument constructors are available for easier specifications of isochrone and search requests.
+
+* `mz_costing` 
+* `mz_costing_options` 
+* `mz_location`
+* `mz_contours`
+* `mz_date_time`
+
+## Related projects
 
 The package does not yet support [other Mapzen API services](https://mapzen.com/documentation/). But do check out these related R packages:
 
@@ -112,14 +163,12 @@ The package does not yet support [other Mapzen API services](https://mapzen.com/
 
 This is a very young package, things may break or change. To install:
 
-```
-# rate-limits are enforced using the ratelimitr package
-devtools::install_github("tarakc02/ratelimitr")
+```{r, eval = FALSE}
 devtools::install_github("tarakc02/rmapzen")
 ```
 
 You'll also need to [acquire an API key](https://mapzen.com/developers), and then set the `MAPZEN_KEY` environment variable:
 
-```
+```{r, eval = FALSE}
 Sys.setenv(MAPZEN_KEY = "mapzen-xxxxxx")
 ```
