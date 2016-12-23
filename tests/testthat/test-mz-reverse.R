@@ -8,14 +8,14 @@ test_that("reverse search urls built correctly", {
         api_key = "mapzen-xxxx"
     )
 
-    expect_true(setequal(
+    expect_dict_equal(
         pt1$query, list(
             point.lat = 48.858268,
             point.lon = 2.294471,
             size = 1,
             api_key = "mapzen-xxxx"
         )
-    ))
+    )
 
     pt2 <- build_reverse_url(
         point = c(lat = 48.858268, lon = 2.294471),
@@ -24,7 +24,7 @@ test_that("reverse search urls built correctly", {
         sources = c("osm", "oa")
     )
 
-    expect_true(setequal(
+    expect_dict_equal(
         pt2$query, list(
             point.lat = 48.858268,
             point.lon = 2.294471,
@@ -32,7 +32,7 @@ test_that("reverse search urls built correctly", {
             api_key = "mapzen-xxxx",
             sources = "osm,oa"
         )
-    ))
+    )
 
     pt3 <- build_reverse_url(
         point = c(lat = 48.858268, lon = 2.294471),
@@ -41,7 +41,7 @@ test_that("reverse search urls built correctly", {
         layers = "locality"
     )
 
-    expect_true(setequal(
+    expect_dict_equal(
         pt3$query, list(
             point.lat = 48.858268,
             point.lon = 2.294471,
@@ -49,7 +49,7 @@ test_that("reverse search urls built correctly", {
             api_key = "mapzen-xxxx",
             layers = "locality"
         )
-    ))
+    )
 
     pt4 <- build_reverse_url(
         point = c(lat = 48.858268, lon = 2.294471),
@@ -59,7 +59,7 @@ test_that("reverse search urls built correctly", {
         layers = c("locality", mz_layers$macroregion)
     )
 
-    expect_true(setequal(
+    expect_dict_equal(
         pt4$query, list(
             point.lat = 48.858268,
             point.lon = 2.294471,
@@ -68,7 +68,7 @@ test_that("reverse search urls built correctly", {
             sources = "osm,oa",
             layers = "locality,macroregion"
         )
-    ))
+    )
 
     pt5 <- build_reverse_url(
         point = c(lat = 48.858268, lon = 2.294471),
@@ -77,7 +77,7 @@ test_that("reverse search urls built correctly", {
         boundary.country = "LIE"
     )
 
-    expect_true(setequal(
+    expect_dict_equal(
         pt5$query, list(
             point.lat = 48.858268,
             point.lon = 2.294471,
@@ -85,7 +85,7 @@ test_that("reverse search urls built correctly", {
             api_key = "mapzen-xxxx",
             boundary.country = "LIE"
         )
-    ))
+    )
 
     tower <- build_reverse_url(
         point = c(
@@ -98,7 +98,7 @@ test_that("reverse search urls built correctly", {
         size = 1
     )
 
-    expect_true(setequal(
+    expect_dict_equal(
         tower$query, list(
             point.lat = 51.5081124,
             point.lon = -.0759493,
@@ -107,6 +107,6 @@ test_that("reverse search urls built correctly", {
             sources = "osm",
             size = 1
         )
-    ))
+    )
 
 })

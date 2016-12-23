@@ -8,14 +8,14 @@ test_that("autocomplete request urls built correctly", {
         api_key = "mz"
     )
 
-    expect_true(setequal(
+    expect_dict_equal(
         a1$query, list(
             focus.point.lat = 37.7,
             focus.point.lon = -122.4,
             text = "union square",
             api_key = "mz"
         )
-    ))
+    )
 
     a2 <- build_autocomplete_url(
         "pennsylvania",
@@ -23,13 +23,13 @@ test_that("autocomplete request urls built correctly", {
         api_key = "m"
     )
 
-    expect_true(setequal(
+    expect_dict_equal(
         a2$query, list(
             text = "pennsylvania",
             sources = "openaddresses",
             api_key = "m"
         )
-    ))
+    )
 
     a3 <- build_autocomplete_url(
         "starbuck",
@@ -37,11 +37,11 @@ test_that("autocomplete request urls built correctly", {
         api_key = "m"
     )
 
-    expect_true(setequal(
+    expect_dict_equal(
         a3$query, list(
             text = "starbuck",
             layers = "coarse",
             api_key = "m"
         )
-    ))
+    )
 })

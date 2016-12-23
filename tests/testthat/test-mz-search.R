@@ -2,13 +2,11 @@ context("mz-search")
 
 test_that("search urls built correctly", {
     main_st <- build_search_url("main street, usa", size = 3, api_key = "zzz")
-    expect_true(
-        setequal(
-            main_st$query, list(
-                api_key = "zzz",
-                text = "main street, usa",
-                size = 3)
-        )
+    expect_dict_equal(
+        main_st$query, list(
+            api_key = "zzz",
+            text = "main street, usa",
+            size = 3)
     )
 
     expect_identical(main_st$scheme, "https")
@@ -16,38 +14,34 @@ test_that("search urls built correctly", {
     eiffel <- build_search_url("eiffel tower, paris", size = 1,
                                boundary.country = "FR", api_key = "zzz")
 
-    expect_true(
-        setequal(
-            eiffel$query, list(
-                api_key = "zzz",
-                text = "eiffel tower, paris",
-                size = 1,
-                boundary.country = "FR"
-            )
+    expect_dict_equal(
+        eiffel$query, list(
+            api_key = "zzz",
+            text = "eiffel tower, paris",
+            size = 1,
+            boundary.country = "FR"
         )
     )
 
     # example from mapzen documentation
     ymca_tx <- build_search_url(text = "YMCA",
-        boundary.rect = c(
-            min_lat = 25.84,
-            min_lon = -106.65,
-            max_lat = 36.5,
-            max_lon = -93.51),
-        api_key = "zzz"
+                                boundary.rect = c(
+                                    min_lat = 25.84,
+                                    min_lon = -106.65,
+                                    max_lat = 36.5,
+                                    max_lon = -93.51),
+                                api_key = "zzz"
     )
 
-    expect_true(
-        setequal(
-            ymca_tx$query, list(
-                api_key = "zzz",
-                text = "YMCA",
-                size = 10,
-                boundary.rect.min_lat=25.84,
-                boundary.rect.min_lon=-106.65,
-                boundary.rect.max_lat=36.5,
-                boundary.rect.max_lon=-93.51
-            )
+    expect_dict_equal(
+        ymca_tx$query, list(
+            api_key = "zzz",
+            text = "YMCA",
+            size = 10,
+            boundary.rect.min_lat=25.84,
+            boundary.rect.min_lon=-106.65,
+            boundary.rect.max_lat=36.5,
+            boundary.rect.max_lon=-93.51
         )
     )
 
@@ -62,7 +56,7 @@ test_that("search urls built correctly", {
         api_key = "abc"
     )
 
-    expect_true(setequal(
+    expect_dict_equal(
         ymca_circle$query, list(
             api_key = "abc",
             text = "YMCA",
@@ -71,7 +65,7 @@ test_that("search urls built correctly", {
             boundary.circle.lon = -79.186484,
             boundary.circle.radius = 35
         )
-    ))
+    )
 
     ymca_aus <- build_search_url(
         "YMCA",
@@ -83,7 +77,7 @@ test_that("search urls built correctly", {
         api_key = "abc"
     )
 
-    expect_true(setequal(
+    expect_dict_equal(
         ymca_aus$query, list(
             api_key = "abc",
             text = "YMCA",
@@ -92,7 +86,7 @@ test_that("search urls built correctly", {
             focus.point.lon = 151.215281,
             focus.point.lat = -33.856680
         )
-    ))
+    )
 
     ymca_oa <- build_search_url(
         text = "YMCA",
@@ -100,14 +94,14 @@ test_that("search urls built correctly", {
         api_key = "abc"
     )
 
-    expect_true(setequal(
+    expect_dict_equal(
         ymca_oa$query, list(
             api_key = "abc",
-            source = "oa",
+            sources = "oa",
             size = 10,
             text = "YMCA"
         )
-    ))
+    )
 
     ymca_2sources <- build_search_url(
         text = "YMCA",
@@ -115,14 +109,14 @@ test_that("search urls built correctly", {
         api_key = "abc"
     )
 
-    expect_true(setequal(
+    expect_dict_equal(
         ymca_2sources$query, list(
             api_key = "abc",
             sources = "osm,gn",
             size = 10,
             text = "YMCA"
         )
-    ))
+    )
 
     ymca_2layers <- build_search_url(
         text = "YMCA",
@@ -130,12 +124,12 @@ test_that("search urls built correctly", {
         api_key = "abc"
     )
 
-    expect_true(setequal(
+    expect_dict_equal(
         ymca_2layers$query, list(
             api_key = "abc",
-            sources = "venue,address",
+            layers = "venue,address",
             size = 10,
             text = "YMCA"
         )
-    ))
+    )
 })
