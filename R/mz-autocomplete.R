@@ -14,8 +14,10 @@ build_autocomplete_url <- function(
         boundary.rect <- unwrap(boundary.rect, "boundary.rect",
                                 c("min.lat", "min.lon", "max.lat", "max.lon"))
 
-    if (!is.null(focus.point))
+    if (!is.null(focus.point)) {
         focus.point <- as.mz_location(focus.point)
+        focus.point <- unwrap(focus.point, "focus.point", c("lat", "lon"))
+    }
 
     if (!is.null(sources)) sources <- string_array(sources)
     if (!is.null(layers)) layers <- string_array(layers)

@@ -15,8 +15,10 @@ build_search_url <- function(
     if (!is.null(boundary.circle))
         boundary.circle <- unwrap(boundary.circle, "boundary.circle",
                                   c("lat", "lon", "radius"))
-    if (!is.null(focus.point))
+    if (!is.null(focus.point)) {
         focus.point <- as.mz_location(focus.point)
+        focus.point <- unwrap(focus.point, "focus.point", c("lat", "lon"))
+    }
 
     if (!is.null(sources)) sources <- string_array(sources)
     if (!is.null(layers)) layers <- string_array(layers)

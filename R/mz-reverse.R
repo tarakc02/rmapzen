@@ -6,6 +6,7 @@ build_reverse_url <- function(
 ) {
     assert_that(is.null(boundary.country) || is.string(boundary.country))
     point <- as.mz_location(point)
+    point <- unwrap(point, "point", c("lat", "lon"))
 
     if (!is.null(sources)) sources <- string_array(sources)
     if (!is.null(layers)) layers <- string_array(layers)
