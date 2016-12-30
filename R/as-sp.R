@@ -15,6 +15,21 @@ as_sp.geo_list <- function(geo, ...) {
 }
 
 #' @export
+as_sp.mapzen_vector_tiles <- function(features, geometry_type, ...) {
+    json <- geojsonio::as.json(features)
+    rgdal::readOGR(
+        json,
+        layer = "OGRGeoJSON",
+        disambiguateFIDs = TRUE,
+        verbose = FALSE,
+        require_geomType = geometry_type,
+        stringsAsFactors = FALSE,
+        ...)
+}
+
+
+
+#' @export
 as.data.frame.mapzen_isochrone_list <- function(x, ...) {
 
     coords <- function(feature)

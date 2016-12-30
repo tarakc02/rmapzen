@@ -28,12 +28,15 @@ mz_bbox.mapzen_geo_list <- function(geo) {
         )
     }
 
-    tibble::data_frame(
+    res <- tibble::data_frame(
         min_lon = as.numeric(bbox[[1]]),
         min_lat = as.numeric(bbox[[2]]),
         max_lon = as.numeric(bbox[[3]]),
         max_lat = as.numeric(bbox[[4]])
     )
+
+    class(res) <- c("mz_bbox", class(res))
+    res
 }
 
 #' @rdname mz_bbox
@@ -54,10 +57,12 @@ mz_bbox.mapzen_isochrone_list <- function(geo) {
     bbox <- sp::bbox(as_sp(geo))
     if (!all.equal(dim(bbox), c(2L, 2L)) | !all.equal(rownames(bbox), c("x", "y")))
         return(default())
-    tibble::data_frame(
+    res <- tibble::data_frame(
         min_lon = bbox["x", "min"],
         min_lat = bbox["y", "min"],
         max_lon = bbox["x", "max"],
         max_lat = bbox["y", "max"]
     )
+    class(res) <- c("mz_bbox", class(res))
+    res
 }
