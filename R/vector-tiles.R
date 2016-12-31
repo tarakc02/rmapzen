@@ -6,7 +6,7 @@ vector_get <- function(url) {
 vector_process <- function(response) {
     httr::stop_for_status(response)
     header <- httr::headers(response)
-    txt <- httr::content(response, as = "text")
+    txt <- httr::content(response, as = "text", encoding = "UTF-8")
     lst <- jsonlite::fromJSON(txt, simplifyVector = FALSE)
     structure(
         lst,
@@ -15,9 +15,16 @@ vector_process <- function(response) {
 }
 
 mz_tile_coordinates <- function(x, y, z) {
-    assert_that(is.number(x), is.number(y), is.number(z))
+    assert_that(is.numeric(x), is.numeric(y), is.number(z))
+
+    df <- expand.grid(x = x, y = y, z = z)
+
+    res <- Map(function(.x, .y, .z) {
+        list(x = .x, y = .y, z = .z)
+    }, df$x, df$y, df$z)
+
     structure(
-        list(x = x, y = y, z = z),
+        res,
         class = c("mz_tile_coordinates", "list")
     )
 }
@@ -27,12 +34,6 @@ as.mz_tile_coordinates.mz_tile_coordinates <- function(obj, ...) obj
 as.mz_tile_coordinates.mz_bbox <- function(obj, height = 375, width = 500, ...) {
     # given a bounding box defined by bottom left and top right corners,
     # convert to vector tile coordinates (x, y, zoom)
-
-    center_bbox <- function(bbox) {
-        lon <- mean(c(bbox[["min_lon"]], bbox[["max_lon"]]))
-        lat <- mean(c(bbox[["min_lat"]], bbox[["max_lat"]]))
-        mz_location(lat = lat, lon = lon)
-    }
 
     # http://stackoverflow.com/a/13274361
     getBoundsZoomLevel <- function(bounds, mapDim) {
@@ -52,9 +53,8 @@ as.mz_tile_coordinates.mz_bbox <- function(obj, height = 375, width = 500, ...) 
         latFraction = (latRad(bounds[["max_lat"]]) - latRad(bounds[["min_lat"]])) / pi
 
         lngDiff = bounds[["max_lon"]] - bounds[["min_lon"]]
-        lngFraction <-
-            if (lngDiff < 0)
-                lngFraction <- lngDiff + 360
+        if (lngDiff < 0)
+            lngFraction <- lngDiff + 360
         else lngFraction <- lngDiff
         lngFraction <- lngFraction / 360
 
@@ -62,7 +62,7 @@ as.mz_tile_coordinates.mz_bbox <- function(obj, height = 375, width = 500, ...) 
         lngZoom = zoom(mapDim$width, WORLD_DIM$width, lngFraction)
 
         # zoom goes from 0-19, instead of 1-20
-        pmin(latZoom, lngZoom, ZOOM_MAX) - 1
+        pmin(latZoom, lngZoom, ZOOM_MAX)
     }
 
     # http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames#R
@@ -77,24 +77,59 @@ as.mz_tile_coordinates.mz_bbox <- function(obj, height = 375, width = 500, ...) 
     }
 
     zoom <- getBoundsZoomLevel(obj, list(height = height, width = width))
-    center <- deg2num(center_bbox(obj), zoom)
-    mz_tile_coordinates(
-        center[1], center[2], zoom
-    )
 
+    # tile for bottom left corner:
+    ll <- deg2num(mz_location(
+        lat = obj[["min_lat"]],
+        lon = obj[["min_lon"]]
+    ), zoom = zoom)
+
+    # for top right:
+    ur <- deg2num(mz_location(
+        lat = obj[["max_lat"]],
+        lon = obj[["max_lon"]]
+    ), zoom = zoom)
+
+    xs <- unique(c(ll[1], ur[1]))
+    ys <- unique(c(ll[2], ur[2]))
+
+    mz_tile_coordinates(x = xs, y = ys, z = zoom)
 }
 
-mz_vector_tiles <- function(tile_coordinates, layers = "all") {
+mz_vector_tiles <- function(tile_coordinates) {
     tile_coordinates <- as.mz_tile_coordinates(tile_coordinates)
-    url <- vector_url(
-        x = tile_coordinates$x,
-        y = tile_coordinates$y,
-        z = tile_coordinates$z,
-        layers = layers,
-        format = "json"
-    )
-    vector_get(url)
 
+    get_tile <- function(tile_coordinates) {
+        url <- vector_url(
+            x = tile_coordinates$x,
+            y = tile_coordinates$y,
+            z = tile_coordinates$z,
+            layers = "all",
+            format = "json"
+        )
+        vector_get(url)
+    }
+
+    all_tiles <- lapply(tile_coordinates, get_tile)
+    Reduce(stitch, all_tiles)
+}
+
+# stitches together two vector tiles
+# it's on the caller to make sure they are actually adjacent
+stitch <- function(tile1, tile2) {
+    layers <- unique(c(names(tile1), names(tile2)))
+    res <- lapply(layers, function(layer) {
+        features1 <- tile1[[layer]]
+        features2 <- tile2[[layer]]
+        stopifnot(features1$type == features2$type)
+        all_features <- c(features1$features, features2$features)
+        structure(
+            list(type = features1$type,
+                 features = all_features),
+            class = c("mapzen_vector_tiles", "list"))
+    })
+    names(res) <- layers
+    res
 }
 
 vector_GET <- ratelimitr::limit_rate(

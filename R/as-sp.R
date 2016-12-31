@@ -15,7 +15,39 @@ as_sp.geo_list <- function(geo, ...) {
 }
 
 #' @export
-as_sp.mapzen_vector_tiles <- function(features, geometry_type, ...) {
+as_sp.mapzen_vector_tiles <- function(features, geometry_type = NULL, ...) {
+    geom_to_wkb <- c(
+        point = "wkbPoint",
+        line = "wkbLineString",
+        polygon = "wkbPolygon"
+    )
+
+    json_to_geom <- c(
+        LineString = "line",
+        MultiLineString = "line",
+        Polygon = "polygon",
+        MultiPolygon = "polygon",
+        Point = "point"
+    )
+
+    if (is.null(geometry_type)) {
+        geometries <- vapply(
+            features$features, function(feature) json_to_geom[[feature$geometry$type]],
+            FUN.VALUE = character(1)
+        )
+
+        if (length(unique(geometries)) == 1L) {
+            geometry_type <- unique(geometries)
+        } else {
+            smry <- table(geometries)
+            msg <- paste(names(smry), ": ", smry, sep = "", collapse = "\n")
+            stop("No geometry_type entered. Pick one of:\n", msg)
+        }
+    }
+
+    assert_that(is.string(geometry_type), geometry_type %in% names(geom_to_wkb))
+    geometry_type <- geom_to_wkb[[geometry_type]]
+
     json <- geojsonio::as.json(features)
     rgdal::readOGR(
         json,
