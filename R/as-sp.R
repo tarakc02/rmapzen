@@ -15,7 +15,7 @@ as_sp.geo_list <- function(geo, ...) {
 }
 
 #' @export
-as_sp.mapzen_vector_tiles <- function(features, geometry_type = NULL, ...) {
+as_sp.mapzen_vector_layer <- function(features, geometry_type = NULL, ...) {
     geom_to_wkb <- c(
         point = "wkbPoint",
         line = "wkbLineString",

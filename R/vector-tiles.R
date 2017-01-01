@@ -111,7 +111,10 @@ mz_vector_tiles <- function(tile_coordinates) {
     }
 
     all_tiles <- lapply(tile_coordinates, get_tile)
-    Reduce(stitch, all_tiles)
+    structure(
+        Reduce(stitch, all_tiles),
+        class = c("mapzen_vector_tiles", "list")
+    )
 }
 
 # stitches together two vector tiles
@@ -121,12 +124,18 @@ stitch <- function(tile1, tile2) {
     res <- lapply(layers, function(layer) {
         features1 <- tile1[[layer]]
         features2 <- tile2[[layer]]
-        stopifnot(features1$type == features2$type)
+        if (is.null(features1)) tp <- features2$type
+        else if (is.null(features2)) tp <- features1$type
+        else {
+            stopifnot(features1$type == features2$type)
+            tp <- features1$type
+        }
+
         all_features <- c(features1$features, features2$features)
         structure(
-            list(type = features1$type,
+            list(type = tp,
                  features = all_features),
-            class = c("mapzen_vector_tiles", "list"))
+            class = c("mapzen_vector_layer", "list"))
     })
     names(res) <- layers
     res
