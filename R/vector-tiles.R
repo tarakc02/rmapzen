@@ -6,6 +6,7 @@ vector_get <- function(url) {
 vector_process <- function(response) {
     httr::stop_for_status(response)
     header <- httr::headers(response)
+    mz_update_usage(header, "tile")
     txt <- httr::content(response, as = "text", encoding = "UTF-8")
     lst <- jsonlite::fromJSON(txt, simplifyVector = FALSE)
     structure(

@@ -11,6 +11,12 @@ usage_recorder <- function() {
         remaining_second = NULL
     )
 
+    tile_usage <- list(
+        last_updated = NULL,
+        remaining_day = NULL,
+        remaining_second = NULL
+    )
+
     update_search <- function(header) {
         if (!is.null(header$`x-cache`) && header$`x-cache` == "MISS") {
             search_usage$last_updated <<- header$date
@@ -25,6 +31,15 @@ usage_recorder <- function() {
         matrix_usage$remaining_second <<- header$`x-apiaxleproxy-qps-left`
     }
 
+    update_tile <- function(header) {
+        if (!is.null(header$`x-apiaxleproxy-qpd-left`) &&
+            !is.null(header$`x-apiaxleproxy-qps-left`)) {
+            tile_usage$last_updated <<- header$date
+            tile_usage$remaining_day <<- header$`x-apiaxleproxy-qpd-left`
+            tile_usage$remaining_second <<- header$`x-apiaxleproxy-qps-left`
+        }
+    }
+
     query <- function() {
         if (!is.null(search_usage$last_updated)) {
             cat("for the search endpoint:\n",
@@ -33,6 +48,7 @@ usage_recorder <- function() {
                 "  remaining queries this second: ", search_usage$remaining_second, "\n",
                 sep = "")
         } else cat("No data for the search endpoint\n")
+
         if (!is.null(matrix_usage$last_updated)) {
             cat("for the matrix endpoint:\n",
                 "  updated on: ", matrix_usage$last_updated, "\n",
@@ -40,6 +56,14 @@ usage_recorder <- function() {
                 "  remaining queries this second: ", matrix_usage$remaining_second, "\n",
                 sep = "")
         } else cat("No data for the matrix endpoint\n")
+
+        if (!is.null(tile_usage$last_updated)) {
+            cat("for the tile (vector tiles) endpoint:\n",
+                "  updated on: ", tile_usage$last_updated, "\n",
+                "  remaining queries today: ", tile_usage$remaining_day, "\n",
+                "  remaining queries this second: ", tile_usage$remaining_second, "\n",
+                sep = "")
+        } else cat("No data for the tile (vector tiles) endpoint\n")
 
         invisible(
             list(search = search_usage, matrix = matrix_usage)
@@ -51,6 +75,7 @@ usage_recorder <- function() {
             r,
             "update_search" = function(hdr) update_search(hdr),
             "update_matrix" = function(hdr) update_matrix(hdr),
+            "update_tile" = function(hdr) update_tile(hdr),
             "view" = function() query()
         )
 }
@@ -75,6 +100,7 @@ mz_update_usage <- function(header, type) {
         type,
         search = usage_statistics("update_search")(header),
         matrix = usage_statistics("update_matrix")(header),
+        tile = usage_statistics("update_tile")(header),
         stop("Unable to update usage statistics for ", type)
     )
 }
