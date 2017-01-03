@@ -10,9 +10,12 @@ as_sp(geo, ...)
 \item{geo}{The object to be converted}
 
 \item{...}{not currently used}
+
+\item{geometry_type}{"point", "line", or "polygon" -- can be left NULL and only
+needs to be specified when an object contains muliple geometry types.}
 }
 \description{
-Coerces responses to SpatialPoints (for search responses) or SpatialLines
-(for isochrone responses) data frames.
+Coerces responses to SpatialPoints, SpatialLines, or SpatialPolygons data
+frames.
 }
 

@@ -1,9 +1,11 @@
 #' Coerce a Mapzen response to an Spatial*DataFrame
 #'
-#' Coerces responses to SpatialPoints (for search responses) or SpatialLines
-#' (for isochrone responses) data frames.
+#' Coerces responses to SpatialPoints, SpatialLines, or SpatialPolygons data
+#' frames.
 #'
 #' @param geo The object to be converted
+#' @param geometry_type "point", "line", or "polygon" -- can be left NULL and only
+#' needs to be specified when an object contains muliple geometry types.
 #' @param ... not currently used
 #'
 #' @export
@@ -57,35 +59,4 @@ as_sp.mapzen_vector_layer <- function(features, geometry_type = NULL, ...) {
         require_geomType = geometry_type,
         stringsAsFactors = FALSE,
         ...)
-}
-
-
-
-#' @export
-as.data.frame.mapzen_isochrone_list <- function(x, ...) {
-
-    coords <- function(feature)
-        dplyr::bind_rows(
-            purrr::map2(
-                feature$geometry$coordinates,
-                seq_along(feature$geometry$coordinates),
-                ~tibble::data_frame(lon = .x[[1]], lat = .x[[2]],
-                                    order = .y)
-            )
-        )
-
-    res <- tibble::data_frame(
-        contours = purrr::map(
-            x$features,
-            ~tibble::as_data_frame(
-                .$properties
-            )
-        ),
-        coordinates = purrr::map(
-            x$features,
-            coords
-        )
-    )
-    res <- tidyr::unnest(res, contours)
-    tidyr::unnest(res)
 }
