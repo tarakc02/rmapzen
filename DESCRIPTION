@@ -18,7 +18,8 @@ Imports:
     geojsonio,
     tidyr,
     purrr,
-    sp
+    sp,
+    rgdal
 RoxygenNote: 5.0.1
 Suggests: testthat,
     covr

@@ -13,8 +13,8 @@ as.mz_tile_coordinates(obj, ...)
 
 \method{as.mz_tile_coordinates}{mz_tile_coordinates}(obj, ...)
 
-\method{as.mz_tile_coordinates}{mz_bbox}(obj, height = 375, width = 500,
-  ...)
+\method{as.mz_tile_coordinates}{mz_bbox}(obj, ..., height = 375,
+  width = 500)
 }
 \arguments{
 \item{x}{integer vector of x-coordinates}
@@ -22,6 +22,10 @@ as.mz_tile_coordinates(obj, ...)
 \item{y}{integer vector of y-coordinates}
 
 \item{z}{integer between 0 and 19 specifying the zoom level}
+
+\item{obj}{An object that can be converted to tile coordinates}
+
+\item{...}{Other arguments passed on to methods}
 
 \item{height}{Height in pixels}
 

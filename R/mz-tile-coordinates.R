@@ -3,6 +3,8 @@
 #' @param x integer vector of x-coordinates
 #' @param y integer vector of y-coordinates
 #' @param z integer between 0 and 19 specifying the zoom level
+#' @param obj An object that can be converted to tile coordinates
+#' @param ... Other arguments passed on to methods
 #' @param height Height in pixels
 #' @param width Width in pixels
 #'
@@ -35,7 +37,7 @@ as.mz_tile_coordinates.mz_tile_coordinates <- function(obj, ...) obj
 
 #' @rdname mz_tile_coordinates
 #' @export
-as.mz_tile_coordinates.mz_bbox <- function(obj, height = 375, width = 500, ...) {
+as.mz_tile_coordinates.mz_bbox <- function(obj, ..., height = 375, width = 500) {
     # given a bounding box defined by bottom left and top right corners,
     # convert to vector tile coordinates (x, y, zoom)
 

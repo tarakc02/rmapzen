@@ -2,9 +2,15 @@
 % Please edit documentation in R/as-sp.R
 \name{as_sp}
 \alias{as_sp}
+\alias{as_sp.geo_list}
+\alias{as_sp.mapzen_vector_layer}
 \title{Coerce a Mapzen response to an Spatial*DataFrame}
 \usage{
 as_sp(geo, ...)
+
+\method{as_sp}{geo_list}(geo, ...)
+
+\method{as_sp}{mapzen_vector_layer}(geo, ..., geometry_type = NULL)
 }
 \arguments{
 \item{geo}{The object to be converted}

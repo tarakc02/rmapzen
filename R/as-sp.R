@@ -8,16 +8,20 @@
 #' needs to be specified when an object contains muliple geometry types.
 #' @param ... not currently used
 #'
+#' @name as_sp
 #' @export
 as_sp <- function(geo, ...) UseMethod("as_sp")
 
+#' @rdname as_sp
 #' @export
 as_sp.geo_list <- function(geo, ...) {
     geojsonio::geojson_sp(geo, stringsAsFactors = FALSE)
 }
 
+#' @rdname as_sp
 #' @export
-as_sp.mapzen_vector_layer <- function(features, geometry_type = NULL, ...) {
+as_sp.mapzen_vector_layer <- function(geo, ..., geometry_type = NULL) {
+    features <- geo
     geom_to_wkb <- c(
         point = "wkbPoint",
         line = "wkbLineString",
