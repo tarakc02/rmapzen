@@ -13,7 +13,7 @@ output:
 
 ## Introduction
 
-`rmapzen` is a client for the Mapzen API. For more information, see [https://mapzen.com/documentation/](https://mapzen.com/documentation/). So far, all of the services in [Mapzen search](https://mapzen.com/documentation/search/) have been implemented, as has the [isochrone service](https://mapzen.com/documentation/mobility/isochrone/api-reference/). The project is [available on github](https://github.com/tarakc02/rmapzen). 
+`rmapzen` is a client for the Mapzen API. For more information, see [https://mapzen.com/documentation/](https://mapzen.com/documentation/). The project is [available on github](https://github.com/tarakc02/rmapzen). 
 
 ## Search
 
@@ -68,9 +68,47 @@ leaflet(as_sp(isos)) %>%
               title = "Drive times from <br/> UC Berkeley Campus")
 ```
 
+## Vector tile service
+
+`rmapzen` provides an interface to Mapzen's [vector tiles service](https://mapzen.com/documentation/vector-tiles/). Tile requests can be specified using the x, y, zoom coordinates of the tile service, as well as with a lat/long bounding box. For instance, continuing the previous example:
+
+```{r vector-tile-example, cache = TRUE}
+# mz_bbox is a generic that returns the bounding box of an object
+ucb_tiles <- mz_vector_tiles(mz_bbox(isos))
+
+# vector tiles return all layers (roads, water, buildings, etc) in a list
+roads <- as_sp(ucb_tiles$roads)
+roads <- subset(roads, kind != "ferry")
+
+# some layers contain multiple geometry types (points, lines, polygons)
+# but Spatial*DataFrames can only contain a single type
+water <- as_sp(ucb_tiles$water, geometry_type = "polygon")
+water <- subset(water, kind == "ocean")
+
+# make a quick static map that includes roads and oceans as reference
+library(ggplot2)
+water_df <- fortify(water)
+roads_df <- fortify(roads) 
+
+ggplot(roads_df, aes(x = long, y = lat, group = group)) +
+    coord_quickmap() +
+    theme_void() +
+
+    # add ocean
+    geom_polygon(data = water_df, colour = NA, fill = "lightblue") +
+    
+    # add the road network
+    geom_path(size = .2, colour = "gray30") +
+    
+    # add the isochrones
+    geom_polygon(data = as.data.frame(isos),
+                 aes(x = lon, y = lat, group = contour),
+                 colour = NA, fill = "black", alpha = .3)
+```
+
 ## Tidiness/Interoperability
 
-As the above example illustrates, any object returned by a Mapzen service can be converted to the appropriate Spatial* object using the generic function `as_sp`, for easy interoperability with other packages. Specifically, search results are converted to SpatialPointsDataFrames, while isochrone results are converted to SpatialLinesDataFrames. You can also convert objects directly to data frames, allowing for use within tidy pipelines:
+As some of the above examples illustrate, any object returned by a Mapzen service can be converted to the appropriate Spatial* object using the generic function `as_sp`, for easy interoperability with other packages. You can also convert most objects directly to data frames, allowing for use within tidy pipelines:
 
 ```{r ex-tidy, warning = FALSE, message = FALSE}
 library(dplyr)

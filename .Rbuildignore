@@ -2,9 +2,10 @@
 ^\.Rproj\.user$
 ^README\.Rmd$
 ^README-.*\.png$
-fig/*
+fig/.*
 ^\.travis\.yml$
 ^codecov\.yml$
 .*_cache/.*
 index\.Rmd
 index\.html
+index_files/.*

@@ -8,4 +8,4 @@ Introduction
 
 `rmapzen` is a client for the Mapzen API. For an introduction, detailed examples, and installation instructions, see: <https://tarakc02.github.io/rmapzen/>.
 
-For more information about the Mapzen API, see <https://mapzen.com/documentation/>. So far, all of the services in [Mapzen search](https://mapzen.com/documentation/search/) have been implemented, as has the [isochrone service](https://mapzen.com/documentation/mobility/isochrone/api-reference/).
+For more information about the Mapzen API, see <https://mapzen.com/documentation/>.
