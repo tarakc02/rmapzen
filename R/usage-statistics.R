@@ -41,32 +41,11 @@ usage_recorder <- function() {
     }
 
     query <- function() {
-        if (!is.null(search_usage$last_updated)) {
-            cat("for the search endpoint:\n",
-                "  updated on: ", search_usage$last_updated, "\n",
-                "  remaining queries today: ", search_usage$remaining_day, "\n",
-                "  remaining queries this second: ", search_usage$remaining_second, "\n",
-                sep = "")
-        } else cat("No data for the search endpoint\n")
-
-        if (!is.null(matrix_usage$last_updated)) {
-            cat("for the matrix endpoint:\n",
-                "  updated on: ", matrix_usage$last_updated, "\n",
-                "  remaining queries today: ", matrix_usage$remaining_day, "\n",
-                "  remaining queries this second: ", matrix_usage$remaining_second, "\n",
-                sep = "")
-        } else cat("No data for the matrix endpoint\n")
-
-        if (!is.null(tile_usage$last_updated)) {
-            cat("for the tile (vector tiles) endpoint:\n",
-                "  updated on: ", tile_usage$last_updated, "\n",
-                "  remaining queries today: ", tile_usage$remaining_day, "\n",
-                "  remaining queries this second: ", tile_usage$remaining_second, "\n",
-                sep = "")
-        } else cat("No data for the tile (vector tiles) endpoint\n")
-
-        invisible(
-            list(search = search_usage, matrix = matrix_usage)
+        structure(
+            list(search = search_usage,
+                 matrix = matrix_usage,
+                 tile = tile_usage),
+            class = c("mz_usage_statistics", "list")
         )
     }
 
@@ -78,6 +57,36 @@ usage_recorder <- function() {
             "update_tile" = function(hdr) update_tile(hdr),
             "view" = function() query()
         )
+}
+
+print.mz_usage_statistics <- function(x, ...) {
+    search_usage <- x$search
+    matrix_usage <- x$matrix
+    tile_usage <- x$tile
+    if (!is.null(search_usage$last_updated)) {
+        cat("for the search endpoint:\n",
+            "  updated on: ", search_usage$last_updated, "\n",
+            "  remaining queries today: ", search_usage$remaining_day, "\n",
+            "  remaining queries this second: ", search_usage$remaining_second, "\n",
+            sep = "")
+    } else cat("No data for the search endpoint\n")
+
+    if (!is.null(matrix_usage$last_updated)) {
+        cat("for the matrix endpoint:\n",
+            "  updated on: ", matrix_usage$last_updated, "\n",
+            "  remaining queries today: ", matrix_usage$remaining_day, "\n",
+            "  remaining queries this second: ", matrix_usage$remaining_second, "\n",
+            sep = "")
+    } else cat("No data for the matrix endpoint\n")
+
+    if (!is.null(tile_usage$last_updated)) {
+        cat("for the tile (vector tiles) endpoint:\n",
+            "  updated on: ", tile_usage$last_updated, "\n",
+            "  remaining queries today: ", tile_usage$remaining_day, "\n",
+            "  remaining queries this second: ", tile_usage$remaining_second, "\n",
+            sep = "")
+    } else cat("No data for the tile (vector tiles) endpoint\n")
+
 }
 
 usage_statistics <- usage_recorder()
