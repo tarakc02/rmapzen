@@ -19,7 +19,9 @@ Imports:
     tidyr,
     purrr,
     sp,
-    rgdal
+    rgdal,
+    digest,
+    maptools
 RoxygenNote: 5.0.1
 Suggests: testthat,
     covr

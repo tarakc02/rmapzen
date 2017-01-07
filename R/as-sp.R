@@ -54,8 +54,14 @@ as_sp.mapzen_vector_layer <- function(geo, ..., geometry_type = NULL) {
     assert_that(is.string(geometry_type), geometry_type %in% names(geom_to_wkb))
     geometry_type <- geom_to_wkb[[geometry_type]]
 
+    features$features <- lapply(features$features, function(feature) {
+        feature$properties$id <- NULL
+        feature$properties$id <- digest::digest(feature$properties)
+        return(feature)
+    })
+
     json <- geojsonio::as.json(features)
-    rgdal::readOGR(
+    res <- rgdal::readOGR(
         json,
         layer = "OGRGeoJSON",
         disambiguateFIDs = TRUE,
@@ -63,4 +69,7 @@ as_sp.mapzen_vector_layer <- function(geo, ..., geometry_type = NULL) {
         require_geomType = geometry_type,
         stringsAsFactors = FALSE,
         ...)
+    if (geometry_type == "wkbPolygon")
+        return(maptools::unionSpatialPolygons(res, IDs = res@data$id))
+    else return(res)
 }
