@@ -66,3 +66,80 @@ mz_bbox.mapzen_isochrone_list <- function(geo) {
     class(res) <- c("mz_bbox", class(res))
     res
 }
+
+mz_bbox.mapzen_vector_tiles <- function(geo) {
+    feature_type <- function(feature) {
+        known_types <- c(
+            "Point", "MultiPoint",
+            "LineString", "MultiLineString",
+            "Polygon", "MultiPolygon"
+        )
+        res <- feature$geometry$type
+        if (is.null(res))
+            stop("Found a feature without a geometry type")
+        if (!res %in% known_types)
+            stop("Feature type not recognized: ", feature_type, "\n",
+                 "expected one of: ", paste(known_types, collapse = ", "))
+        res
+    }
+
+    position <- function(coords) {
+        data.frame(lon = as.numeric(coords[[1]]),
+                   lat = as.numeric(coords[[2]]))
+    }
+
+    positions <- function(coords) {
+        res <- lapply(coords, position)
+        do.call("rbind", res)
+    }
+
+    positions_array <- function(coords) {
+        res <- lapply(coords, positions)
+        do.call("rbind", res)
+    }
+
+    point_coords <- function(feature)
+        position(feature$geometry$coordinates)
+
+    multipoint_coords <- function(feature) {
+        positions(feature$geometry$coordinates)
+    }
+
+    line_coords <- function(feature) multipoint_coords(feature)
+
+    multiline_coords <- function(feature) {
+        positions_array(feature$geometry$coordinates)
+    }
+
+    polygon_coords <- function(feature) multiline_coords(feature)
+    multipolygon_coords <- function(feature) {
+        res <- lapply(feature$geometry$coordinates, positions_array)
+        do.call("rbind", res)
+    }
+
+    coords <- function(feature)
+        switch(feature_type(feature),
+               Point = point_coords(feature),
+               MultiPoint = multipoint_coords(feature),
+               LineString = line_coords(feature),
+               MultiLineString = multiline_coords(feature),
+               Polygon = polygon_coords(feature),
+               MultiPolygon = multipolygon_coords(feature),
+               default = stop("Unrecognized feature"))
+
+    layer_coords <- function(layer) {
+        res <- lapply(layer$features, coords)
+        do.call("rbind", res)
+    }
+
+    res <- lapply(geo, layer_coords)
+    res <- do.call("rbind", res)
+    structure(
+        data.frame(
+            min_lon = min(res$lon),
+            min_lat = min(res$lat),
+            max_lon = max(res$lon),
+            max_lat = max(res$lat)
+        ), class = c("mz_bbox", "tbl_df", "tbl", "data.frame")
+    )
+}
