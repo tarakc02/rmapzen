@@ -2,11 +2,12 @@
 title: "rmapzen: a Mapzen API client for R"
 output: 
     html_document:
-        toc: true
-        toc_float:
-            collapsed: false
-            smooth_scroll: true
-        theme: flatly
+      self_contained: no
+      theme: flatly
+      toc: yes
+      toc_float:
+        collapsed: no
+        smooth_scroll: yes
 ---
 [![Travis-CI Build Status](https://travis-ci.org/tarakc02/rmapzen.svg?branch=master)](https://travis-ci.org/tarakc02/rmapzen)
 [![Coverage Status](https://img.shields.io/codecov/c/github/tarakc02/rmapzen/master.svg)](https://codecov.io/github/tarakc02/rmapzen?branch=master)
@@ -122,10 +123,11 @@ Currently, the following methods are available to pull out commonly used
 pieces of a response:
 
 * `mz_coordinates` (only available for search results)
-* `mz_bbox` (for either search or isochrone results)
+* `mz_bbox`
 
-```{r ex-accessors}
+```{r ex-accessors, cache = TRUE}
 mz_coordinates(hard_rock)
+mz_bbox(ucb_tiles)
 ```
 
 ## A more detailed example
@@ -175,6 +177,8 @@ Mapzen's per-second [published rate limits](https://mapzen.com/documentation/ove
 ```{r mz-check-usage, cache = TRUE}
 mz_check_usage()
 ```
+
+These statistics are taken from the headers in the various responses from Mapzen and stored only for the length of the R session. If an endpoint has "No data," that means you have yet to use that endpoint during the current R  session, or that all uses of the endpoint have hit Mapzen's cache servers and so have not been counted against usage limits.
 
 ## Convenience features
 
