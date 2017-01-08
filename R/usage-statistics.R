@@ -59,6 +59,7 @@ usage_recorder <- function() {
         )
 }
 
+#' @export
 print.mz_usage_statistics <- function(x, ...) {
     search_usage <- x$search
     matrix_usage <- x$matrix
