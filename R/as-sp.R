@@ -69,7 +69,16 @@ as_sp.mapzen_vector_layer <- function(geo, ..., geometry_type = NULL) {
         require_geomType = geometry_type,
         stringsAsFactors = FALSE,
         ...)
-    if (geometry_type == "wkbPolygon")
-        return(maptools::unionSpatialPolygons(res, IDs = res@data$id))
+    if (geometry_type == "wkbPolygon"){
+        polygons <- maptools::unionSpatialPolygons(res, IDs = res@data$id)
+
+        return(
+            sp::SpatialPolygonsDataFrame(
+                polygons,
+                data = base::unique(res@data),
+                match.ID = "id"
+            )
+        )
+    }
     else return(res)
 }
