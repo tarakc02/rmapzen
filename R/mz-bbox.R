@@ -67,6 +67,7 @@ mz_bbox.mapzen_isochrone_list <- function(geo) {
     res
 }
 
+#' @export
 mz_bbox.mapzen_vector_tiles <- function(geo) {
     feature_type <- function(feature) {
         known_types <- c(
