@@ -7,6 +7,7 @@ Maintainer: Tarak Shah <tarak_shah@berkeley.edu>
 Description: Provides an interface to the Mapzen API.
 License: MIT + file LICENSE
 LazyData: TRUE
+Depends: R (>= 2.10)
 Imports:
     tibble,
     httr,
