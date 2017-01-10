@@ -19,12 +19,13 @@ vector_process <- function(response) {
 #'
 #' @param tile_coordinates an \code{\link{mz_tile_coordinates}} object, or something
 #' that can be coerced to one (including the output of \code{\link{mz_bbox}})
+#' @param ... Arguments passed on to \code{\link{as.mz_tile_coordinates}}
 #'
 #' Multiple tiles will be stitched together and returned as one object.
 #'
 #' @export
-mz_vector_tiles <- function(tile_coordinates) {
-    tile_coordinates <- as.mz_tile_coordinates(tile_coordinates)
+mz_vector_tiles <- function(tile_coordinates, ...) {
+    tile_coordinates <- as.mz_tile_coordinates(tile_coordinates, ...)
 
     get_tile <- function(tile_coordinates) {
         url <- vector_url(
