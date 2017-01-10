@@ -23,24 +23,25 @@ test_that("tile coordinates are generated for contiguous rectangular range", {
 })
 
 test_that("bounding box is correctly converted to tile coordinates", {
-    rect <- structure(
-        data.frame(
-            min_lon = -122.3163,
-            min_lat = 37.86393,
-            max_lon = -122.3093,
-            max_lat = 37.86912
-        ), class = c("mz_bbox", "tbl_df", "tbl", "data.frame")
+    rect <- mz_rect(
+        min_lon = -122.3163,
+        min_lat = 37.86393,
+        max_lon = -122.3093,
+        max_lat = 37.86912
     )
+
     marinalon <- -122.3151
     marinalat <- 37.86613
     tile_coords <- as.mz_tile_coordinates(rect)
     z <- tile_coords[[1]]$z
 
-    # convert the lat/lon/z to tile coordinate:
-    marinalat_rad <- marinalat * pi / 180
-    n <- 2 ^ z
-    x <- floor((marinalon + 180) / 360 * n)
-    y <- floor((1 - log(tan(marinalat_rad) + (1 / cos(marinalat_rad))) / pi) / 2 * n)
+    # at zoom16, this tile should be there:
+    # based on http://tools.geofabrik.de/calc/#type=geofabrik_standard&bbox=-122.321657,37.862023,-122.305585,37.870408&grid=1
+    x <- 10501
+    y <- 25310
+
+    x <- as.integer(x * 2^(z - 16))
+    y <- as.integer(y * 2^(z - 16))
 
     # make sure the coord is in the set:
     xs <- vapply(tile_coords, function(.) .[["x"]], numeric(1))

@@ -1,11 +1,15 @@
 #' Get the bounding box
 #'
 #' Returns the bottom left and top right corners of the box that contains a
-#' mapzen object (mz_geo_list or mz_isochrone_list). The returned value can be
+#' mapzen object (mz_geo_list or mz_isochrone_list). In the case of \code{mz_rect},
+#' creates such a box from the specified coordinates. The returned value can be
 #' used directly as the \code{boundary.rect} parameter for
-#' \code{\link{search}} functions.
+#' \code{\link{search}} functions, as well as converted to x, y, zoom coordinates
+#' to use with \code{\link{mz_vector_tiles}}
 #'
 #' @param geo A mapzen geo list or isochrone list
+#' @param min_lon,min_lat,max_lon,max_lat The bottom left and top right corners,
+#' expressed as latitude and longitude, of a rectangle.
 #'
 #' @return A tibble
 #' @name mz_bbox
@@ -141,6 +145,23 @@ mz_bbox.mapzen_vector_tiles <- function(geo) {
             min_lat = min(res$lat),
             max_lon = max(res$lon),
             max_lat = max(res$lat)
+        ), class = c("mz_bbox", "tbl_df", "tbl", "data.frame")
+    )
+}
+
+#' @rdname mz_bbox
+#' @export
+mz_rect <- function(min_lon, min_lat, max_lon, max_lat) {
+    assert_that(is.number(min_lon),
+                is.number(min_lat),
+                is.number(max_lon),
+                is.number(max_lat))
+    structure(
+        data.frame(
+            min_lon = min_lon,
+            min_lat = min_lat,
+            max_lon = max_lon,
+            max_lat = max_lat
         ), class = c("mz_bbox", "tbl_df", "tbl", "data.frame")
     )
 }

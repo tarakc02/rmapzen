@@ -4,6 +4,7 @@
 \alias{mz_bbox}
 \alias{mz_bbox.mapzen_geo_list}
 \alias{mz_bbox.mapzen_isochrone_list}
+\alias{mz_rect}
 \title{Get the bounding box}
 \usage{
 mz_bbox(geo)
@@ -11,17 +12,24 @@ mz_bbox(geo)
 \method{mz_bbox}{mapzen_geo_list}(geo)
 
 \method{mz_bbox}{mapzen_isochrone_list}(geo)
+
+mz_rect(min_lon, min_lat, max_lon, max_lat)
 }
 \arguments{
 \item{geo}{A mapzen geo list or isochrone list}
+
+\item{min_lon, min_lat, max_lon, max_lat}{The bottom left and top right corners,
+expressed as latitude and longitude, of a rectangle.}
 }
 \value{
 A tibble
 }
 \description{
 Returns the bottom left and top right corners of the box that contains a
-mapzen object (mz_geo_list or mz_isochrone_list). The returned value can be
+mapzen object (mz_geo_list or mz_isochrone_list). In the case of \code{mz_rect},
+creates such a box from the specified coordinates. The returned value can be
 used directly as the \code{boundary.rect} parameter for
-\code{\link{search}} functions.
+\code{\link{search}} functions, as well as converted to x, y, zoom coordinates
+to use with \code{\link{mz_vector_tiles}}
 }
 
