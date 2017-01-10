@@ -23,3 +23,14 @@
 #' @source Mapzen, OpenStreetMap contributors, Who's On First, Natural Earth,
 #' and openstreetmapdata.com
 "ca_tiles"
+
+#' Pedestrian isochrones from the Berkeley Marina for 10 and 15 minutes, as polygons
+#'
+#' Polygon Isochrone results (using \code{polygons = TRUE}) from Mapzen as of
+#' January 10, 2017. The location for the isochrones is the Berkeley Marina,
+#' lat 37.86613, lon -122.3151, and the contours are 10 and 15 minutes for a
+#' pedestrian costing model.
+#'
+#' @source Mapzen, OpenStreetMap, British Oceanographic Data Centre,
+#' NASA, USGS, and Transitland.
+"marina_walks_polygons"
