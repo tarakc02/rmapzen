@@ -1,11 +1,9 @@
-#' @import assertthat
-build_search_url <- function(
-    text, size = 10,
+search_query_parameters <- function(
+    size = 10,
     boundary.country = NULL, boundary.rect = NULL,
     boundary.circle = NULL, focus.point = NULL,
-    sources = NULL, layers = NULL, api_key = mz_key())
-{
-    assert_that(is.string(text))
+    sources = NULL, layers = NULL
+) {
     assert_that(is.count(size))
     assert_that(is.null(boundary.country) || is.string(boundary.country))
 
@@ -24,13 +22,36 @@ build_search_url <- function(
     if (!is.null(layers)) layers <- string_array(layers)
 
     query <- list()
-
     query <- c(
         query,
-        text = text, size = size,
+        size = size,
         boundary.country = boundary.country,
         boundary.rect, boundary.circle, focus.point,
-        sources = sources, layers = layers,
+        sources = sources, layers = layers
+    )
+    query[!is.null(query)]
+}
+
+#' @import assertthat
+build_search_url <- function(
+    text, size = 10,
+    boundary.country = NULL, boundary.rect = NULL,
+    boundary.circle = NULL, focus.point = NULL,
+    sources = NULL, layers = NULL, api_key = mz_key())
+{
+    assert_that(is.string(text))
+
+    query <- search_query_parameters(
+        size = size, boundary.country = boundary.country,
+        boundary.rect = boundary.rect,
+        boundary.circle = boundary.circle,
+        focus.point = focus.point,
+        sources = sources, layers = layers
+    )
+
+    query <- c(
+        text = text,
+        query,
         api_key = api_key
     )
     query <- query[!is.null(query)]
