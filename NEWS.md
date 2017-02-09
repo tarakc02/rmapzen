@@ -1,3 +1,6 @@
+* Added support for [structured geocoding](https://mapzen.com/documentation/search/structured-geocoding/)
+* Simple print methods for vector tiles and individual vector tile layers
+
 # rmapzen 0.3.0.9007
 * new function `mz_rect` for directly creating a bounding box
 * `mz_vector_tiles` gained a `...` argument to pass height/width/zoom specifications to `as.mz_tile_coordinates`.
