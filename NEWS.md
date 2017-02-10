@@ -1,3 +1,4 @@
+# rmapzen 0.3.1
 * Added support for [structured geocoding](https://mapzen.com/documentation/search/structured-geocoding/)
 * Simple print methods for vector tiles and individual vector tile layers
 
