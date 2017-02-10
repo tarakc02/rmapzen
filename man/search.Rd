@@ -25,7 +25,7 @@ See \code{\link{mz_countries}}}
 
 \item{boundary.rect}{4 corners that define a box to narrow the search. Can
 be the result of \code{\link{mz_bbox}}. Should have named elements with names
-"min_lon", "min_lat", "max_lon", "max_lat"}
+"min_lon", "min_lat", "max_lon", "max_lat" -- can be created using \code{\link{mz_rect}}.}
 
 \item{focus.point}{A point to "focus" the search. Can be created with
 \code{\link{mz_location}} or \code{\link{mz_geocode}}, otherwise should have
@@ -52,6 +52,13 @@ with names "lon", "lat", and "radius"}
 }
 \description{
 Functions to access the various endpoints from the Mapzen Search API.
-For more details, see \url{https://mapzen.com/documentation/search/}.
+For more details, see \url{https://mapzen.com/documentation/search/}. If your
+data is already split up by street, city, state, zip, etc., then you might
+find \code{\link{mz_structured_search}} to be more precise. All arguments
+besides \code{text} (\code{point} in the case of \code{mz_reverse_geocode}) are
+optional.
+}
+\seealso{
+\code{\link{mz_place}}, \code{\link{mz_structured_search}}
 }
 
