@@ -24,6 +24,7 @@ All of the services in [Mapzen search](https://mapzen.com/documentation/search/)
 * `mz_reverse_geocode`
 * `mz_autocomplete`
 * `mz_place`
+* `mz_structured_search` ([what's this?](https://mapzen.com/documentation/search/structured-geocoding/))
 
 For example, to search for Hard Rock Cafes in Sweden (see [Additional convenience features](#additional-convenience-features) below for more ways to get the correct ISO-3166 country code):
 
