@@ -9,7 +9,7 @@
 #' Furthermore, \code{postalcode} can not be used by itself.
 #'
 #' @param address Can be a numbered street address or just the name of the street
-#' @param neibhourhood Neighborhood name (eg "Notting Hill" in London)
+#' @param neighbourhood Neighborhood name (eg "Notting Hill" in London)
 #' @param borough eg "Manhattan"
 #' @param locality The city (eg "Oakland")
 #' @param county The county

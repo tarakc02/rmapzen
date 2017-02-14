@@ -11,6 +11,8 @@ mz_structured_search(address = NULL, neighbourhood = NULL, borough = NULL,
 \arguments{
 \item{address}{Can be a numbered street address or just the name of the street}
 
+\item{neighbourhood}{Neighborhood name (eg "Notting Hill" in London)}
+
 \item{borough}{eg "Manhattan"}
 
 \item{locality}{The city (eg "Oakland")}
@@ -32,8 +34,6 @@ the MAPZEN_KEY environment variable.}
 \item{...}{Any of the parameters, other than "text", that appear in
 \code{\link{mz_search}}, can appear here, for example \code{size},
 \code{boundary.country}, etc.}
-
-\item{neibhourhood}{Neighborhood name (eg "Notting Hill" in London)}
 }
 \description{
 \code{\link{mz_search}} allows you to search using an unstructured string of
