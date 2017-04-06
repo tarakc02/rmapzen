@@ -10,20 +10,10 @@
 #' and the confidence (between 0 and 1)
 #' @export
 mz_geocode <- function(location, api_key = mz_key()) {
-    result <- tryCatch(
-        mz_search(location, size = 10, api_key = api_key),
-        error = function(c) list(features = list())
-    )
+    result <- mz_search(location, size = 10, api_key = api_key)
 
     if (is.null(result$features) || length(result$features) <= 0L)
-        return(
-            tibble::data_frame(
-                geocode_address = location,
-                geocode_longitude = NA,
-                geocode_latitude = NA,
-                geocode_confidence = NA
-            )
-        )
+        stop("Tried to geocode ", location, " but there were no results")
     confidence <- as.numeric(result$features[[1]]$properties$confidence[[1]])
     longitude <- as.numeric(result$features[[1]]$geometry$coordinates[[1]])
     latitude <- as.numeric(result$features[[1]]$geometry$coordinates[[2]])
