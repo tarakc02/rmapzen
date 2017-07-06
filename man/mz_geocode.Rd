@@ -19,4 +19,3 @@ and the confidence (between 0 and 1)
 This is a convenience function that calls \code{\link{mz_search}} to retrieve
 latitude and longitude.
 }
-

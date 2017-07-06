@@ -37,4 +37,3 @@ largest contour.}
 \description{
 See \url{https://mapzen.com/documentation/mobility/isochrone/api-reference/}.
 }
-

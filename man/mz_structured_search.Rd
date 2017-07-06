@@ -47,4 +47,3 @@ Furthermore, \code{postalcode} can not be used by itself.
 \seealso{
 \code{\link{mz_search}}
 }
-

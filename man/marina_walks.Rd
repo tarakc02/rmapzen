@@ -17,4 +17,3 @@ Isochrone results from Mapzen as of January 8, 2017. The location for the
 isochrones is the Berkeley Marina, lat 37.86613, lon -122.3151
 }
 \keyword{datasets}
-

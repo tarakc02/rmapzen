@@ -1,3 +1,16 @@
+recalculate_ids <- function(features) {
+    features$features <- lapply(features$features, function(feature) {
+        feature$properties$id <- NULL
+        feature$properties$id <- digest::digest(feature$properties)
+        return(feature)
+    })
+    features
+}
+
+as_json <- function(geo) {
+    geojsonio::as.json(geo)
+}
+
 #' Coerce a Mapzen response to an Spatial*DataFrame
 #'
 #' Coerces responses to SpatialPoints, SpatialLines, or SpatialPolygons data
@@ -54,13 +67,8 @@ as_sp.mapzen_vector_layer <- function(geo, ..., geometry_type = NULL) {
     assert_that(is.string(geometry_type), geometry_type %in% names(geom_to_wkb))
     geometry_type <- geom_to_wkb[[geometry_type]]
 
-    features$features <- lapply(features$features, function(feature) {
-        feature$properties$id <- NULL
-        feature$properties$id <- digest::digest(feature$properties)
-        return(feature)
-    })
-
-    json <- geojsonio::as.json(features)
+    features <- recalculate_ids(features)
+    json <- as_json(features)
     res <- rgdal::readOGR(
         json,
         layer = "OGRGeoJSON",

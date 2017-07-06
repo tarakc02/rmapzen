@@ -16,4 +16,3 @@ from the Colorbrewer 4-class oranges palette.}
 Contours are given as inputs to \code{\link{mz_isochrone}}. This function
 makes it convenient to construct them.
 }
-

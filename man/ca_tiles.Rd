@@ -16,4 +16,3 @@ ca_tiles
 Vector tiles the contain California
 }
 \keyword{datasets}
-

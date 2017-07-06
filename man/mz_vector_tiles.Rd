@@ -17,4 +17,3 @@ Multiple tiles will be stitched together and returned as one object.}
 \description{
 Request vector tile data
 }
-

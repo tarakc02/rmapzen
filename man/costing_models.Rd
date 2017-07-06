@@ -45,4 +45,3 @@ mz_costing$multimodal(
 )
 }
 \keyword{datasets}
-

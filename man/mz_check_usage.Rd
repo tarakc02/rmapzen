@@ -16,4 +16,3 @@ This function is populated from the headers of responses to various API requests
 If no queries have been made, or if the only queries so far have hit cache servers,
 then no information will be available.
 }
-

@@ -18,4 +18,3 @@ A tibble, with columns \code{lon} and \code{lat}
 \description{
 Extract a data frame of coordinates from a \code{mapzen_geo_list}
 }
-

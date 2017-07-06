@@ -3,9 +3,9 @@
 \docType{data}
 \name{mapzen_references}
 \alias{mapzen_references}
-\alias{mz_countries}
-\alias{mz_layers}
 \alias{mz_sources}
+\alias{mz_layers}
+\alias{mz_countries}
 \title{Reference lists}
 \format{An object of class \code{list} of length 8.}
 \usage{
@@ -20,4 +20,3 @@ Lists of sources, layers, and countries, as they are expected to appear in
 the \code{\link{mz_search}} functions.
 }
 \keyword{datasets}
-

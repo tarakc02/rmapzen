@@ -19,4 +19,3 @@ lat 37.86613, lon -122.3151, and the contours are 10 and 15 minutes for a
 pedestrian costing model.
 }
 \keyword{datasets}
-

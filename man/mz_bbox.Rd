@@ -32,4 +32,3 @@ used directly as the \code{boundary.rect} parameter for
 \code{\link{search}} functions, as well as converted to x, y, zoom coordinates
 to use with \code{\link{mz_vector_tiles}}
 }
-

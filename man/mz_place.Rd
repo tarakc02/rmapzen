@@ -31,4 +31,3 @@ See \url{https://mapzen.com/documentation/search/place/} for details. This
 function is generic, and can take a character vector of IDs, or a
 \code{mapzen_geo_list} as returned by \code{\link{mz_search}} and friends.
 }
-

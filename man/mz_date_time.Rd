@@ -16,4 +16,3 @@ Mobility services (such as \code{mz_isochrone}) take, optionally, a date_time
 argument that specifies the date and time along with type (departure/arrival).
 This function constructs the appropriate objects to use as date_time arguments.
 }
-

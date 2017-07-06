@@ -24,4 +24,3 @@ needs to be specified when an object contains muliple geometry types.}
 Coerces responses to SpatialPoints, SpatialLines, or SpatialPolygons data
 frames.
 }
-

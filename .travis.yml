@@ -4,11 +4,14 @@ language: r
 sudo: required
 dist: trusty
 
+before_install:
+    - sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable
+    - sudo apt-get update
+    - sudo apt-get install libgdal-dev libgeos-dev libproj-dev libudunits2-dev liblwgeom-dev
+
 addons:
   apt:
     packages:
-      - libgdal-dev
-      - libproj-dev
       - libv8-dev
 
 after_success:

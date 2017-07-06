@@ -17,4 +17,3 @@ Contains the search results from Mapzen's search service for the query
 "Oakland public library branch" as of January 8, 2017.
 }
 \keyword{datasets}
-
