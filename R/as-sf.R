@@ -16,9 +16,9 @@ as_sf.geo_list <- function(geo, ...) {
 }
 
 #' @rdname as_sf
+#' @importFrom sf summarise.sf ungroup.sf
 #' @export
 as_sf.mapzen_vector_layer <- function(geo, ...) {
-    library(sf, quietly = TRUE)
     geo <- recalculate_ids(geo)
     res <- sf::read_sf(as_json(geo))
 
@@ -28,6 +28,7 @@ as_sf.mapzen_vector_layer <- function(geo, ...) {
     res <- dplyr::group_by_at(
         res,
         setdiff(names(res), "geometry"))
+    res <- sf::st_as_sf(res)
     res <- dplyr::summarise(res)
     dplyr::ungroup(res)
 }
