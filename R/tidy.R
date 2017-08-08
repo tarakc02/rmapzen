@@ -10,15 +10,12 @@ as.data.frame.mapzen_geo_list <- function(x, ...) {
 
 #' @export
 as.data.frame.mapzen_isochrone_list <- function(x, ...) {
-
     coords <- function(feature)
-        dplyr::bind_rows(
-            purrr::map2(
-                feature$geometry$coordinates,
-                seq_along(feature$geometry$coordinates),
-                ~tibble::data_frame(lon = .x[[1]], lat = .x[[2]],
-                                    order = .y)
-            )
+        purrr::map2_df(
+            feature$geometry$coordinates,
+            seq_along(feature$geometry$coordinates),
+            ~tibble::data_frame(lon = .x[[1]], lat = .x[[2]],
+                                order = .y)
         )
 
     res <- tibble::data_frame(
@@ -33,6 +30,6 @@ as.data.frame.mapzen_isochrone_list <- function(x, ...) {
             coords
         )
     )
-    res <- tidyr::unnest(res, contours)
+    res <- tidyr::unnest_(res, "contours")
     tidyr::unnest(res)
 }
