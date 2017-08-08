@@ -18,6 +18,16 @@ as_sf.geo_list <- function(geo, ...) {
 #' @rdname as_sf
 #' @export
 as_sf.mapzen_vector_layer <- function(geo, ...) {
+    library(sf, quietly = TRUE)
     geo <- recalculate_ids(geo)
-    sf::read_sf(as_json(geo))
+    res <- sf::read_sf(as_json(geo))
+
+    # polygons that were separated by tile divisions will have the same ids
+    # b/c of recalculate_ids. need to union them into a single polygon and
+    # then bring back feature data
+    res <- dplyr::group_by_at(
+        res,
+        setdiff(names(res), "geometry"))
+    res <- dplyr::summarise(res)
+    dplyr::ungroup(res)
 }
