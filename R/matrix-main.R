@@ -13,7 +13,4 @@ matrix_url <- function(endpoint, ..., api_key = mz_key()) {
     )
 }
 
-matrix_GET <- ratelimitr::limit_rate(
-    httr::GET,
-    ratelimitr::rate(n = 2, period = 1)
-)
+matrix_GET <- httr::GET

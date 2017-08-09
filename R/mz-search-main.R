@@ -18,10 +18,7 @@ search_url <- function(endpoint, ..., api_key = mz_key()) {
     )
 }
 
-search_GET <- ratelimitr::limit_rate(
-    httr::GET,
-    ratelimitr::rate(n = 6, period = 1)
-)
+search_GET <- httr::GET
 
 #' @import assertthat
 search_get <- function(url) {

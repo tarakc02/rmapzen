@@ -73,11 +73,7 @@ stitch <- function(tile1, tile2) {
     structure(res, header = header)
 }
 
-vector_GET <- ratelimitr::limit_rate(
-    httr::GET,
-    ratelimitr::rate(n = 100, period = 1),
-    ratelimitr::rate(n = 2000, period = 60)
-)
+vector_GET <- httr::GET
 
 vector_path <- function(layers, x, y, z, format) {
     res <- paste("mapzen", "vector", "v1", layers, z, x, y, sep = "/")

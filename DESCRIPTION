@@ -15,7 +15,6 @@ Imports:
     maps,
     dplyr,
     assertthat,
-    ratelimitr,
     geojsonio,
     tidyr,
     purrr,
