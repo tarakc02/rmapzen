@@ -58,7 +58,8 @@ ucb <- mz_geocode("UC Berkeley")
 isos <- mz_isochrone(
     ucb,
     costing_model = mz_costing$auto(),
-    contours = mz_contours(c(10, 20, 30))
+    contours = mz_contours(c(10, 20, 30)),
+    polygons = TRUE
 )
 
 library(leaflet)
@@ -74,43 +75,33 @@ leaflet(as_sp(isos)) %>%
 
 `rmapzen` provides an interface to Mapzen's [vector tiles service](https://mapzen.com/documentation/vector-tiles/). Tile requests can be specified using the x, y, zoom coordinates of the tile service, as well as with a lat/long bounding box. For instance, continuing the previous example:
 
-```{r vector-tile-example, cache = TRUE}
+```{r vector-tile-example, cache = TRUE, message = FALSE, warning = FALSE}
+library(dplyr)
+library(sf)
+library(ggplot2)
+
 # mz_bbox is a generic that returns the bounding box of an object
 ucb_tiles <- mz_vector_tiles(mz_bbox(isos))
 
 # vector tiles return all layers (roads, water, buildings, etc) in a list
-roads <- as_sp(ucb_tiles$roads)
-roads <- subset(roads, kind != "ferry")
-
-# some layers contain multiple geometry types (points, lines, polygons)
-# but Spatial*DataFrames can only contain a single type
-water <- as_sp(ucb_tiles$water, geometry_type = "polygon")
-water <- subset(water, kind == "ocean")
+roads <- as_sf(ucb_tiles$roads) %>% filter(kind != "ferry")
+water <- as_sf(ucb_tiles$water)
 
 # make a quick static map that includes roads and oceans as reference
-library(ggplot2)
-water_df <- fortify(water)
-roads_df <- fortify(roads) 
-
-ggplot(roads_df, aes(x = long, y = lat, group = group)) +
-    coord_quickmap() +
-    theme_void() +
-
-    # add ocean
-    geom_polygon(data = water_df, colour = NA, fill = "lightblue") +
-    
-    # add the road network
-    geom_path(size = .2, colour = "gray30") +
-    
-    # add the isochrones
-    geom_polygon(data = as.data.frame(isos),
-                 aes(x = lon, y = lat, group = contour),
-                 colour = NA, fill = "black", alpha = .3)
+ggplot() +
+    geom_sf(data = water, 
+            fill = "lightblue", colour = NA) + 
+    geom_sf(data = roads, 
+            size = .2, colour = "gray30") + 
+    geom_sf(data = as_sf(isos), 
+            colour = "black", size = .1,
+            fill = "gray20", alpha = .3) + 
+    theme_void()
 ```
 
-## Tidiness/Interoperability
+## `sf` and `Spatial*DataFrame` conversion
 
-As some of the above examples illustrate, any object returned by a Mapzen service can be converted to the appropriate Spatial* object using the generic function `as_sp`, for easy interoperability with other packages. You can also convert most objects directly to data frames, allowing for use within tidy pipelines:
+As some of the above examples illustrate, any object returned by a Mapzen service can be converted to the appropriate `Spatial*DataFrame` or `sf` object using the generics `as_sp` and `as_sf`, for easy interoperability with other packages. You can also convert most objects directly to data frames, allowing for use within tidy pipelines:
 
 ```{r ex-tidy, warning = FALSE, message = FALSE}
 library(dplyr)
@@ -171,16 +162,6 @@ leaflet(as_sp(walkable)) %>%
         color = "#ff0000")
 ```
 
-## Rate limits
-
-Mapzen's per-second [published rate limits](https://mapzen.com/documentation/overview/#search-and-mobility-products) are automatically observed, using the [ratelimitr package](https://github.com/tarakc02/ratelimitr). The package does not manage daily limits for you, but you can check usage statistics at any time using the function `mz_check_usage`.
-
-```{r mz-check-usage, cache = TRUE}
-mz_check_usage()
-```
-
-These statistics are taken from the headers in the various responses from Mapzen and stored only for the length of the R session. If an endpoint has "No data," that means you have yet to use that endpoint during the current R  session, or that all uses of the endpoint have hit Mapzen's cache servers and so have not been counted against usage limits.
-
 ## Convenience features
 
 Several of the search functions take, optionally, the arguments `layers`, `sources`, and `boundary.country` (the latter requires [ISO-3166](https://en.wikipedia.org/wiki/ISO_3166) codes). If you're using an IDE with auto-complete, the objects `mz_layers`, `mz_sources`, and `mz_countries` should make it easier to get the correct codes.
@@ -203,8 +184,6 @@ The package does not yet support [other Mapzen API services](https://mapzen.com/
 * [postr](https://github.com/Ironholds/poster) for address parsing and normalization using the [libpostal](https://github.com/openvenues/libpostal) library
 
 ## Installation
-
-This is a very young package, things may break or change. To install:
 
 ```{r, eval = FALSE}
 devtools::install_github("tarakc02/rmapzen")
