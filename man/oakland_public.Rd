@@ -7,7 +7,7 @@
 \format{A \code{mapzen_geo_list} with 25 locations}
 \source{
 Mapzen, OpenStreetMap, OpenAddresses, GeoNames, WhosOnFirst,
-see \url{https://search.mapzen.com/v1/attribution}
+see \url{https://mapzen.com/rights/}
 }
 \usage{
 oakland_public
