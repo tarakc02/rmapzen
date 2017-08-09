@@ -2,6 +2,7 @@
 * Added ability to convert to `sf`
 * All objects returned from the Mapzen API now include the header from the response as an attribute called "header"
 * conversion functions now error on empty inputs (e.g. a search with 0 results)
+* request functions are no longer rate-limited, because Mapzen's service has been updated and only has monthly (not per-second or per-minute) limits
 
 # rmapzen 0.3.1
 * Added support for [structured geocoding](https://mapzen.com/documentation/search/structured-geocoding/)
