@@ -3,8 +3,6 @@ title: rmapzen
 output: 
     github_document
 ---
-[![Travis-CI Build Status](https://travis-ci.org/tarakc02/rmapzen.svg?branch=master)](https://travis-ci.org/tarakc02/rmapzen)
-[![Coverage Status](https://img.shields.io/codecov/c/github/tarakc02/rmapzen/master.svg)](https://codecov.io/github/tarakc02/rmapzen?branch=master)
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r, echo = FALSE}
