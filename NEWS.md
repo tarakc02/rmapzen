@@ -1,3 +1,8 @@
+# rmapzen 0.3.2
+* Added ability to convert to `sf`
+* All objects returned from the Mapzen API now include the header from the response as an attribute called "header"
+* conversion functions now error on empty inputs (e.g. a search with 0 results)
+
 # rmapzen 0.3.1
 * Added support for [structured geocoding](https://mapzen.com/documentation/search/structured-geocoding/)
 * Simple print methods for vector tiles and individual vector tile layers
