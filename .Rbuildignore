@@ -9,3 +9,4 @@ fig/.*
 index\.Rmd
 index\.html
 index_files/.*
+^cran-comments\.md$
