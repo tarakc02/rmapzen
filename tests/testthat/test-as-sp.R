@@ -24,3 +24,13 @@ test_that("as_sp converts vector tile layers to the appropriate Spatial*DF", {
     waterpoints <- as_sp(ca_tiles$water, geometry_type = "point")
     expect_is(waterpoints, "SpatialPointsDataFrame")
 })
+
+test_that("as_sp errors on empty search results", {
+    empty_search <- oakland_public
+    empty_search$features <- list()
+    expect_error(as_sp(empty_search), "no data")
+})
+
+test_that("as_sp errors on emtpy vector tile layers", {
+    expect_error(as_sp(ca_tiles$buildings), "empty")
+})

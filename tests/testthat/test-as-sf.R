@@ -23,3 +23,13 @@ test_that("as_sf converts vector tile layers to sf", {
     waterpoints <- as_sf(ca_tiles$water)
     expect_is(waterpoints, "sf")
 })
+
+test_that("as_sf errors on empty search results", {
+    empty_search <- oakland_public
+    empty_search$features <- list()
+    expect_error(as_sf(empty_search), "no data")
+})
+
+test_that("as_sf errors on empty vector tile layers", {
+    expect_error(as_sf(ca_tiles$buildings), "empty")
+})

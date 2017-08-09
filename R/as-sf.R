@@ -12,6 +12,8 @@ as_sf <- function(geo, ...) UseMethod("as_sf")
 #' @rdname as_sf
 #' @export
 as_sf.geo_list <- function(geo, ...) {
+    if (length(geo$features) == 0L)
+        stop("Cannot convert to sf: no data")
     sf::read_sf(as_json(geo), stringsAsFactors = FALSE)
 }
 
@@ -19,6 +21,8 @@ as_sf.geo_list <- function(geo, ...) {
 #' @importFrom sf summarise.sf ungroup.sf
 #' @export
 as_sf.mapzen_vector_layer <- function(geo, ...) {
+    if (length(geo$features) == 0L)
+        stop("Cannot convert to sf: empty layer")
     geo <- recalculate_ids(geo)
     res <- sf::read_sf(as_json(geo))
 

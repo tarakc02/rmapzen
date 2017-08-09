@@ -28,12 +28,16 @@ as_sp <- function(geo, ...) UseMethod("as_sp")
 #' @rdname as_sp
 #' @export
 as_sp.geo_list <- function(geo, ...) {
+    if (length(geo$features) == 0L)
+        stop("Cannot convert to sp: no data")
     geojsonio::geojson_sp(geo, stringsAsFactors = FALSE)
 }
 
 #' @rdname as_sp
 #' @export
 as_sp.mapzen_vector_layer <- function(geo, ..., geometry_type = NULL) {
+    if (length(geo$features) == 0L)
+        stop("Cannot convert to sf: empty layer")
     features <- geo
     geom_to_wkb <- c(
         point = "wkbPoint",
