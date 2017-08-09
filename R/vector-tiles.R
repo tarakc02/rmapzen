@@ -11,6 +11,7 @@ vector_process <- function(response) {
     lst <- jsonlite::fromJSON(txt, simplifyVector = FALSE)
     structure(
         lst,
+        header = header,
         class = "mapzen_vector_tiles"
     )
 }
@@ -48,6 +49,9 @@ mz_vector_tiles <- function(tile_coordinates, ...) {
 # stitches together two vector tiles
 # it's on the caller to make sure they are actually adjacent
 stitch <- function(tile1, tile2) {
+    if (is.null(attr(tile1, "header"))) header <- attr(tile2, "header")
+    else header <- attr(tile1, "header")
+
     layers <- unique(c(names(tile1), names(tile2)))
     res <- lapply(layers, function(layer) {
         features1 <- tile1[[layer]]
@@ -66,7 +70,7 @@ stitch <- function(tile1, tile2) {
             class = c("mapzen_vector_layer", "list"))
     })
     names(res) <- layers
-    res
+    structure(res, header = header)
 }
 
 vector_GET <- ratelimitr::limit_rate(

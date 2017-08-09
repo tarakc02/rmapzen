@@ -100,6 +100,7 @@ iso_process <- function(response) {
     txt <- httr::content(response, as = "text")
     lst <- jsonlite::fromJSON(txt, simplifyVector = FALSE)
     structure(lst,
+              header = header,
               class = c("mapzen_isochrone_list", "geo_list"))
 }
 

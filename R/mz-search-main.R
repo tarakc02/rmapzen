@@ -38,5 +38,5 @@ search_process <- function(response) {
 
     txt <- httr::content(response, as = "text")
     lst <- jsonlite::fromJSON(txt, simplifyVector = FALSE)
-    structure(lst, class = c("mapzen_geo_list", "geo_list"))
+    structure(lst, header = header, class = c("mapzen_geo_list", "geo_list"))
 }
