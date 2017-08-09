@@ -24,6 +24,7 @@ as_sf.mapzen_vector_layer <- function(geo, ...) {
     if (length(geo$features) == 0L)
         stop("Cannot convert to sf: empty layer")
     geo <- recalculate_ids(geo)
+    geo <- collapse_properties(geo)
     res <- sf::read_sf(as_json(geo))
 
     # polygons that were separated by tile divisions will have the same ids

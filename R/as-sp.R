@@ -72,6 +72,7 @@ as_sp.mapzen_vector_layer <- function(geo, ..., geometry_type = NULL) {
     geometry_type <- geom_to_wkb[[geometry_type]]
 
     features <- recalculate_ids(features)
+    features <- collapse_properties(features)
     json <- as_json(features)
     res <- rgdal::readOGR(
         json,
