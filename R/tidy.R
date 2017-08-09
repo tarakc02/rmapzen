@@ -1,5 +1,7 @@
 #' @export
 as.data.frame.mapzen_geo_list <- function(x, ...) {
+    if (length(x$features) == 0L)
+        stop("Cannot convert to data.frame: no data")
     coords <- mz_coordinates(x)
     rest <- dplyr::bind_rows(
         lapply(x$features,
@@ -10,6 +12,8 @@ as.data.frame.mapzen_geo_list <- function(x, ...) {
 
 #' @export
 as.data.frame.mapzen_isochrone_list <- function(x, ...) {
+    if (length(x$features) == 0L)
+        stop("Cannot convert to data.frame: empty layer")
     coords <- function(feature)
         purrr::map2_df(
             feature$geometry$coordinates,

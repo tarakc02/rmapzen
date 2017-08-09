@@ -15,3 +15,9 @@ test_that("as.data.frame converts isochrone results to sf", {
     expect_equal(nrow(marina_walks_df), num_features)
 })
 
+test_that("as.data.frame errors on empty search results", {
+    empty_search <- oakland_public
+    empty_search$features <- list()
+    expect_error(as.data.frame(empty_search), "no data")
+})
+
