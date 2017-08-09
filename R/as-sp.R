@@ -18,7 +18,7 @@ as_json <- function(geo) {
 #'
 #' @param geo The object to be converted
 #' @param geometry_type "point", "line", or "polygon" -- can be left NULL and only
-#' needs to be specified when an object contains muliple geometry types.
+#' needs to be specified when an object contains multiple geometry types.
 #' @param ... not currently used
 #'
 #' @name as_sp

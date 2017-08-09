@@ -18,7 +18,7 @@ as_sp(geo, ...)
 \item{...}{not currently used}
 
 \item{geometry_type}{"point", "line", or "polygon" -- can be left NULL and only
-needs to be specified when an object contains muliple geometry types.}
+needs to be specified when an object contains multiple geometry types.}
 }
 \description{
 Coerces responses to SpatialPoints, SpatialLines, or SpatialPolygons data
