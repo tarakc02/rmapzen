@@ -24,6 +24,33 @@ vector_process <- function(response) {
 #'
 #' Multiple tiles will be stitched together and returned as one object.
 #'
+#' @return A list of tile layers (such as "water", "buildings", "roads", etc.).
+#' Each layer is an object of class \code{mapzen_vector_layer}, which can be converted
+#' to \code{sf} or \code{sp} using \code{\link{as_sf}} or \code{\link{as_sp}}
+#'
+#' @examples
+#' \dontrun{
+#' # vector tile at x = 19293, y = 24641, and zoom level 16
+#' mz_vector_tiles(mz_tile_coordinates(19293, 24641, 16))
+#'
+#' # multiple contiguous tiles will be stitched together
+#' # this returns the result of stitching together 4 tiles
+#' mz_vector_tiles(mz_tile_coordinates(19293:19294, 24641:24642, 16))
+#'
+#' # can also use a bounding box:
+#' mz_vector_tiles(mz_rect(min_lon = -122.2856,
+#'                         min_lat = 37.73742,
+#'                         max_lon = -122.1749,
+#'                         max_lat = 37.84632))
+#'
+#' # mz_bbox returns a bounding box for any Mapzen object
+#' mz_vector_tiles(mz_bbox(oakland_public))
+#'
+#' # bounding boxes are automatically converted to tile coordinates,
+#' # with the zoom level based on the desired size in pixels of the final map
+#' mz_vector_tiles(mz_bbox(oakland_public), height = 750, width = 1000)
+#' }
+#'
 #' @export
 mz_vector_tiles <- function(tile_coordinates, ...) {
     tile_coordinates <- as.mz_tile_coordinates(tile_coordinates, ...)
@@ -40,6 +67,21 @@ mz_vector_tiles <- function(tile_coordinates, ...) {
     }
 
     all_tiles <- lapply(tile_coordinates, get_tile)
+
+    if (length(tile_coordinates) == 1L) {
+        all_tiles <- all_tiles[[1]]
+
+        all_tiles <- lapply(all_tiles, function(x) {
+            class(x) <- c("mapzen_vector_layer", "list")
+            x
+        })
+
+        return(structure(
+            all_tiles,
+            class = c("mapzen_vector_tiles", "list")
+        ))
+    }
+
     structure(
         Reduce(stitch, all_tiles),
         class = c("mapzen_vector_tiles", "list")

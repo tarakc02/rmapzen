@@ -14,6 +14,35 @@ that can be coerced to one (including the output of \code{\link{mz_bbox}})}
 
 Multiple tiles will be stitched together and returned as one object.}
 }
+\value{
+A list of tile layers (such as "water", "buildings", "roads", etc.).
+Each layer is an object of class \code{mapzen_vector_layer}, which can be converted
+to \code{sf} or \code{sp} using \code{\link{as_sf}} or \code{\link{as_sp}}
+}
 \description{
 Request vector tile data
+}
+\examples{
+\dontrun{
+# vector tile at x = 19293, y = 24641, and zoom level 16
+mz_vector_tiles(mz_tile_coordinates(19293, 24641, 16))
+
+# multiple contiguous tiles will be stitched together
+# this returns the result of stitching together 4 tiles
+mz_vector_tiles(mz_tile_coordinates(19293:19294, 24641:24642, 16))
+
+# can also use a bounding box:
+mz_vector_tiles(mz_rect(min_lon = -122.2856,
+                        min_lat = 37.73742,
+                        max_lon = -122.1749,
+                        max_lat = 37.84632))
+
+# mz_bbox returns a bounding box for any Mapzen object
+mz_vector_tiles(mz_bbox(oakland_public))
+
+# bounding boxes are automatically converted to tile coordinates,
+# with the zoom level based on the desired size in pixels of the final map
+mz_vector_tiles(mz_bbox(oakland_public), height = 750, width = 1000)
+}
+
 }
