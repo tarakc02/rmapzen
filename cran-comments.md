@@ -1,5 +1,5 @@
 ## Resubmission
-This is a resubmission. In this verion, I have:
+This is a resubmission. In this version, I have:
 
 * Edited the description in the DESCRIPTION file for clarity
 * Added more examples to the help pages
