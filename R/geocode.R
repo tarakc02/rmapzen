@@ -8,6 +8,16 @@
 #'
 #' @return A tibble, with the parsed address used to retrieve the geocode, lat/lon,
 #' and the confidence (between 0 and 1)
+#'
+#' @examples
+#' \dontrun{
+#' mz_geocode("1600 Pennsylvania Ave., Washington DC")
+#'
+#' # can also be a landmark
+#' mz_geocode("Statue of Liberty, New York")
+#' }
+#'
+#' @seealso \code{\link{mz_search}}, \code{\link{mz_reverse_geocode}}
 #' @export
 mz_geocode <- function(location, api_key = mz_key()) {
     result <- mz_search(location, size = 10, api_key = api_key)

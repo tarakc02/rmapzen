@@ -1,6 +1,7 @@
 #' Coerce a Mapzen response to a simple features object
 #'
-#' Coerces responses to class sf
+#' Coerces responses to class sf. See \code{vignette("sf1", package = "sf")} for
+#' more information about Simple Features for R.
 #'
 #' @param geo The object to be converted
 #' @param ... not currently used

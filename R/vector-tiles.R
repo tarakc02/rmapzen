@@ -18,11 +18,17 @@ vector_process <- function(response) {
 
 #' Request vector tile data
 #'
+#' From \url{https://mapzen.com/documentation/vector-tiles/}: "Vector tiles are
+#' square-shaped collections of geographic data that contain the map feature
+#' geometry, such as lines and points."
+#'
+#' Multiple tiles are stitched together and returned as one object. Individual
+#' layers can be converted to \code{sf} or \code{sp}, making it possible to
+#' draw each layer with custom styles.
+#'
 #' @param tile_coordinates an \code{\link{mz_tile_coordinates}} object, or something
 #' that can be coerced to one (including the output of \code{\link{mz_bbox}})
-#' @param ... Arguments passed on to \code{\link{as.mz_tile_coordinates}}
-#'
-#' Multiple tiles will be stitched together and returned as one object.
+#' @param ... Arguments passed on to \code{\link{as.mz_tile_coordinates}}.
 #'
 #' @return A list of tile layers (such as "water", "buildings", "roads", etc.).
 #' Each layer is an object of class \code{mapzen_vector_layer}, which can be converted
@@ -51,6 +57,7 @@ vector_process <- function(response) {
 #' mz_vector_tiles(mz_bbox(oakland_public), height = 750, width = 1000)
 #' }
 #'
+#' @seealso \code{\link{mz_tile_coordinates}}
 #' @export
 mz_vector_tiles <- function(tile_coordinates, ...) {
     tile_coordinates <- as.mz_tile_coordinates(tile_coordinates, ...)

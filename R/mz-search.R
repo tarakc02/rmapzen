@@ -66,7 +66,7 @@ build_search_url <- function(
 #' data is already split up by street, city, state, zip, etc., then you might
 #' find \code{\link{mz_structured_search}} to be more precise. All arguments
 #' besides \code{text} (\code{point} in the case of \code{mz_reverse_geocode}) are
-#' optional.
+#' optional. If you have parsed addresses (e.g. for geocoding), use \code{\link{mz_structured_search}}
 #'
 #' @param text Search string
 #' @param point For reverse geocoding, the location to reverse geocode. Can be
@@ -91,7 +91,20 @@ build_search_url <- function(
 #' @param api_key Your Mapzen API key. The default is to look for the value in
 #' the MAPZEN_KEY environment variable.
 #' @name search
-#' @seealso \code{\link{mz_place}}, \code{\link{mz_structured_search}}
+#' @seealso \code{\link{mz_place}}, \code{\link{mz_structured_search}},
+#' \code{\link{mz_countries}}, \code{\link{mz_sources}}, \code{\link{mz_layers}}
+#'
+#' @examples
+#' \dontrun{
+#' # hard rock cafes in sweden:
+#' mz_search("Hard Rock Cafe", boundary.country = "SE")
+#'
+#' # autocompletions when the user types in "Union Square"
+#' # prioritizing San Francisco results first:
+#' mz_autocomplete("Union Square",
+#'                 focus.point = mz_geocode("San Francisco, CA"))
+#' }
+#'
 #' @export
 mz_search <- function(
     text, size = 10,

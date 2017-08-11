@@ -44,4 +44,7 @@ mz_costing$multimodal(
     )
 )
 }
+\seealso{
+\code{\link{mz_isochrone}}
+}
 \keyword{datasets}

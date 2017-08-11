@@ -34,6 +34,35 @@ largest contour.}
 
 \item{api_key}{Your Mapzen API key, defaults to the MAPZEN_KEY environment variable.}
 }
+\value{
+A \code{mapzen_isochrone_list}, which can be converted to \code{sf}
+or \code{sp} using \code{\link{as_sf}} or \code{\link{as_sp}}.
+}
 \description{
-See \url{https://mapzen.com/documentation/mobility/isochrone/api-reference/}.
+From \url{https://mapzen.com/documentation/mobility/isochrone/api-reference/}:
+"An isochrone is a line that connects points of equal travel time about a
+given location, from the Greek roots of 'iso' for equal and 'chrone' for time.
+The Mapzen Isochrone service computes areas that are reachable within
+specified time intervals from a location, and returns the reachable regions
+as contours of polygons or lines that you can display on a map."
+}
+\examples{
+\dontrun{
+mz_isochrone(
+    mz_location(lat = 37.87416, lon = -122.2544),
+    costing_model = mz_costing$auto(),
+    contours = mz_contours(c(10, 20, 30))
+)
+
+# departure point can be specified as a geocode result
+mz_isochrone(
+    mz_geocode("UC Berkeley"),
+    costing_model = mz_costing$pedestrian(),
+    contours = mz_contours(c(10, 20, 30))
+)
+}
+
+}
+\seealso{
+\code{\link{mz_costing}}
 }

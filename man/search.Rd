@@ -57,8 +57,21 @@ For more details, see \url{https://mapzen.com/documentation/search/}. If your
 data is already split up by street, city, state, zip, etc., then you might
 find \code{\link{mz_structured_search}} to be more precise. All arguments
 besides \code{text} (\code{point} in the case of \code{mz_reverse_geocode}) are
-optional.
+optional. If you have parsed addresses (e.g. for geocoding), use \code{\link{mz_structured_search}}
+}
+\examples{
+\dontrun{
+# hard rock cafes in sweden:
+mz_search("Hard Rock Cafe", boundary.country = "SE")
+
+# autocompletions when the user types in "Union Square"
+# prioritizing San Francisco results first:
+mz_autocomplete("Union Square",
+                focus.point = mz_geocode("San Francisco, CA"))
+}
+
 }
 \seealso{
-\code{\link{mz_place}}, \code{\link{mz_structured_search}}
+\code{\link{mz_place}}, \code{\link{mz_structured_search}},
+\code{\link{mz_countries}}, \code{\link{mz_sources}}, \code{\link{mz_layers}}
 }

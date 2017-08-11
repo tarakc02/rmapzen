@@ -19,3 +19,15 @@ and the confidence (between 0 and 1)
 This is a convenience function that calls \code{\link{mz_search}} to retrieve
 latitude and longitude.
 }
+\examples{
+\dontrun{
+mz_geocode("1600 Pennsylvania Ave., Washington DC")
+
+# can also be a landmark
+mz_geocode("Statue of Liberty, New York")
+}
+
+}
+\seealso{
+\code{\link{mz_search}}, \code{\link{mz_reverse_geocode}}
+}

@@ -17,6 +17,25 @@ mz_countries
 }
 \description{
 Lists of sources, layers, and countries, as they are expected to appear in
-the \code{\link{mz_search}} functions.
+the \code{\link{mz_search}} functions. These data objects are provided as a
+convenience, to be able to quickly and easily look up acceptable values for
+the optional arguments of search functions. Object names match the argument
+names for which they are appropriate. So \code{mz_sources} provide acceptable
+arguments for the \code{source} argument in \code{\link{mz_search}},
+\code{mz_layers} for the \code{layer} argument, and \code{\link{mz_countries}}
+for the \code{boundary.country} argument. Mapzen's documentation
+(\url{https://mapzen.com/documentation/search/search/}) explains more about
+each of these arguments.
+}
+\examples{
+\dontrun{
+# look for YMCAs in Jamaica:
+# Note that boundary.country is supplied via ISO3166 code,
+# but mz_countries will look up the code
+mz_search("YMCA",
+          boundary.country = mz_countries$Jamaica,
+          layers = c(mz_layers$venue, mz_layers$address))
+}
+
 }
 \keyword{datasets}

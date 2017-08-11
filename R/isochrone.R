@@ -112,7 +112,12 @@ isochrone_get <- function(url) {
 
 #' Retrieve isochrones
 #'
-#' See \url{https://mapzen.com/documentation/mobility/isochrone/api-reference/}.
+#' From \url{https://mapzen.com/documentation/mobility/isochrone/api-reference/}:
+#' "An isochrone is a line that connects points of equal travel time about a
+#' given location, from the Greek roots of 'iso' for equal and 'chrone' for time.
+#' The Mapzen Isochrone service computes areas that are reachable within
+#' specified time intervals from a location, and returns the reachable regions
+#' as contours of polygons or lines that you can display on a map."
 #'
 #' @param locations An \code{mz_location}, or something that can be coerced to an
 #' \code{\link{mz_location}}, as the departure point for the isochrone. This can be the
@@ -130,6 +135,28 @@ isochrone_get <- function(url) {
 #' @param generalize Tolerance in meters for the Douglas-Peucker generalization.
 #' @param id A descriptive identifier, the response will contain the id as an element.
 #' @param api_key Your Mapzen API key, defaults to the MAPZEN_KEY environment variable.
+#'
+#' @return A \code{mapzen_isochrone_list}, which can be converted to \code{sf}
+#' or \code{sp} using \code{\link{as_sf}} or \code{\link{as_sp}}.
+#'
+#' @seealso \code{\link{mz_costing}}
+#'
+#' @examples
+#' \dontrun{
+#' mz_isochrone(
+#'     mz_location(lat = 37.87416, lon = -122.2544),
+#'     costing_model = mz_costing$auto(),
+#'     contours = mz_contours(c(10, 20, 30))
+#' )
+#'
+#' # departure point can be specified as a geocode result
+#' mz_isochrone(
+#'     mz_geocode("UC Berkeley"),
+#'     costing_model = mz_costing$pedestrian(),
+#'     contours = mz_contours(c(10, 20, 30))
+#' )
+#' }
+#'
 #' @name mz_isochrone
 #' @export
 mz_isochrone <- function(

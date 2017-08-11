@@ -6,8 +6,7 @@ Author: Tarak Shah
 Maintainer: Tarak Shah <tarak_shah@berkeley.edu>
 Description: Provides an interface to the 'Mapzen' API for geographic search 
     and geocoding, isochrone calculation, and vector data to draw map tiles. 
-    See <https://mapzen.com/documentation/> for more information about 'Mapzen' 
-    and the rmapzen website for additional documentation and examples.
+    See <https://mapzen.com/documentation/> for more information.
 License: MIT + file LICENSE
 LazyData: TRUE
 Depends: R (>= 2.10)

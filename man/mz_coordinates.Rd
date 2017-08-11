@@ -13,8 +13,12 @@ mz_coordinates(geo)
 \item{geo}{A mapzen geo list}
 }
 \value{
-A tibble, with columns \code{lon} and \code{lat}
+A tibble, with columns \code{lon} and \code{lat}.
 }
 \description{
 Extract a data frame of coordinates from a \code{mapzen_geo_list}
+}
+\examples{
+mz_coordinates(oakland_public)
+
 }

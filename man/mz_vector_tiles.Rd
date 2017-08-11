@@ -10,9 +10,7 @@ mz_vector_tiles(tile_coordinates, ...)
 \item{tile_coordinates}{an \code{\link{mz_tile_coordinates}} object, or something
 that can be coerced to one (including the output of \code{\link{mz_bbox}})}
 
-\item{...}{Arguments passed on to \code{\link{as.mz_tile_coordinates}}
-
-Multiple tiles will be stitched together and returned as one object.}
+\item{...}{Arguments passed on to \code{\link{as.mz_tile_coordinates}}.}
 }
 \value{
 A list of tile layers (such as "water", "buildings", "roads", etc.).
@@ -20,7 +18,14 @@ Each layer is an object of class \code{mapzen_vector_layer}, which can be conver
 to \code{sf} or \code{sp} using \code{\link{as_sf}} or \code{\link{as_sp}}
 }
 \description{
-Request vector tile data
+From \url{https://mapzen.com/documentation/vector-tiles/}: "Vector tiles are
+square-shaped collections of geographic data that contain the map feature
+geometry, such as lines and points."
+}
+\details{
+Multiple tiles are stitched together and returned as one object. Individual
+layers can be converted to \code{sf} or \code{sp}, making it possible to
+draw each layer with custom styles.
 }
 \examples{
 \dontrun{
@@ -45,4 +50,7 @@ mz_vector_tiles(mz_bbox(oakland_public))
 mz_vector_tiles(mz_bbox(oakland_public), height = 750, width = 1000)
 }
 
+}
+\seealso{
+\code{\link{mz_tile_coordinates}}
 }

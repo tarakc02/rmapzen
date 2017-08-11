@@ -1,5 +1,10 @@
 #' Specify tile coordinates
 #'
+#' \code{\link{mz_vector_tiles}} requires tile coordinates or some other
+#' specification of the region that is to be drawn. \code{\link{mz_vector_tiles}}
+#' will automatically convert its inputs to vector tiles, so you generally won't
+#' need to use this function directly.
+#'
 #' @param x integer vector of x-coordinates
 #' @param y integer vector of y-coordinates
 #' @param z integer between 0 and 19 specifying the zoom level
@@ -7,6 +12,29 @@
 #' @param ... Other arguments passed on to methods
 #' @param height Height in pixels
 #' @param width Width in pixels
+#'
+#' @examples
+#' mz_tile_coordinates(19293, 24641, 16)
+#'
+#' ## can specify multiple contiguous tiles:
+#' mz_tile_coordinates(19293:19294, 24641:24642, 16)
+#'
+#' ## a rectangular bounding box can be converted to tile coordinates:
+#' as.mz_tile_coordinates(mz_rect(min_lon = -122.2856,
+#'                                min_lat = 37.73742,
+#'                                max_lon = -122.1749,
+#'                                max_lat = 37.84632))
+#'
+#' ## zoom level is calculated based on desired pixel dimensions of the map:
+#' as.mz_tile_coordinates(mz_rect(min_lon = -122.2856,
+#'                                min_lat = 37.73742,
+#'                                max_lon = -122.1749,
+#'                                max_lat = 37.84632), height = 750, width = 1000)
+#'
+#' ## a bounding box can also be calculated:
+#' as.mz_tile_coordinates(mz_bbox(oakland_public))
+#'
+#' @seealso \code{\link{mz_vector_tiles}}, \code{\link{mz_bbox}}
 #'
 #' @name mz_tile_coordinates
 #' @export

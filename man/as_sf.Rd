@@ -18,5 +18,6 @@ as_sf(geo, ...)
 \item{...}{not currently used}
 }
 \description{
-Coerces responses to class sf
+Coerces responses to class sf. See \code{vignette("sf1", package = "sf")} for
+more information about Simple Features for R.
 }

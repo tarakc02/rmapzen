@@ -2,7 +2,11 @@
 #'
 #' @param geo A mapzen geo list
 #'
-#' @return A tibble, with columns \code{lon} and \code{lat}
+#' @return A tibble, with columns \code{lon} and \code{lat}.
+#'
+#' @examples
+#' mz_coordinates(oakland_public)
+#'
 #' @name mz_coordinates
 #' @export
 mz_coordinates <- function(geo) UseMethod("mz_coordinates")

@@ -51,6 +51,7 @@ costing_model <- function(type, ...) {
 #'         mz_costing_options$pedestrian$walking_speed(4.1)
 #'     )
 #' )
+#' @seealso \code{\link{mz_isochrone}}
 #' @name costing_models
 #' @export
 mz_costing <- list(

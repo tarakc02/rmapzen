@@ -1,18 +1,26 @@
 #' Get the bounding box
 #'
 #' Returns the bottom left and top right corners of the box that contains a
-#' mapzen object (mz_geo_list or mz_isochrone_list). In the case of \code{mz_rect},
-#' creates such a box from the specified coordinates. The returned value can be
-#' used directly as the \code{boundary.rect} parameter for
-#' \code{\link{search}} functions, as well as converted to x, y, zoom coordinates
-#' to use with \code{\link{mz_vector_tiles}}
+#' mapzen object (\code{mz_geo_list}, \code{mz_isochrone_list},
+#' or \code{mapzen_vector_tiles}).
+#' In the case of \code{mz_rect}, creates such a box from the specified
+#' coordinates. The returned value can be used directly as the
+#' \code{boundary.rect} parameter for \code{\link{search}} functions, as well as
+#' converted to x, y, zoom coordinates to use with \code{\link{mz_vector_tiles}}.
 #'
 #' @param geo A mapzen geo list or isochrone list
 #' @param min_lon,min_lat,max_lon,max_lat The bottom left and top right corners,
 #' expressed as latitude and longitude, of a rectangle.
 #'
-#' @return A tibble
+#' @return A single-row tibble with columns \code{min_lon}, \code{min_lat},
+#' \code{max_lon}, \code{max_lat}.
+#'
 #' @name mz_bbox
+#'
+#' @examples
+#' mz_rect(min_lon = -122.2856, min_lat = 37.73742, max_lon = -122.1749, max_lat = 37.84632)
+#' mz_bbox(oakland_public)
+#'
 #' @export
 mz_bbox <- function(geo) UseMethod("mz_bbox")
 

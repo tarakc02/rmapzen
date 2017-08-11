@@ -1,3 +1,6 @@
+# rmapzen 0.3.3
+* Added additional documentation and updated DESCRIPTION
+
 # rmapzen 0.3.2
 * Added ability to convert to `sf`
 * All objects returned from the Mapzen API now include the header from the response as an attribute called "header"
