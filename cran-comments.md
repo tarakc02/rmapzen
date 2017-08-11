@@ -1,7 +1,8 @@
 ## Resubmission
 This is a resubmission. In this verion, I have:
 
-* Re-worded the title and expanded the description in the DESCRIPTION file to provide more information on what 'Mapzen' is. 
+* Edited the description in the DESCRIPTION file for clarity
+* Added more examples to the help pages
 
 ## Test environments
 * local ubuntu 16.04, R 3.4.1
