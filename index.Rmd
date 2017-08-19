@@ -14,7 +14,7 @@ output:
 
 ## Introduction
 
-`rmapzen` is a client for the Mapzen API. For more information, see [https://mapzen.com/documentation/](https://mapzen.com/documentation/). The project is [available on github](https://github.com/tarakc02/rmapzen). 
+`rmapzen` is a client for the Mapzen API. For more information, see [https://mapzen.com/documentation/](https://mapzen.com/documentation/). The project is [available on github](https://github.com/tarakc02/rmapzen) as well as [CRAN](https://cran.r-project.org/package=rmapzen). 
 
 ## Search
 
@@ -65,8 +65,8 @@ isos <- mz_isochrone(
 library(leaflet)
 leaflet(as_sp(isos)) %>%
     addProviderTiles("CartoDB.DarkMatter") %>%
-    addPolygons(color = ~paste0("#", color), weight = 1) %>%
-    addLegend(colors = ~paste0("#", color), 
+    addPolygons(color = ~color, weight = 1) %>%
+    addLegend(colors = ~color, 
               labels = ~paste(contour, "minutes"),
               title = "Drive times from <br/> UC Berkeley Campus")
 ```
@@ -185,8 +185,10 @@ The package does not yet support [other Mapzen API services](https://mapzen.com/
 
 ## Installation
 
+`rmapzen` is available [on CRAN](https://cran.r-project.org/package=rmapzen). To install:
+
 ```{r, eval = FALSE}
-devtools::install_github("tarakc02/rmapzen")
+install.packages("rmapzen")
 ```
 
 You'll also need to [acquire an API key](https://mapzen.com/developers), and then set the `MAPZEN_KEY` environment variable:
