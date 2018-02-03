@@ -1,3 +1,10 @@
 .onLoad <- function(libname, pkgname) {
-    options(RMAPZEN.search.host="search.mapzen.com")
+    rmapzen_default_options <- list(
+        RMAPZEN.search.host = "search.mapzen.com"
+    )
+    op <- options()
+    toset <- !(names(rmapzen_default_options) %in% names(op))
+    if(any(toset)) options(rmapzen_default_options[toset])
+
+    invisible()
 }
