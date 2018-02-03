@@ -133,7 +133,7 @@ vector_url <- function(x, y, z, layers = "all", format = "json", api_key = mz_ke
     structure(
         list(
             scheme = "https",
-            hostname = "tile.mapzen.com",
+            hostname = getOption("RMAPZEN.tile.host"),
             path = vector_path(layers, x, y, z, format),
             query = list(
                 api_key = api_key
