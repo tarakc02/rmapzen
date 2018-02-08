@@ -11,7 +11,7 @@ search_url <- function(endpoint, ..., api_key = mz_key()) {
     structure(
         list(
             scheme = "https",
-            hostname = getOption("RMAPZEN.search.host"),
+            hostname = getOption("RMAPZEN_SEARCH_HOST"),
             path = search_path(endpoint),
             query = query),
         class = "url"

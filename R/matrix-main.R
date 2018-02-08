@@ -6,7 +6,7 @@ matrix_url <- function(endpoint, ..., api_key = mz_key()) {
     structure(
         list(
             scheme = "https",
-            hostname = getOption("RMAPZEN.matrix.host"),
+            hostname = getOption("RMAPZEN_MATRIX_HOST"),
             path = matrix_path(endpoint),
             query = query),
         class = "url"
