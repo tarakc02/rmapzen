@@ -2,7 +2,9 @@ Package: rmapzen
 Type: Package
 Title: Client for the 'Mapzen' API
 Version: 0.3.3.9001
-Author: Tarak Shah
+Authors@R: c(
+    person("Tarak", "Shah", email = "tarak_shah@berkeley.edu", role = c("aut", "cre")),
+    person("Daniel","Possenriede", role = "ctb"))
 Maintainer: Tarak Shah <tarak_shah@berkeley.edu>
 Description: Provides an interface to the 'Mapzen' API for geographic search 
     and geocoding, isochrone calculation, and vector data to draw map tiles. 
