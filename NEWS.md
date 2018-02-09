@@ -1,4 +1,4 @@
-
+* Made service host configurable, since Mapzen is no more :(. To use, e.g., geocode.earth: `options(RMAPZEN_SEARCH_HOST = "api.geocode.earth")`. Thanks to @dpprdan for the update. 
 
 # rmapzen 0.3.3
 * Added additional documentation and updated DESCRIPTION
