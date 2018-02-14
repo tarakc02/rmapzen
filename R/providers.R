@@ -1,6 +1,7 @@
-mz_provider <- function(hostname, path = "v1", key, scheme = "https") {
+mz_provider <- function(hostname, path = "v1", key = NULL, scheme = "https") {
     if (!assertthat::is.string(hostname)) stop("hostname must be a string")
-    if (!assertthat::is.string(path)) stop("path must be a string")
+    if (!is.null(path) && !assertthat::is.string(path))
+        stop("path must be a string")
     if (!assertthat::is.string(scheme)) stop("scheme must be a string")
 
     path <- gsub("/$", "", path)
