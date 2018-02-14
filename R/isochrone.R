@@ -7,7 +7,7 @@ build_isochrone_url <- function(
     denoise,
     generalize,
     id,
-    api_key = mz_key()
+    api_key = NULL
 ) {
     costing <- costing_model$costing
     costing_options <- costing_model$costing_options
@@ -168,7 +168,7 @@ mz_isochrone <- function(
     denoise = NULL,
     generalize = NULL,
     id = "my-iso",
-    api_key = mz_key()
+    api_key = NULL
 ) {
     costing_options <- costing_model$costing_options
     url <- build_isochrone_url(
