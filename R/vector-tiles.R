@@ -125,15 +125,20 @@ stitch <- function(tile1, tile2) {
 vector_GET <- httr::GET
 
 vector_path <- function(layers, x, y, z, format) {
-    res <- paste("mapzen", "vector", "v1", layers, z, x, y, sep = "/")
+    tilepath <- mz_get_host("tile")$path
+    if (is.null(tilepath)) {
+        res <- paste(layers, z, x, y, sep = "/")
+    } else {
+        res <- paste(tilepath, layers, z, x, y, sep = "/")
+    }
     paste(res, format, sep = ".")
 }
 
-vector_url <- function(x, y, z, layers = "all", format = "json", api_key = mz_key()) {
+vector_url <- function(x, y, z, layers = "all", format = "json", api_key = mz_key(which = "tile")) {
     structure(
         list(
-            scheme = "https",
-            hostname = getOption("RMAPZEN_TILE_HOST"),
+            scheme = mz_get_host("tile")$scheme,
+            hostname = mz_get_host("tile")$hostname,
             path = vector_path(layers, x, y, z, format),
             query = list(
                 api_key = api_key
