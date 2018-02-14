@@ -14,9 +14,9 @@
 #' @param api_key Your Mapzen API key. Defaults to \code{Sys.getenv("MAPZEN_KEY")}
 #' @name mz_place
 #' @export
-mz_place <- function(ids, ..., api_key = mz_key()) UseMethod("mz_place")
+mz_place <- function(ids, ..., api_key = NULL) UseMethod("mz_place")
 
-build_place_url <- function(ids, api_key = mz_key()) {
+build_place_url <- function(ids, api_key = NULL) {
     ids <- string_array(ids)
 
     query <- list(
@@ -29,13 +29,13 @@ build_place_url <- function(ids, api_key = mz_key()) {
 
 #' @rdname mz_place
 #' @export
-mz_place.character <- function(ids, ..., api_key = mz_key()) {
+mz_place.character <- function(ids, ..., api_key = NULL) {
     search_get(build_place_url(ids, api_key = api_key))
 }
 
 #' @rdname mz_place
 #' @export
-mz_place.mapzen_geo_list <- function(ids, ..., gid = "gid", api_key = mz_key()) {
+mz_place.mapzen_geo_list <- function(ids, ..., gid = "gid", api_key = NULL) {
     geolist <- ids
     getgid <- function(feature) {
         feature$properties[[gid]]

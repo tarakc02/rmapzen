@@ -1,6 +1,15 @@
-search_path <- function(endpoint) paste0("v1/", endpoint)
+search_path <- function(endpoint) {
+    spath <- mz_get_host("search")$path
+    if (is.null(spath)) {
+        res <- endpoint
+    } else {
+        res <- paste(spath, endpoint, sep = "/")
+    }
+    res
+}
 
-search_url <- function(endpoint, ..., api_key = mz_key()) {
+search_url <- function(endpoint, ..., api_key) {
+    if (is.null(api_key)) api_key <- mz_key(which = "search")
     query <- list(...)
 
     query <- c(
@@ -10,8 +19,8 @@ search_url <- function(endpoint, ..., api_key = mz_key()) {
 
     structure(
         list(
-            scheme = "https",
-            hostname = getOption("RMAPZEN_SEARCH_HOST"),
+            scheme = mz_get_host("search")$scheme,
+            hostname = mz_get_host("search")$hostname,
             path = search_path(endpoint),
             query = query),
         class = "url"

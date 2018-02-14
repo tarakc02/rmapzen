@@ -35,7 +35,7 @@ mz_structured_search <- function(
     county = NULL,
     region = NULL,
     postalcode = NULL,
-    country = NULL, api_key = mz_key(), ...
+    country = NULL, api_key = NULL, ...
 )
 {
     url <- build_structured_search_url(
@@ -64,7 +64,7 @@ build_structured_search_url <- function(
     county = NULL,
     region = NULL,
     postalcode = NULL,
-    country = NULL, api_key = mz_key(), ...
+    country = NULL, api_key = NULL, ...
 ) {
     assert_that(
         is.null(address) || is.string(address),
@@ -98,7 +98,7 @@ build_structured_search_url <- function(
              "  country")
 
     additional_params <- search_query_parameters(...)
-    query <- c(api_key = api_key, query, additional_params)
+    query <- c(list(api_key = api_key), query, additional_params)
     if (!is.null(postalcode)) query <- c(query, postalcode = postalcode)
     do.call(search_url, c(endpoint = "search/structured", query))
 }

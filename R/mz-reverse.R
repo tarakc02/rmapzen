@@ -2,7 +2,7 @@
 build_reverse_url <- function(
     point, size = NULL, layers = NULL, sources = NULL,
     boundary.country = NULL,
-    api_key = mz_key()
+    api_key = NULL
 ) {
     assert_that(is.null(boundary.country) || is.string(boundary.country))
     point <- as.mz_location(point)
@@ -15,7 +15,7 @@ build_reverse_url <- function(
         point, size = size,
         sources = sources, layers = layers,
         boundary.country = boundary.country,
-        api_key = api_key
+        list(api_key = api_key)
     )
     query <- query[!is.null(query)]
 
@@ -27,7 +27,7 @@ build_reverse_url <- function(
 mz_reverse_geocode <- function(
     point, size = NULL, layers = NULL, sources = NULL,
     boundary.country = NULL,
-    api_key = mz_key()
+    api_key = NULL
 ) {
     url <- build_reverse_url(
         point = point,

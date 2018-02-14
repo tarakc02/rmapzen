@@ -6,7 +6,7 @@ build_autocomplete_url <- function(
     focus.point = NULL,
     sources = NULL,
     layers = NULL,
-    api_key = mz_key())
+    api_key = NULL)
 {
     assert_that(is.string(text))
     assert_that(is.null(boundary.country) || is.string(boundary.country))
@@ -32,7 +32,7 @@ build_autocomplete_url <- function(
         focus.point,
         sources = sources,
         layers = layers,
-        api_key = api_key
+        list(api_key = api_key)
     )
     query <- query[!is.null(query)]
 
@@ -48,7 +48,7 @@ mz_autocomplete <- function(
     focus.point = NULL,
     sources = NULL,
     layers = NULL,
-    api_key = mz_key())
+    api_key = NULL)
 {
     url <- build_autocomplete_url(
         text = text,

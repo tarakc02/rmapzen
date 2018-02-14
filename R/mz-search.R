@@ -37,7 +37,7 @@ build_search_url <- function(
     text, size = 10,
     boundary.country = NULL, boundary.rect = NULL,
     boundary.circle = NULL, focus.point = NULL,
-    sources = NULL, layers = NULL, api_key = mz_key())
+    sources = NULL, layers = NULL, api_key = NULL)
 {
     assert_that(is.string(text))
 
@@ -52,7 +52,7 @@ build_search_url <- function(
     query <- c(
         text = text,
         query,
-        api_key = api_key
+        list(api_key = api_key)
     )
     query <- query[!is.null(query)]
 
@@ -110,7 +110,7 @@ mz_search <- function(
     text, size = 10,
     boundary.country = NULL, boundary.rect = NULL,
     boundary.circle = NULL, focus.point = NULL,
-    sources = NULL, layers = NULL, api_key = mz_key())
+    sources = NULL, layers = NULL, api_key = NULL)
 {
     url <- build_search_url(
         text = text,

@@ -19,7 +19,7 @@
 #'
 #' @seealso \code{\link{mz_search}}, \code{\link{mz_reverse_geocode}}
 #' @export
-mz_geocode <- function(location, api_key = mz_key()) {
+mz_geocode <- function(location, api_key = NULL) {
     result <- mz_search(location, size = 10, api_key = api_key)
 
     if (is.null(result$features) || length(result$features) <= 0L)
