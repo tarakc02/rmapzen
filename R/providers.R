@@ -60,6 +60,7 @@ mz_get_host <- function(which) {
 }
 
 #' @rdname mz_set_host
+#' @export
 mz_set_search_host_geocode.earth <- function(key = Sys.getenv("GEOCODE.EARTH_KEY")) {
     if (is.null(key)) stop("mz_set_search_host_geocode.earth requires a key")
     p <- mz_provider(hostname = "api.geocode.earth",
@@ -69,6 +70,7 @@ mz_set_search_host_geocode.earth <- function(key = Sys.getenv("GEOCODE.EARTH_KEY
 }
 
 #' @rdname mz_set_host
+#' @export
 mz_set_search_host_nyc_geosearch <- function() {
     p <- mz_provider(hostname = "geosearch.planninglabs.nyc",
                      path = "v1",
@@ -77,6 +79,7 @@ mz_set_search_host_nyc_geosearch <- function() {
 }
 
 #' @rdname mz_set_host
+#' @export
 mz_set_tile_host_nextzen <- function(key = Sys.getenv("NEXTZEN_KEY")) {
     if (is.null(key)) stop("mz_set_tile_host_nextzen requires a key")
     p <- mz_provider(hostname = "tile.nextzen.org",
