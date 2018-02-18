@@ -4,7 +4,7 @@
 \alias{mz_geocode}
 \title{Geocode an address or other location}
 \usage{
-mz_geocode(location, api_key = mz_key())
+mz_geocode(location, api_key = NULL)
 }
 \arguments{
 \item{location}{An address or other suitably specific search string}

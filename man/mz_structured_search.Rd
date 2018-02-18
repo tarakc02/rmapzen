@@ -6,7 +6,7 @@
 \usage{
 mz_structured_search(address = NULL, neighbourhood = NULL, borough = NULL,
   locality = NULL, county = NULL, region = NULL, postalcode = NULL,
-  country = NULL, api_key = mz_key(), ...)
+  country = NULL, api_key = NULL, ...)
 }
 \arguments{
 \item{address}{Can be a numbered street address or just the name of the street}

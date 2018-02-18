@@ -6,12 +6,11 @@
 \alias{mz_place.mapzen_geo_list}
 \title{Get details on a place}
 \usage{
-mz_place(ids, ..., api_key = mz_key())
+mz_place(ids, ..., api_key = NULL)
 
-\method{mz_place}{character}(ids, ..., api_key = mz_key())
+\method{mz_place}{character}(ids, ..., api_key = NULL)
 
-\method{mz_place}{mapzen_geo_list}(ids, ..., gid = "gid",
-  api_key = mz_key())
+\method{mz_place}{mapzen_geo_list}(ids, ..., gid = "gid", api_key = NULL)
 }
 \arguments{
 \item{ids}{A character vector of gids (see details), or a \code{mapzen_geo_list}}
