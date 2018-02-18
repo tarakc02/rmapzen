@@ -6,7 +6,7 @@ test_that("Notting Hill structured search url built correctly", {
         locality = "London",
         api_key = "abc"
     )
-    expect_identical(url$path, "v1/search/structured")
+    expect_match(url$path, "/structured$")
     expect_identical(url$query$neighbourhood, "Notting Hill")
     expect_identical(url$query$locality, "London")
     expect_identical(url$query$api_key, "abc")

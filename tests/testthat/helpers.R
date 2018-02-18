@@ -6,3 +6,31 @@ expect_dict_equal <- function(x1, x2) {
     expect_equal(actual_query, expected_query)
 
 }
+
+mz_setup <- function() {
+    hosts <- c("search", "matrix", "tile")
+    gh <- function(x) tryCatch(mz_get_host(x), error = function(e) NULL)
+    old_opts <- structure(lapply(hosts, gh),
+                          names = hosts)
+    suppressWarnings(
+        lapply(hosts,
+               mz_set_host,
+               provider = mz_provider("www.example.com",
+                                      path = "not/a/real/path",
+                                      key = "api-key"))
+    )
+    old_opts
+}
+
+mz_teardown <- function(old_opts) {
+    suppressWarnings(
+        Map(mz_set_host,
+            which = names(old_opts),
+            provider = old_opts)
+    )
+}
+test_that <- function(...) {
+    old_opts <- mz_setup()
+    testthat::test_that(...)
+    mz_teardown(old_opts)
+}
