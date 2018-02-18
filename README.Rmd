@@ -15,11 +15,13 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-NOTE: [Mapzen has shut down](https://mapzen.com/blog/shutdown/). However, the rmapzen package can be used with [other providers](https://mapzen.com/blog/migration/). The hosting service can be updated via `options`, for example, to update the search host (for `mz_search`, `mz_geocode`, and `mz_structured_search`):
+NOTE: [Mapzen has shut down](https://mapzen.com/blog/shutdown/). However, the rmapzen package can be used with [other PELIAS providers](https://mapzen.com/blog/migration/). The specific hosting service can be set up with `mz_set_host`. For known providers, `rmapzen` includes pre-configured API set up functions:
 
-```{r, eval = FALSE}
-options(RMAPZEN_SEARCH_HOST = "api.geocode.earth")
-```
+- `mz_set_search_host_geocode.earth` to set up [geocode.earth](https://geocode.earth/) as a search (includes geocoding, autocomplete, etc) provider
+- `mz_set_search_host_nyc_geosearch()` to set up  [GeoSearch from NYC Planning Labs](https://geosearch.planninglabs.nyc/) (currently in beta) as a search provider.
+- `mz_set_tile_host_nextzen` to set up [Nextzen](https://www.nextzen.org/) as a vector tile provider
+
+If you know of an API that uses PELIAS that is not included here, [let me know](https://github.com/tarakc02/rmapzen/issues/new).
 
 -----------------------------------
 
