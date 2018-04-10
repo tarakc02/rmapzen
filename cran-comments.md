@@ -1,3 +1,6 @@
+## Release summary
+This release adds support for other API providers besides Mapzen.
+
 ## Test environments
 * local ubuntu 17.10, R 3.4.2
 * ubuntu 14.04 (on travis-ci), R 3.4.2
@@ -7,8 +10,6 @@
 
 0 errors | 0 warnings | 0 notes
 
-* This is a new release.
-
 ## Reverse dependencies
 
-This is a new release, so there are no reverse dependencies.
+There are no reverse dependencies.
