@@ -14,7 +14,7 @@ output:
 
 ## Introduction
 
-`rmapzen` is a client for the Mapzen API. For more information, see [https://mapzen.com/documentation/](https://mapzen.com/documentation/). The project is [available on github](https://github.com/tarakc02/rmapzen) as well as [CRAN](https://cran.r-project.org/package=rmapzen). 
+`rmapzen` is a client for any implementation of the Mapzen API. Though Mapzen itself has [gone out of business](https://mapzen.com/blog/shutdown/), `rmapzen` can be set up to work with any provider who hosts Mapzen's open-source software, including [geocode.earth](https://geocode.earth/), [Nextzen](https://www.nextzen.org/), and [NYC GeoSearch from NYC Planning Labs](https://geosearch.planninglabs.nyc/). For more information, see [https://mapzen.com/documentation/](https://mapzen.com/documentation/). The project is [available on github](https://github.com/tarakc02/rmapzen) as well as [CRAN](https://cran.r-project.org/package=rmapzen). 
 
 ## Search
 
@@ -30,13 +30,15 @@ For example, to search for Hard Rock Cafes in Sweden (see [Additional convenienc
 
 ```{r loadmapzen, echo = FALSE}
 library(rmapzen)
+mz_set_tile_host_nextzen()
+mz_set_search_host_geocode.earth()
 ```
 
 ```{r ex-search-2, cache = TRUE}
 library(rmapzen)
 
-hard_rock <- mz_search("Hard Rock Cafe", boundary.country = "SE")
-hard_rock
+oakland_public <- mz_search("Oakland Public Library Branch", size = 25)
+oakland_public
 ```
 
 Additionally, `mz_geocode` is a convenient function to geocode an address, utilizing the more general `mz_search` function.
@@ -45,47 +47,25 @@ Additionally, `mz_geocode` is a convenient function to geocode an address, utili
 mz_geocode("UC Berkeley, Berkeley, CA")
 ```
 
-## Isochrones
-
-The [isochrone service](https://mapzen.com/documentation/mobility/isochrone/api-reference/) allows you to "[compute] areas that are reachable within specified time intervals from a location, and returns the reachable regions as contours of polygons or lines that you can display on a map". Below is an example of finding places within driving distance of UC Berkeley, and plotting them using the [leaflet package](http://rstudio.github.io/leaflet/).
-
-```{r load-leaflet, echo = FALSE}
-library(leaflet)
-```
-
-```{r isochrone-example, cache = TRUE}
-ucb <- mz_geocode("UC Berkeley")
-isos <- mz_isochrone(
-    ucb,
-    costing_model = mz_costing$auto(),
-    contours = mz_contours(c(10, 20, 30)),
-    polygons = TRUE
-)
-
-library(leaflet)
-leaflet(as_sp(isos)) %>%
-    addProviderTiles("CartoDB.DarkMatter") %>%
-    addPolygons(color = ~color, weight = 1) %>%
-    addLegend(colors = ~color, 
-              labels = ~paste(contour, "minutes"),
-              title = "Drive times from <br/> UC Berkeley Campus")
-```
-
 ## Vector tile service
 
 `rmapzen` provides an interface to Mapzen's [vector tiles service](https://mapzen.com/documentation/vector-tiles/). Tile requests can be specified using the x, y, zoom coordinates of the tile service, as well as with a lat/long bounding box. For instance, continuing the previous example:
 
-```{r vector-tile-example, cache = TRUE, message = FALSE, warning = FALSE}
-library(dplyr)
+```{r vector-tile-example, cache = TRUE, message = FALSE, warning = FALSE, dpi = 300}
+library(tidyverse)
 library(sf)
-library(ggplot2)
 
 # mz_bbox is a generic that returns the bounding box of an object
-ucb_tiles <- mz_vector_tiles(mz_bbox(isos))
+oakland_tiles <- mz_vector_tiles(mz_bbox(oakland_public))
 
 # vector tiles return all layers (roads, water, buildings, etc) in a list
-roads <- as_sf(ucb_tiles$roads) %>% filter(kind != "ferry")
-water <- as_sf(ucb_tiles$water)
+roads <- as_sf(oakland_tiles$roads) %>% filter(kind != "ferry")
+water <- as_sf(oakland_tiles$water)
+
+labels <- as.data.frame(oakland_public) %>% 
+    mutate(name = str_replace_all(
+        name, 
+        "(Oakland Public Library)|(Branch)", ""))
 
 # make a quick static map that includes roads and oceans as reference
 ggplot() +
@@ -93,10 +73,15 @@ ggplot() +
             fill = "lightblue", colour = NA) + 
     geom_sf(data = roads, 
             size = .2, colour = "gray30") + 
-    geom_sf(data = as_sf(isos), 
-            colour = "black", size = .1,
-            fill = "gray20", alpha = .3) + 
-    theme_void()
+    geom_sf(data = as_sf(oakland_public), 
+            colour = "black", size = 1) + 
+    ggrepel::geom_label_repel(
+        data = labels,
+        aes(x = lon, y = lat, label = name), size = 3,
+        family = "Roboto Condensed", label.padding = unit(.1, "lines"),
+        alpha = .7) +
+    theme_void() + 
+    theme(panel.grid.major = element_line(size = 0))
 ```
 
 ## `sf` and `Spatial*DataFrame` conversion
@@ -104,8 +89,7 @@ ggplot() +
 As some of the above examples illustrate, any object returned by a Mapzen service can be converted to the appropriate `Spatial*DataFrame` or `sf` object using the generics `as_sp` and `as_sf`, for easy interoperability with other packages. You can also convert most objects directly to data frames, allowing for use within tidy pipelines:
 
 ```{r ex-tidy, warning = FALSE, message = FALSE}
-library(dplyr)
-as.data.frame(hard_rock) %>%
+as.data.frame(oakland_public) %>%
     select(name, confidence, region, locality, neighbourhood)
 ```
 
@@ -118,48 +102,8 @@ pieces of a response:
 * `mz_bbox`
 
 ```{r ex-accessors, cache = TRUE}
-mz_coordinates(hard_rock)
-mz_bbox(ucb_tiles)
-```
-
-## A more detailed example
-
-Say you have an afternoon meeting at the TransAmerica center in San Francisco, and would like to visit a local museum afterwards. Here's how to make a map of museums within walking distance:
-
-```{r detailed-example, cache = TRUE}
-# first geocode the TransAmerica Center
-trans_america <- mz_geocode("TransAmerica Center, San Francisco CA")
-
-# then identify the area that is within 15 minutes walking distance
-walkable <- mz_isochrone(
-    trans_america,
-    costing_model = mz_costing$pedestrian(),
-    contours = mz_contours(15))
-
-# now search for museums, but limit the search to areas within "walkable"
-museums <- mz_search(
-    "Museum", 
-    boundary.rect = mz_bbox(walkable), 
-    layers = mz_layers$venue, 
-    size = 15
-)
-
-# use the leaflet package to draw the map
-leaflet(as_sp(walkable)) %>%
-    addProviderTiles("CartoDB.DarkMatter") %>%
-    addPolygons(color = "#ffffff", weight = 1) %>%
-    addMarkers(
-        data = trans_america, 
-        lat = ~geocode_latitude, 
-        lng = ~geocode_longitude,
-        popup = "TransAmerica Center") %>%
-    addCircleMarkers(
-        data = as_sp(museums), 
-        weight = 1,
-        radius = 7,
-        opacity = 1,
-        popup = ~name,
-        color = "#ff0000")
+mz_coordinates(oakland_public)
+mz_bbox(oakland_tiles)
 ```
 
 ## Convenience features
@@ -191,8 +135,4 @@ The package does not yet support [other Mapzen API services](https://mapzen.com/
 install.packages("rmapzen")
 ```
 
-You'll also need to [acquire an API key](https://mapzen.com/developers), and then set the `MAPZEN_KEY` environment variable:
-
-```{r, eval = FALSE}
-Sys.setenv(MAPZEN_KEY = "mapzen-xxxxxx")
-```
+You'll also need to set up soem options specific to the API provider you end up using. See `?mz_set_host` for details.
