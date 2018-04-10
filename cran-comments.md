@@ -1,13 +1,6 @@
-## Resubmission
-This is a resubmission. In this version, I have:
-
-* Edited the description in the DESCRIPTION file for clarity
-* Added more examples to the help pages
-
 ## Test environments
-* local ubuntu 16.04, R 3.4.1
-* ubuntu 14.04 (on travis-ci), R 3.4.1
-* local Windows 7, R 3.4.0
+* local ubuntu 17.10, R 3.4.2
+* ubuntu 14.04 (on travis-ci), R 3.4.2
 * win-builder (devel and release)
 
 ## R CMD check results
