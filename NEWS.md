@@ -1,3 +1,6 @@
+# rmapzen 0.3.5
+* Updated `as_sf` and `as_sp` methods for vector tile data, previous versions used functions that are no longer exported from the `sf` package (as of version 0.6-2)
+
 # rmapzen 0.3.4
 * Made service host configurable, since Mapzen is no more :(. See `?mz_set_host` for how to set up a specific API provider. Thanks to @dpprdan for the initial update. 
 
