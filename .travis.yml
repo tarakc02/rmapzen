@@ -18,5 +18,8 @@ addons:
     packages:
       - libv8-dev
 
+r_packages:
+  - devtools
+
 after_success:
   - Rscript -e 'covr::codecov()'
