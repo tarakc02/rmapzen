@@ -19,11 +19,16 @@ as_sf.geo_list <- function(geo, ...) {
 }
 
 #' @rdname as_sf
-#' @importFrom sf summarise.sf ungroup.sf
 #' @export
 as_sf.mapzen_vector_layer <- function(geo, ...) {
     if (length(geo$features) == 0L)
         stop("Cannot convert to sf: empty layer")
+
+    if (packageVersion("sf") < "0.6-2") {
+        summarise.sf <- sf::summarise.sf
+        ungroup.sf <- sf::ungroup.sf
+    }
+
     geo <- recalculate_ids(geo)
     geo <- collapse_properties(geo)
     res <- sf::read_sf(as_json(geo))
