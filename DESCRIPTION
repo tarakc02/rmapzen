@@ -29,7 +29,7 @@ Imports:
     rgdal,
     digest,
     maptools,
-    sf
+    sf (>= 0.6-2)
 RoxygenNote: 6.0.1
 Suggests: testthat,
     covr
