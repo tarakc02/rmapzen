@@ -74,9 +74,11 @@ as_sp.mapzen_vector_layer <- function(geo, ..., geometry_type = NULL) {
     features <- recalculate_ids(features)
     features <- collapse_properties(features)
     json <- as_json(features)
+    jsonfile <- tempfile()
+    writeLines(json, jsonfile)
     res <- rgdal::readOGR(
-        json,
-        layer = "OGRGeoJSON",
+        jsonfile,
+        layer = rgdal::ogrListLayers(jsonfile),
         disambiguateFIDs = TRUE,
         verbose = FALSE,
         require_geomType = geometry_type,
