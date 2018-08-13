@@ -4,7 +4,7 @@
 #' latitude and longitude.
 #'
 #' @param location An address or other suitably specific search string
-#' @param api_key Your Mapzen API key, defaults to the value of the MAPZEN_KEY environment variable
+#' @param ... Additional arguments passed on to \code{\link{mz_search}}
 #'
 #' @return A tibble, with the parsed address used to retrieve the geocode, lat/lon,
 #' and the confidence (between 0 and 1)
@@ -19,8 +19,8 @@
 #'
 #' @seealso \code{\link{mz_search}}, \code{\link{mz_reverse_geocode}}
 #' @export
-mz_geocode <- function(location, api_key = NULL) {
-    result <- mz_search(location, size = 10, api_key = api_key)
+mz_geocode <- function(location, ...) {
+    result <- mz_search(location, size = 10, ...)
 
     if (is.null(result$features) || length(result$features) <= 0L)
         stop("Tried to geocode ", location, " but there were no results")
