@@ -1,0 +1,100 @@
+---
+title: "Introduction to rmapzen"
+author: "Tarak Shah"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+## Introduction
+
+`rmapzen` is a client for any implementation of the Mapzen API. Though Mapzen itself has [gone out of business](https://mapzen.com/blog/shutdown/), `rmapzen` can be set up to work with any provider who hosts Mapzen's open-source software, including [geocode.earth](https://geocode.earth/), [Nextzen](https://www.nextzen.org/), and [NYC GeoSearch from NYC Planning Labs](https://geosearch.planninglabs.nyc/). For more information, see [https://mapzen.com/documentation/](https://mapzen.com/documentation/). The project is [available on github](https://github.com/tarakc02/rmapzen) as well as [CRAN](https://cran.r-project.org/package=rmapzen). 
+
+`rmapzen` provides access to the following Mapzen API services:
+
+- [Search](https://mapzen.com/documentation/search/): Structured and unstructured search and geocoding, reverse geocoding, and autocomplete. 
+- [Vector Tiles](https://mapzen.com/documentation/vector-tiles/): Basemap vector data.
+- [Isochrone](https://mapzen.com/documentation/mobility/isochrone/api-reference/): Calculation of areas reachable from a specified locations.
+
+## Set-up
+
+`rmapzen` works with API providers who implement the Mapzen API. In order to specify provider information (such as URL and API key), use `mz_set_host`. There are custom set-up functions for the following providers: 
+
+- [geocode.earth](https://geocode.earth/), for search services. Use the function `mz_set_search_host_geocode.earth`
+- [Nextzen](https://www.nextzen.org/), for vector tiles. Use the function `mz_set_tile_host_nextzen`. 
+- [NYC GeoSearch](https://geosearch.planninglabs.nyc/), for search services using New York City's Property Address Directory. Use `mz_set_search_host_nyc_geosearch`.
+
+As of this writing, there are no public providers offering the Mapzen isochrone service. 
+
+## Search
+
+All of the services in [Mapzen search](https://mapzen.com/documentation/search/) have been implemented. Search functions:
+
+* `mz_search`
+* `mz_reverse_geocode`
+* `mz_autocomplete`
+* `mz_place`
+* `mz_structured_search` ([what's this?](https://mapzen.com/documentation/search/structured-geocoding/))
+
+Each of those functions returns a `mapzen_geo_list`. The sample dataset `oakland_public` contains the results of `mz_search("Oakland public library branch")` on January 8, 2017:
+
+```{r loadmapzen, echo = FALSE}
+library(rmapzen)
+oakland_public
+```
+
+```{r}
+mz_bbox(oakland_public)
+as.data.frame(oakland_public)
+```
+
+Search can, optionally, be constrained to a particular country, data layer, boundary rectangle, or boundary circle. Furthermore, search can prioritize results near a given "focus" point. See `?mz_search`.
+
+## Vector tile service
+
+`rmapzen` provides an interface to Mapzen's [vector tiles service](https://mapzen.com/documentation/vector-tiles/). Tile requests can be specified using the x, y, zoom coordinates of the tile service, as well as with a lat/long bounding box. Multiple tiles are stitched together and returned as an object of class `mz_vector_tiles`. See `?mz_vector_tiles`. The sample data set `ca_tiles` contains zoomed out vector tile data for all of California as well as parts of neighboring states.
+
+```{r}
+ca_tiles
+```
+
+Each element of a vector tile response includes point, line, and or polygon data for an individual map layer, and has class `mapzen_vector_layer`. Like other response types, the `mapzen_vector_layer` can be converted to `sf` and `sp` objects for further processing, using the generic functions `as_sf` and `as_sp`.
+
+```{r}
+# points of interest
+as_sf(ca_tiles$pois)
+```
+
+## `sf` and `Spatial*DataFrame` conversion
+
+Any object returned by a Mapzen service can be converted to the appropriate `Spatial*DataFrame` or `sf` object using the generics `as_sp` and `as_sf`, for easy interoperability with other packages. You can also convert most objects directly to data frames, allowing for use within tidy pipelines:
+
+```{r ex-tidy, warning = FALSE, message = FALSE}
+library(dplyr)
+library(sf)
+as_sf(oakland_public) %>%
+    select(name, confidence, region, locality, neighbourhood)
+```
+
+## Accessor methods
+
+Currently, the following methods are available to pull out commonly used 
+pieces of a response:
+
+* `mz_coordinates` (only available for search results): extracts lat/lon coordinates from search results, and returns them as a `data.frame`.
+* `mz_bbox`: returns the bounding box of an object as a `data.frame` with columns `min_lon`, `min_lat`, `max_lon`, and `max_lat`.
+
+```{r ex-accessors}
+mz_bbox(ca_tiles)
+```
