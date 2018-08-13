@@ -32,6 +32,9 @@ Imports:
     sf (>= 0.6-2)
 RoxygenNote: 6.0.1
 Suggests: testthat,
-    covr
+    covr,
+    knitr,
+    rmarkdown
 URL: https://tarakc02.github.io/rmapzen/
 BugReports: https://github.com/tarakc02/rmapzen/issues
+VignetteBuilder: knitr

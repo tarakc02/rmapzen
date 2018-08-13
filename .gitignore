@@ -4,3 +4,4 @@
 .Ruserdata
 README_cache/*
 index_cache/*
+inst/doc
