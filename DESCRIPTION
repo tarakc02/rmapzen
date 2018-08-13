@@ -1,7 +1,7 @@
 Package: rmapzen
 Type: Package
 Title: Client for 'Mapzen' and Related Map APIs
-Version: 0.3.5
+Version: 0.3.5.9000
 Authors@R: c(
     person("Tarak", "Shah", email = "tarak_shah@berkeley.edu", role = c("aut", "cre")),
     person("Daniel","Possenriede", role = "ctb"))
