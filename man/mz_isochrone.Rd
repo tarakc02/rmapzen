@@ -32,7 +32,8 @@ largest contour.}
 
 \item{id}{A descriptive identifier, the response will contain the id as an element.}
 
-\item{api_key}{Your Mapzen API key, defaults to the MAPZEN_KEY environment variable.}
+\item{api_key}{Your Mapzen API key. The default is to look for the key within
+the provider information that was set up with `mz_set_host`.}
 }
 \value{
 A \code{mapzen_isochrone_list}, which can be converted to \code{sf}

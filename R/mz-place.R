@@ -11,7 +11,8 @@
 #' @param gid The name of the \code{gid} field to use. Search results may include,
 #' in addition to the \code{gid} for the search result itself (the default), the
 #' \code{gid}s for the country, region, county, locality and neighborhood.
-#' @param api_key Your Mapzen API key. Defaults to \code{Sys.getenv("MAPZEN_KEY")}
+#' @param api_key Your Mapzen API key. The default is to look for the key within
+#' the provider information that was set up with `mz_set_host`.
 #' @name mz_place
 #' @export
 mz_place <- function(ids, ..., api_key = NULL) UseMethod("mz_place")

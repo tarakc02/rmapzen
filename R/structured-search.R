@@ -19,8 +19,8 @@
 #' one other argument
 #' @param country The country - Can be the full name or the abbreviation from
 #' \code{\link{mz_countries}}
-#' @param api_key Your Mapzen API key. The default is to look for the value in
-#' the MAPZEN_KEY environment variable.
+#' @param api_key Your Mapzen API key. The default is to look for the key within
+#' the provider information that was set up with `mz_set_host`.
 #' @param ... Any of the parameters, other than "text", that appear in
 #' \code{\link{mz_search}}, can appear here, for example \code{size},
 #' \code{boundary.country}, etc.

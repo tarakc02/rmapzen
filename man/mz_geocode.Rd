@@ -4,12 +4,12 @@
 \alias{mz_geocode}
 \title{Geocode an address or other location}
 \usage{
-mz_geocode(location, api_key = NULL)
+mz_geocode(location, ...)
 }
 \arguments{
 \item{location}{An address or other suitably specific search string}
 
-\item{api_key}{Your Mapzen API key, defaults to the value of the MAPZEN_KEY environment variable}
+\item{...}{Additional arguments passed on to \code{\link{mz_search}}}
 }
 \value{
 A tibble, with the parsed address used to retrieve the geocode, lat/lon,

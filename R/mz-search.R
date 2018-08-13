@@ -88,8 +88,8 @@ build_search_url <- function(
 #' @param layers Which layers (types of places) to search. See
 #' \url{https://mapzen.com/documentation/search/search/#filter-by-data-type}
 #' for definitions, and use \code{\link{mz_layers}} for convenience
-#' @param api_key Your Mapzen API key. The default is to look for the value in
-#' the MAPZEN_KEY environment variable.
+#' @param api_key Your Mapzen API key. The default is to look for the key within
+#' the provider information that was set up with `mz_set_host`.
 #' @name search
 #' @seealso \code{\link{mz_place}}, \code{\link{mz_structured_search}},
 #' \code{\link{mz_countries}}, \code{\link{mz_sources}}, \code{\link{mz_layers}}

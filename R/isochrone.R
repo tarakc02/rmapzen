@@ -134,7 +134,8 @@ isochrone_get <- function(url) {
 #' largest contour.
 #' @param generalize Tolerance in meters for the Douglas-Peucker generalization.
 #' @param id A descriptive identifier, the response will contain the id as an element.
-#' @param api_key Your Mapzen API key, defaults to the MAPZEN_KEY environment variable.
+#' @param api_key Your Mapzen API key. The default is to look for the key within
+#' the provider information that was set up with `mz_set_host`.
 #'
 #' @return A \code{mapzen_isochrone_list}, which can be converted to \code{sf}
 #' or \code{sp} using \code{\link{as_sf}} or \code{\link{as_sp}}.

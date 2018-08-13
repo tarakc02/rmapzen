@@ -39,8 +39,8 @@ results). See \code{\link{mz_sources}}}
 \url{https://mapzen.com/documentation/search/search/#filter-by-data-type}
 for definitions, and use \code{\link{mz_layers}} for convenience}
 
-\item{api_key}{Your Mapzen API key. The default is to look for the value in
-the MAPZEN_KEY environment variable.}
+\item{api_key}{Your Mapzen API key. The default is to look for the key within
+the provider information that was set up with `mz_set_host`.}
 
 \item{point}{For reverse geocoding, the location to reverse geocode. Can be
 created with \code{\link{mz_location}} or \code{\link{mz_geocode}},
