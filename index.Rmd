@@ -16,6 +16,28 @@ output:
 
 `rmapzen` is a client for any implementation of the Mapzen API. Though Mapzen itself has [gone out of business](https://mapzen.com/blog/shutdown/), `rmapzen` can be set up to work with any provider who hosts Mapzen's open-source software, including [geocode.earth](https://geocode.earth/), [Nextzen](https://www.nextzen.org/), and [NYC GeoSearch from NYC Planning Labs](https://geosearch.planninglabs.nyc/). For more information, see [https://mapzen.com/documentation/](https://mapzen.com/documentation/). The project is [available on github](https://github.com/tarakc02/rmapzen) as well as [CRAN](https://cran.r-project.org/package=rmapzen). 
 
+`rmapzen` provides access to the following Mapzen API services:
+
+- [Search](https://mapzen.com/documentation/search/): Structured and unstructured search and geocoding, reverse geocoding, and autocomplete. 
+- [Vector Tiles](https://mapzen.com/documentation/vector-tiles/): Basemap vector data.
+- [Isochrone](https://mapzen.com/documentation/mobility/isochrone/api-reference/): Calculation of areas reachable from a specified locations.
+
+## Installation and Set-up
+
+`rmapzen` is available [on CRAN](https://cran.r-project.org/package=rmapzen). To install:
+
+```{r, eval = FALSE}
+install.packages("rmapzen")
+```
+
+You'll also need to set up options specific to the API provider you end up using. `rmapzen` works with API providers who implement the Mapzen API. In order to specify provider information (such as URL and API key), use `mz_set_host`. There are custom set-up functions for the following providers: 
+
+- [geocode.earth](https://geocode.earth/), for search services. Use the function `mz_set_search_host_geocode.earth`
+- [Nextzen](https://www.nextzen.org/), for vector tiles. Use the function `mz_set_tile_host_nextzen`. 
+- [NYC GeoSearch](https://geosearch.planninglabs.nyc/), for search services using New York City's Property Address Directory. Use `mz_set_search_host_nyc_geosearch`.
+
+As of this writing, there are no public providers offering the Mapzen isochrone service, but `mz_isochrone` and related functions are available. If you know of a provider not listed here, use the more general `mz_set_host` function, and [submit an issue](https://github.com/tarakc02/rmapzen/issues) so we can create a custom set up function for future users.
+
 ## Search
 
 All of the services in [Mapzen search](https://mapzen.com/documentation/search/) have been implemented. Search functions:
@@ -26,20 +48,22 @@ All of the services in [Mapzen search](https://mapzen.com/documentation/search/)
 * `mz_place`
 * `mz_structured_search` ([what's this?](https://mapzen.com/documentation/search/structured-geocoding/))
 
-For example, to search for Hard Rock Cafes in Sweden (see [Additional convenience features](#additional-convenience-features) below for more ways to get the correct ISO-3166 country code):
+For example, to search for public library branches in Oakland, CA:
 
-```{r loadmapzen, echo = FALSE}
+```{r loadmapzen}
+# load rmapzen and run provider set-up functions
 library(rmapzen)
 mz_set_tile_host_nextzen()
 mz_set_search_host_geocode.earth()
 ```
 
 ```{r ex-search-2, cache = TRUE}
-library(rmapzen)
-
-oakland_public <- mz_search("Oakland Public Library Branch", size = 25)
+oakland_public <- mz_search("Oakland Public Library Branch", 
+                            size = 25)
 oakland_public
 ```
+
+Search can, optionally, be constrained to a particular country, data layer, boundary rectangle, or boundary circle. Furthermore, search can prioritize results near a given "focus" point. See `?mz_search`.
 
 Additionally, `mz_geocode` is a convenient function to geocode an address, utilizing the more general `mz_search` function.
 
@@ -59,7 +83,8 @@ library(sf)
 oakland_tiles <- mz_vector_tiles(mz_bbox(oakland_public))
 
 # vector tiles return all layers (roads, water, buildings, etc) in a list
-roads <- as_sf(oakland_tiles$roads) %>% filter(kind != "ferry")
+roads <- as_sf(oakland_tiles$roads) %>% 
+    filter(kind != "ferry")
 water <- as_sf(oakland_tiles$water)
 
 labels <- as.data.frame(oakland_public) %>% 
@@ -93,13 +118,13 @@ as.data.frame(oakland_public) %>%
     select(name, confidence, region, locality, neighbourhood)
 ```
 
-## Mapzen list methods
+## Accessor methods
 
 Currently, the following methods are available to pull out commonly used 
 pieces of a response:
 
-* `mz_coordinates` (only available for search results)
-* `mz_bbox`
+* `mz_coordinates` (only available for search results): extracts lat/lon coordinates from search results, and returns them as a `data.frame`.
+* `mz_bbox`: returns the bounding box of an object as a `data.frame` with columns `min_lon`, `min_lat`, `max_lon`, and `max_lat`.
 
 ```{r ex-accessors, cache = TRUE}
 mz_coordinates(oakland_public)
@@ -126,13 +151,3 @@ The package does not yet support [other Mapzen API services](https://mapzen.com/
 
 * [elevatr](https://github.com/jhollist/elevatr) for accessing elevation data, including Mapzen Terrain and Elevation
 * [postr](https://github.com/Ironholds/poster) for address parsing and normalization using the [libpostal](https://github.com/openvenues/libpostal) library
-
-## Installation
-
-`rmapzen` is available [on CRAN](https://cran.r-project.org/package=rmapzen). To install:
-
-```{r, eval = FALSE}
-install.packages("rmapzen")
-```
-
-You'll also need to set up soem options specific to the API provider you end up using. See `?mz_set_host` for details.
