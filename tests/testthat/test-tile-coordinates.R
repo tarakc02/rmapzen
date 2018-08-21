@@ -30,8 +30,6 @@ test_that("bounding box is correctly converted to tile coordinates", {
         max_lat = 37.86912
     )
 
-    marinalon <- -122.3151
-    marinalat <- 37.86613
     tile_coords <- as.mz_tile_coordinates(rect)
     z <- tile_coords[[1]]$z
 
@@ -40,8 +38,25 @@ test_that("bounding box is correctly converted to tile coordinates", {
     x <- 10501
     y <- 25310
 
-    x <- as.integer(x * 2^(z - 16))
-    y <- as.integer(y * 2^(z - 16))
+    # make sure the coord is in the set:
+    xs <- vapply(tile_coords, function(.) .[["x"]], numeric(1))
+    ys <- vapply(tile_coords, function(.) .[["y"]], numeric(1))
+
+    expect_true(x %in% xs)
+    expect_true(y %in% ys)
+})
+
+test_that("point + zoom is correctly converted to tile coordinates", {
+    marinalon <- -122.319080
+    marinalat <-   37.873242
+    z <- 15
+
+    marina <- mz_location(lat = marinalat, lon = marinalon)
+    tile_coords <- as.mz_tile_coordinates(marina, z = z)
+
+    # based on: http://tools.geofabrik.de/calc/#type=geofabrik_standard&bbox=-122.321657,37.862023,-122.305585,37.870408&grid=1
+    x <- 5250
+    y <- 12654
 
     # make sure the coord is in the set:
     xs <- vapply(tile_coords, function(.) .[["x"]], numeric(1))

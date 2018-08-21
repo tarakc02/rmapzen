@@ -1,3 +1,14 @@
+deg2num <- function(pt, zoom){
+    # http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames#R
+    lat_deg <- pt[["lat"]]
+    lon_deg <- pt[["lon"]]
+    lat_rad <- lat_deg * pi /180
+    n <- 2.0 ^ zoom
+    xtile <- floor((lon_deg + 180.0) / 360.0 * n)
+    ytile = floor((1.0 - log(tan(lat_rad) + (1 / cos(lat_rad))) / pi) / 2.0 * n)
+    return( c(xtile, ytile))
+}
+
 #' Specify tile coordinates
 #'
 #' \code{\link{mz_vector_tiles}} requires tile coordinates or some other
@@ -98,17 +109,6 @@ as.mz_tile_coordinates.mz_bbox <- function(obj, ..., height = 375, width = 500) 
         pmin(latZoom, lngZoom, ZOOM_MAX)
     }
 
-    # http://wiki.openstreetmap.org/wiki/Slippy_map_tilenames#R
-    deg2num <- function(pt, zoom){
-        lat_deg <- pt[["lat"]]
-        lon_deg <- pt[["lon"]]
-        lat_rad <- lat_deg * pi /180
-        n <- 2.0 ^ zoom
-        xtile <- floor((lon_deg + 180.0) / 360.0 * n)
-        ytile = floor((1.0 - log(tan(lat_rad) + (1 / cos(lat_rad))) / pi) / 2.0 * n)
-        return( c(xtile, ytile))
-    }
-
     zoom <- getBoundsZoomLevel(obj, list(height = height, width = width))
 
     # tile for bottom left corner:
@@ -127,4 +127,19 @@ as.mz_tile_coordinates.mz_bbox <- function(obj, ..., height = 375, width = 500) 
     ys <- unique(c(ll[2], ur[2]))
 
     mz_tile_coordinates(x = xs, y = ys, z = zoom)
+}
+
+#' @rdname mz_tile_coordinates
+#' @export
+as.mz_tile_coordinates.mz_location <- function(obj, ..., z = 17) {
+    xy_coords <- deg2num(obj, zoom = z)
+    mz_tile_coordinates(x = xy_coords[1], y = xy_coords[2], z = z)
+}
+
+#' @rdname mz_tile_coordinates
+#' @export
+as.mz_tile_coordinates.mz_geocode_result <- function(obj, ..., z = 17) {
+    obj <- as.mz_location(obj)
+    xy_coords <- deg2num(obj, zoom = z)
+    mz_tile_coordinates(x = xy_coords[1], y = xy_coords[2], z = z)
 }
