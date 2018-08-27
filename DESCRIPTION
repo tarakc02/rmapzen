@@ -34,7 +34,8 @@ RoxygenNote: 6.0.1
 Suggests: testthat,
     covr,
     knitr,
-    rmarkdown
+    rmarkdown,
+    rlang
 URL: https://tarakc02.github.io/rmapzen/
 BugReports: https://github.com/tarakc02/rmapzen/issues
 VignetteBuilder: knitr

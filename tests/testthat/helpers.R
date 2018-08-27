@@ -34,3 +34,16 @@ test_that <- function(...) {
     testthat::test_that(...)
     mz_teardown(old_opts)
 }
+
+expect_tiles_contain_xy <- function(object, x, y) {
+    act <- quasi_label(rlang::enquo(object))
+
+    xs <- vapply(object, function(.) .[["x"]], numeric(1))
+    ys <- vapply(object, function(.) .[["y"]], numeric(1))
+
+    expect(
+        x %in% xs && y %in% ys,
+        sprintf("%s does not contain tile (%i, %i)", act$lab, x, y)
+    )
+    invisible(act$val)
+}
