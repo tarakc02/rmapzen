@@ -1,3 +1,12 @@
+# rmapzen 0.4.0
+* added `mz_geocode_structured` for geocoding structured address data
+* added additional ways to specify tile coordinates for vector tiles. Vector tile coordinates can now be specified using: 
+    - the x, y, z tile coordinate system, 
+    - a lat/lon bounding box with a zoom level, 
+    - a bounding box with height/width in pixels, and 
+    - a point location plus a zoom level 
+* added additional methods for `mz_bbox`
+
 # rmapzen 0.3.5
 * Updated `as_sf` and `as_sp` methods for vector tile data, previous versions used functions that are no longer exported from the `sf` package (as of version 0.6-2)
 
