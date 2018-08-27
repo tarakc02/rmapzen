@@ -79,8 +79,7 @@ mz_bbox.mapzen_isochrone_list <- function(geo) {
     res
 }
 
-#' @export
-mz_bbox.mapzen_vector_tiles <- function(geo) {
+layer_coords <- function(layer) {
     feature_type <- function(feature) {
         known_types <- c(
             "Point", "MultiPoint",
@@ -140,11 +139,21 @@ mz_bbox.mapzen_vector_tiles <- function(geo) {
                MultiPolygon = multipolygon_coords(feature),
                default = stop("Unrecognized feature"))
 
-    layer_coords <- function(layer) {
-        res <- lapply(layer$features, coords)
-        do.call("rbind", res)
-    }
+    res <- lapply(layer$features, coords)
+    do.call("rbind", res)
+}
 
+#' @export
+mz_bbox.mapzen_vector_layer <- function(geo) {
+    res <- layer_coords(geo)
+    mz_rect(min_lon = min(res$lon),
+            min_lat = min(res$lat),
+            max_lon = max(res$lon),
+            max_lat = max(res$lat))
+}
+
+#' @export
+mz_bbox.mapzen_vector_tiles <- function(geo) {
     res <- lapply(geo, layer_coords)
     res <- do.call("rbind", res)
     structure(
@@ -171,5 +180,16 @@ mz_rect <- function(min_lon, min_lat, max_lon, max_lat) {
             max_lon = max_lon,
             max_lat = max_lat
         ), class = c("mz_bbox", "tbl_df", "tbl", "data.frame")
+    )
+}
+
+#' @export
+mz_bbox.default <- function(geo) {
+    bbox <- sf::st_bbox(geo)
+    mz_rect(
+        min_lon = bbox[["xmin"]],
+        min_lat = bbox[["ymin"]],
+        max_lon = bbox[["xmax"]],
+        max_lat = bbox[["ymax"]]
     )
 }

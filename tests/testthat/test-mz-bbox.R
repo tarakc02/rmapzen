@@ -54,3 +54,11 @@ test_that("mz_bbox gets bounding box for search results", {
     }
     Map(function(x, y) within(x, y, bbox), coords$lon, coords$lat)
 })
+
+test_that("mz_bbox works for sf and sp objects", {
+    oakland_sf <- as_sf(oakland_public)
+    oakland_sp <- as_sp(oakland_public)
+
+    expect_is(mz_bbox(oakland_sf), "mz_bbox")
+    expect_is(mz_bbox(oakland_sp), "mz_bbox")
+})
