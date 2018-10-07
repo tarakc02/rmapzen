@@ -1,11 +1,11 @@
 Package: rmapzen
 Type: Package
 Title: Client for 'Mapzen' and Related Map APIs
-Version: 0.4.0
+Version: 0.4.1
 Authors@R: c(
-    person("Tarak", "Shah", email = "tarak_shah@berkeley.edu", role = c("aut", "cre")),
+    person("Tarak", "Shah", email = "tarak.shah@gmail.com", role = c("aut", "cre")),
     person("Daniel","Possenriede", role = "ctb"))
-Maintainer: Tarak Shah <tarak_shah@berkeley.edu>
+Maintainer: Tarak Shah <tarak.shah@gmail.com>
 Description: Provides an interface to 'Mapzen'-based APIs (including 
     geocode.earth, Nextzen, and NYC GeoSearch) for geographic search 
     and geocoding, isochrone calculation, and vector data to draw map tiles. 
@@ -30,7 +30,7 @@ Imports:
     digest,
     maptools,
     sf (>= 0.6-2)
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
 Suggests: testthat,
     covr,
     knitr,

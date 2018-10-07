@@ -1,3 +1,6 @@
+# rmapzen 0.4.1
+* updated maintainer email address
+
 # rmapzen 0.4.0
 * added `mz_geocode_structured` for geocoding structured address data
 * added additional ways to specify tile coordinates for vector tiles. Vector tile coordinates can now be specified using: 
