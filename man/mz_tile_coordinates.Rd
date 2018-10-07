@@ -15,8 +15,8 @@ as.mz_tile_coordinates(obj, ...)
 
 \method{as.mz_tile_coordinates}{mz_tile_coordinates}(obj, ...)
 
-\method{as.mz_tile_coordinates}{mz_bbox}(obj, ..., z = NULL, height = NULL,
-  width = NULL)
+\method{as.mz_tile_coordinates}{mz_bbox}(obj, ..., z = NULL,
+  height = NULL, width = NULL)
 
 \method{as.mz_tile_coordinates}{mz_location}(obj, ..., z = 15L)
 

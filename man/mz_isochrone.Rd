@@ -5,8 +5,8 @@
 \title{Retrieve isochrones}
 \usage{
 mz_isochrone(locations, costing_model, contours, date_time = NULL,
-  polygons = NULL, denoise = NULL, generalize = NULL, id = "my-iso",
-  api_key = NULL)
+  polygons = NULL, denoise = NULL, generalize = NULL,
+  id = "my-iso", api_key = NULL)
 }
 \arguments{
 \item{locations}{An \code{mz_location}, or something that can be coerced to an

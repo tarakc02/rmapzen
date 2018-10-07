@@ -9,14 +9,15 @@
 \title{Mapzen search API}
 \usage{
 mz_autocomplete(text, boundary.country = NULL, boundary.rect = NULL,
-  focus.point = NULL, sources = NULL, layers = NULL, api_key = NULL)
+  focus.point = NULL, sources = NULL, layers = NULL,
+  api_key = NULL)
 
 mz_reverse_geocode(point, size = NULL, layers = NULL, sources = NULL,
   boundary.country = NULL, api_key = NULL)
 
-mz_search(text, size = 10, boundary.country = NULL, boundary.rect = NULL,
-  boundary.circle = NULL, focus.point = NULL, sources = NULL,
-  layers = NULL, api_key = NULL)
+mz_search(text, size = 10, boundary.country = NULL,
+  boundary.rect = NULL, boundary.circle = NULL, focus.point = NULL,
+  sources = NULL, layers = NULL, api_key = NULL)
 }
 \arguments{
 \item{text}{Search string}
