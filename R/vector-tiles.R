@@ -1,5 +1,5 @@
-vector_get <- function(url) {
-    response <- vector_GET(httr::build_url(url))
+vector_get <- function(url, ...) {
+    response <- vector_GET(httr::build_url(url), ...)
     vector_process(response)
 }
 
@@ -59,7 +59,7 @@ vector_process <- function(response) {
 #'
 #' @seealso \code{\link{mz_tile_coordinates}}
 #' @export
-mz_vector_tiles <- function(tile_coordinates, ...) {
+mz_vector_tiles <- function(tile_coordinates, ..., Origin = NULL) {
     tile_coordinates <- as.mz_tile_coordinates(tile_coordinates, ...)
 
     get_tile <- function(tile_coordinates) {
@@ -70,7 +70,8 @@ mz_vector_tiles <- function(tile_coordinates, ...) {
             layers = "all",
             format = "json"
         )
-        vector_get(url)
+        if (is.null(Origin)) vector_get(url)
+        else vector_get(url, httr::add_headers(Origin = Origin))
     }
 
     all_tiles <- lapply(tile_coordinates, get_tile)
