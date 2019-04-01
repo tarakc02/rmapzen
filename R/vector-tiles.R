@@ -29,6 +29,7 @@ vector_process <- function(response) {
 #' @param tile_coordinates an \code{\link{mz_tile_coordinates}} object, or something
 #' that can be coerced to one (including the output of \code{\link{mz_bbox}})
 #' @param ... Arguments passed on to \code{\link{as.mz_tile_coordinates}}.
+#' @param Origin optional, specify Origin URL in request header
 #'
 #' @return A list of tile layers (such as "water", "buildings", "roads", etc.).
 #' Each layer is an object of class \code{mapzen_vector_layer}, which can be converted

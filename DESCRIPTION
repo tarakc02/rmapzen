@@ -30,7 +30,7 @@ Imports:
     digest,
     maptools,
     sf (>= 0.6-2)
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 Suggests: testthat,
     covr,
     knitr,

@@ -4,13 +4,15 @@
 \alias{mz_vector_tiles}
 \title{Request vector tile data}
 \usage{
-mz_vector_tiles(tile_coordinates, ...)
+mz_vector_tiles(tile_coordinates, ..., Origin = NULL)
 }
 \arguments{
 \item{tile_coordinates}{an \code{\link{mz_tile_coordinates}} object, or something
 that can be coerced to one (including the output of \code{\link{mz_bbox}})}
 
 \item{...}{Arguments passed on to \code{\link{as.mz_tile_coordinates}}.}
+
+\item{Origin}{optional, specify Origin URL in request header}
 }
 \value{
 A list of tile layers (such as "water", "buildings", "roads", etc.).
