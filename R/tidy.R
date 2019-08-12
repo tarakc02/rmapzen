@@ -10,6 +10,10 @@ as.data.frame.mapzen_geo_list <- function(x, ...) {
     dplyr::bind_cols(rest, coords)
 }
 
+tidyr_new_interface <- function() {
+    utils::packageVersion("tidyr") > "0.8.99"
+}
+
 #' @export
 as.data.frame.mapzen_isochrone_list <- function(x, ...) {
     if (length(x$features) == 0L)
@@ -34,6 +38,11 @@ as.data.frame.mapzen_isochrone_list <- function(x, ...) {
             coords
         )
     )
-    res <- tidyr::unnest(res, cols = c(contours))
-    tidyr::unnest(res, cols = c(coordinates))
+    if (tidyr_new_interface()) {
+        res <- tidyr::unnest(res, cols = tidyr::one_of("contours"))
+        return(tidyr::unnest(res, cols = tidyr::one_of("coordinates")))
+    } else {
+        res <- tidyr::unnest_(res, "contours")
+        return(tidyr::unnest(res))
+    }
 }

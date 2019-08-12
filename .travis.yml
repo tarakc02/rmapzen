@@ -1,6 +1,8 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
-language: r
+language: R
+cache: packages
+
 sudo: required
 dist: trusty
 
@@ -21,5 +23,11 @@ addons:
 r_packages:
   - devtools
 
-after_success:
-  - Rscript -e 'covr::codecov()'
+matrix:
+    include:
+    - r: release
+        after_success:
+        - Rscript -e 'covr::codecov()'
+    - r: release
+        name: tidyr-devel
+        before_script: Rscript -e "remotes::install_github('tidyverse/tidyr')"
