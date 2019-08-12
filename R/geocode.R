@@ -5,7 +5,7 @@ search_results_to_geocodes <- function(result, location) {
     confidence <- as.numeric(result$features[[1]]$properties$confidence[[1]])
     longitude <- as.numeric(result$features[[1]]$geometry$coordinates[[1]])
     latitude <- as.numeric(result$features[[1]]$geometry$coordinates[[2]])
-    res <- tibble::data_frame(
+    res <- tibble::tibble(
         geocode_address = result$features[[1]]$properties$label,
         geocode_longitude = longitude,
         geocode_latitude = latitude,

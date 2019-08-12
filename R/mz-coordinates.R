@@ -25,5 +25,5 @@ mz_coordinates.mapzen_geo_list <- function(geo) {
                       feature$geometry$coordinates[[2]]
                   }, FUN.VALUE = numeric(1))
 
-    tibble::data_frame(lon = lon, lat = lat)
+    tibble::tibble(lon = lon, lat = lat)
 }
