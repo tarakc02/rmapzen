@@ -34,6 +34,6 @@ as.data.frame.mapzen_isochrone_list <- function(x, ...) {
             coords
         )
     )
-    res <- tidyr::unnest(res, tidyr::one_of("contours"))
+    res <- tidyr::unnest(res, cols = c(contours))
     tidyr::unnest(res, cols = c(coordinates))
 }
