@@ -1,3 +1,7 @@
+# rmapzen 0.4.2
+* added optional `Origin` argument to `mz_vector_tiles`, see issue #17
+* minor modifications to code to avoid using deprecated tidyverse functions
+
 # rmapzen 0.4.1
 * updated maintainer email address
 

@@ -1,7 +1,7 @@
 Package: rmapzen
 Type: Package
 Title: Client for 'Mapzen' and Related Map APIs
-Version: 0.4.1
+Version: 0.4.2
 Authors@R: c(
     person("Tarak", "Shah", email = "tarak.shah@gmail.com", role = c("aut", "cre")),
     person("Daniel","Possenriede", role = "ctb"))
@@ -29,8 +29,9 @@ Imports:
     rgdal,
     digest,
     maptools,
-    sf (>= 0.6-2)
-RoxygenNote: 6.1.0
+    sf (>= 0.6-2),
+    utils
+RoxygenNote: 6.1.1
 Suggests: testthat,
     covr,
     knitr,

@@ -5,9 +5,13 @@ as.data.frame.mapzen_geo_list <- function(x, ...) {
     coords <- mz_coordinates(x)
     rest <- dplyr::bind_rows(
         lapply(x$features,
-               function(feature) tibble::as_data_frame(feature$properties))
+               function(feature) tibble::as_tibble(feature$properties))
     )
     dplyr::bind_cols(rest, coords)
+}
+
+tidyr_new_interface <- function() {
+    utils::packageVersion("tidyr") > "0.8.99"
 }
 
 #' @export
@@ -18,14 +22,14 @@ as.data.frame.mapzen_isochrone_list <- function(x, ...) {
         purrr::map2_df(
             feature$geometry$coordinates,
             seq_along(feature$geometry$coordinates),
-            ~tibble::data_frame(lon = .x[[1]], lat = .x[[2]],
+            ~tibble::tibble(lon = .x[[1]], lat = .x[[2]],
                                 order = .y)
         )
 
-    res <- tibble::data_frame(
+    res <- tibble::tibble(
         contours = purrr::map(
             x$features,
-            ~tibble::as_data_frame(
+            ~tibble::as_tibble(
                 .$properties
             )
         ),
@@ -34,6 +38,11 @@ as.data.frame.mapzen_isochrone_list <- function(x, ...) {
             coords
         )
     )
-    res <- tidyr::unnest_(res, "contours")
-    tidyr::unnest(res)
+    if (tidyr_new_interface()) {
+        res <- tidyr::unnest(res, cols = tidyr::one_of("contours"))
+        return(tidyr::unnest(res, cols = tidyr::one_of("coordinates")))
+    } else {
+        res <- tidyr::unnest_(res, "contours")
+        return(tidyr::unnest(res))
+    }
 }

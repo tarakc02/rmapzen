@@ -1,5 +1,5 @@
-vector_get <- function(url) {
-    response <- vector_GET(httr::build_url(url))
+vector_get <- function(url, ...) {
+    response <- vector_GET(httr::build_url(url), ...)
     vector_process(response)
 }
 
@@ -29,6 +29,7 @@ vector_process <- function(response) {
 #' @param tile_coordinates an \code{\link{mz_tile_coordinates}} object, or something
 #' that can be coerced to one (including the output of \code{\link{mz_bbox}})
 #' @param ... Arguments passed on to \code{\link{as.mz_tile_coordinates}}.
+#' @param Origin optional, specify Origin URL in request header
 #'
 #' @return A list of tile layers (such as "water", "buildings", "roads", etc.).
 #' Each layer is an object of class \code{mapzen_vector_layer}, which can be converted
@@ -59,7 +60,7 @@ vector_process <- function(response) {
 #'
 #' @seealso \code{\link{mz_tile_coordinates}}
 #' @export
-mz_vector_tiles <- function(tile_coordinates, ...) {
+mz_vector_tiles <- function(tile_coordinates, ..., Origin = NULL) {
     tile_coordinates <- as.mz_tile_coordinates(tile_coordinates, ...)
 
     get_tile <- function(tile_coordinates) {
@@ -70,7 +71,8 @@ mz_vector_tiles <- function(tile_coordinates, ...) {
             layers = "all",
             format = "json"
         )
-        vector_get(url)
+        if (is.null(Origin)) vector_get(url)
+        else vector_get(url, httr::add_headers(Origin = Origin))
     }
 
     all_tiles <- lapply(tile_coordinates, get_tile)
