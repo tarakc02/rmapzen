@@ -1,23 +1,16 @@
 ## Test environments
-* local ubuntu 18.04, R 3.5.1
-* ubuntu 14.04 (on travis-ci), R 3.5.1
+* local Mac OS 10.14.6, R 3.5.2
+* ubuntu 14.04 (on travis-ci), R 3.6.1
 * win-builder (devel and release)
 
 ## R CMD check results
 
 0 errors | 0 warnings | 1 notes
 
-There was one note on win-builder: 
+The note:
+- Missing or unexported object: ‘tidyr::one_of’
 
-* checking CRAN incoming feasibility ... NOTE
-Maintainer: 'Tarak Shah <tarak.shah@gmail.com>'
-
-New maintainer:
-  Tarak Shah <tarak.shah@gmail.com>
-Old maintainer(s):
-  Tarak Shah <tarak_shah@berkeley.edu>
-
-I sent an email to CRAN-submissions@R-project.org about this change.
+That piece of code was included for forward compatibility with the upcoming release of `tidyr`, and only runs if the installed version of `tidyr` is at least v1.0
 
 ## Reverse dependencies
 
