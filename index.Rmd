@@ -50,7 +50,7 @@ All of the services in [Mapzen search](https://mapzen.com/documentation/search/)
 
 For example, to search for public library branches in Oakland, CA:
 
-```{r loadmapzen}
+```{r loadmapzen, warning = FALSE}
 # load rmapzen and run provider set-up functions
 library(rmapzen)
 mz_set_tile_host_nextzen()
@@ -59,7 +59,7 @@ mz_set_search_host_geocode.earth()
 
 ```{r ex-search-2, cache = TRUE}
 oakland_public <- mz_search("Oakland Public Library Branch", 
-                            size = 25)
+                            size = 20, focus.point = mz_geocode("Oakland, CA"))
 oakland_public
 ```
 

@@ -31,7 +31,7 @@ mz_bbox.mapzen_geo_list <- function(geo) {
     if (is.null(bbox) || length(bbox) != 4L) {
         warning("Unable to read bounding box, returning NA")
         return(
-            tibble::data_frame(
+            tibble::tibble(
                 min_lon = NA_real_,
                 min_lat = NA_real_,
                 max_lon = NA_real_,
@@ -40,7 +40,7 @@ mz_bbox.mapzen_geo_list <- function(geo) {
         )
     }
 
-    res <- tibble::data_frame(
+    res <- tibble::tibble(
         min_lon = as.numeric(bbox[[1]]),
         min_lat = as.numeric(bbox[[2]]),
         max_lon = as.numeric(bbox[[3]]),
@@ -56,7 +56,7 @@ mz_bbox.mapzen_geo_list <- function(geo) {
 mz_bbox.mapzen_isochrone_list <- function(geo) {
     default <- function() {
         warning("Unable to read bounding box, returning NA")
-        return(tibble::data_frame(
+        return(tibble::tibble(
             min_lon = NA_real_,
             min_lat = NA_real_,
             max_lon = NA_real_,
@@ -69,7 +69,7 @@ mz_bbox.mapzen_isochrone_list <- function(geo) {
     bbox <- sp::bbox(as_sp(geo))
     if (!all.equal(dim(bbox), c(2L, 2L)) | !all.equal(rownames(bbox), c("x", "y")))
         return(default())
-    res <- tibble::data_frame(
+    res <- tibble::tibble(
         min_lon = bbox["x", "min"],
         min_lat = bbox["y", "min"],
         max_lon = bbox["x", "max"],
