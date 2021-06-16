@@ -57,9 +57,13 @@ mz_set_tile_host_nextzen()
 mz_set_search_host_geocode.earth()
 ```
 
-```{r ex-search-2, cache = TRUE}
+```{r ex-search-2, eval = FALSE}
 oakland_public <- mz_search("Oakland Public Library Branch", 
-                            size = 20, focus.point = mz_geocode("Oakland, CA"))
+                            size = 5,
+                            focus.point = mz_geocode("Oakland, CA"),
+                            boundary.country = mz_countries$USA)
+```
+```{r ex-search-2a}
 oakland_public
 ```
 
@@ -67,7 +71,7 @@ Search can, optionally, be constrained to a particular country, data layer, boun
 
 Additionally, `mz_geocode` is a convenient function to geocode an address, utilizing the more general `mz_search` function.
 
-```{r ex-geocode, cache = TRUE}
+```{r ex-geocode, cache=FALSE}
 mz_geocode("UC Berkeley, Berkeley, CA")
 ```
 
@@ -114,6 +118,7 @@ ggplot() +
 As some of the above examples illustrate, any object returned by a Mapzen service can be converted to the appropriate `Spatial*DataFrame` or `sf` object using the generics `as_sp` and `as_sf`, for easy interoperability with other packages. You can also convert most objects directly to data frames, allowing for use within tidy pipelines:
 
 ```{r ex-tidy, warning = FALSE, message = FALSE}
+require(dplyr)
 as.data.frame(oakland_public) %>%
     select(name, confidence, region, locality, neighbourhood)
 ```

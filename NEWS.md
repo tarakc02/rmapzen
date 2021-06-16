@@ -1,3 +1,6 @@
+# rmapzen 0.4.3
+* fixed for sf switching to s2 backend, see issue #21
+
 # rmapzen 0.4.2
 * added optional `Origin` argument to `mz_vector_tiles`, see issue #17
 * minor modifications to code to avoid using deprecated tidyverse functions

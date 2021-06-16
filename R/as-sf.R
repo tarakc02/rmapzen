@@ -35,6 +35,7 @@ as_sf.mapzen_vector_layer <- function(geo, ...) {
         res,
         setdiff(names(res), "geometry"))
     res <- sf::st_as_sf(res)
+    res <- sf::st_make_valid(res)
     res <- dplyr::summarise(res)
     dplyr::ungroup(res)
 }

@@ -1,24 +1,34 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
 
 <title>rmapzen: a Mapzen API client for R</title>
 
+<script src="index_files/header-attrs-2.8/header-attrs.js"></script>
 <script src="index_files/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="index_files/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="index_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="index_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="index_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="index_files/jqueryui-1.11.4/jquery-ui.min.js"></script>
 <link href="index_files/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="index_files/tocify-1.9.1/jquery.tocify.js"></script>
@@ -26,12 +36,16 @@
 <link href="index_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="index_files/highlightjs-9.12.0/highlight.js"></script>
 
-<style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
 <script type="text/javascript">
 if (window.hljs) {
   hljs.configure({languages: []});
@@ -44,37 +58,10 @@ if (window.hljs) {
 
 
 
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
 
 
-</head>
 
-<body>
+
 
 <style type = "text/css">
 .main-container {
@@ -82,13 +69,8 @@ h6 {
   margin-left: auto;
   margin-right: auto;
 }
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
-}
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -99,50 +81,75 @@ img {
 button.code-folding-btn:focus {
   outline: none;
 }
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
 </style>
 
 
 
-<div class="container-fluid main-container">
-
 <!-- tabsets -->
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-</script>
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
 
 <!-- code folding -->
 
 
-
-
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = false;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <style type="text/css">
 
@@ -156,6 +163,12 @@ $(document).ready(function ()  {
 }
 }
 
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
 
 .toc-content {
   padding-left: 30px;
@@ -191,8 +204,6 @@ div.tocify {
 
 .tocify-subheader .tocify-item {
   font-size: 0.90em;
-  padding-left: 25px;
-  text-indent: 0;
 }
 
 .tocify .list-group-item {
@@ -208,8 +219,18 @@ div.tocify {
 
 </style>
 
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
 <!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
+<div class="row">
 <div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
@@ -220,7 +241,7 @@ div.tocify {
 
 
 
-<div class="fluid-row" id="header">
+<div id="header">
 
 
 
@@ -232,7 +253,7 @@ div.tocify {
 <p><a href="https://travis-ci.org/tarakc02/rmapzen"><img src="https://travis-ci.org/tarakc02/rmapzen.svg?branch=master" alt="Travis-CI Build Status" /></a> <a href="https://codecov.io/github/tarakc02/rmapzen?branch=master"><img src="https://img.shields.io/codecov/c/github/tarakc02/rmapzen/master.svg" alt="Coverage Status" /></a></p>
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
-<p><code>rmapzen</code> is a client for any implementation of the Mapzen API. Though Mapzen itself has <a href="https://mapzen.com/blog/shutdown/">gone out of business</a>, <code>rmapzen</code> can be set up to work with any provider who hosts Mapzen’s open-source software, including <a href="https://geocode.earth/">geocode.earth</a>, <a href="https://www.nextzen.org/">Nextzen</a>, and <a href="https://geosearch.planninglabs.nyc/">NYC GeoSearch from NYC Planning Labs</a>. For more information, see <a href="https://mapzen.com/documentation/" class="uri">https://mapzen.com/documentation/</a>. The project is <a href="https://github.com/tarakc02/rmapzen">available on github</a> as well as <a href="https://cran.r-project.org/package=rmapzen">CRAN</a>.</p>
+<p><code>rmapzen</code> is a client for any implementation of the Mapzen API. Though Mapzen itself has <a href="https://mapzen.com/blog/shutdown/">gone out of business</a>, <code>rmapzen</code> can be set up to work with any provider who hosts Mapzen’s open-source software, including <a href="https://geocode.earth/">geocode.earth</a>, <a href="https://www.nextzen.org/">Nextzen</a>, and <a href="https://geosearch.planninglabs.nyc/">NYC GeoSearch from NYC Planning Labs</a>. For more information, see <a href="https://mapzen.com/documentation/">https://mapzen.com/documentation/</a>. The project is <a href="https://github.com/tarakc02/rmapzen">available on github</a> as well as <a href="https://cran.r-project.org/package=rmapzen">CRAN</a>.</p>
 <p><code>rmapzen</code> provides access to the following Mapzen API services:</p>
 <ul>
 <li><a href="https://mapzen.com/documentation/search/">Search</a>: Structured and unstructured search and geocoding, reverse geocoding, and autocomplete.</li>
@@ -268,25 +289,27 @@ library(rmapzen)
 mz_set_tile_host_nextzen()
 mz_set_search_host_geocode.earth()</code></pre>
 <pre class="r"><code>oakland_public &lt;- mz_search(&quot;Oakland Public Library Branch&quot;, 
-                            size = 20, focus.point = mz_geocode(&quot;Oakland, CA&quot;))
-oakland_public</code></pre>
+                            size = 5,
+                            focus.point = mz_geocode(&quot;Oakland, CA&quot;),
+                            boundary.country = mz_countries$USA)</code></pre>
+<pre class="r"><code>oakland_public</code></pre>
 <pre><code>## GeoJSON response from Mapzen
-## Attribution info: https://geocode.earth/guidelines 
+## Attribution info: https://search.mapzen.com/v1/attribution 
 ## Bounds (lon/lat): (-122.29, 37.74) - (-122.17, 37.85)
-## 20 locations:
-##    Montclair Branch Oakland Public Library (-122.21, 37.83)
-##    Rockbridge Branch Oakland Public Library (-122.25, 37.85)
-##    Main Branch Oakland Public Library (-122.26, 37.8)
-##    Asian Branch Oakland Public Library (-122.27, 37.8)
+## 25 locations:
+##    Oakland Public Library - Temescal Branch (-122.26, 37.84)
+##    Oakland Public Library - Rockridge Branch (-122.25, 37.84)
 ##    Lakeview Branch Oakland Public Library (-122.25, 37.81)
+##    Golden Gate Branch Oakland Public Library (-122.28, 37.84)
+##    Brookfield Village Branch Oakland Public Library (-122.19, 37.74)
 ##   ...</code></pre>
 <p>Search can, optionally, be constrained to a particular country, data layer, boundary rectangle, or boundary circle. Furthermore, search can prioritize results near a given “focus” point. See <code>?mz_search</code>.</p>
 <p>Additionally, <code>mz_geocode</code> is a convenient function to geocode an address, utilizing the more general <code>mz_search</code> function.</p>
 <pre class="r"><code>mz_geocode(&quot;UC Berkeley, Berkeley, CA&quot;)</code></pre>
 <pre><code>## # A tibble: 1 x 4
-##   geocode_address       geocode_longitude geocode_latitude geocode_confide…
-## * &lt;chr&gt;                             &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;
-## 1 UC Berkeley, Berkele…             -122.             37.9                1</code></pre>
+##   geocode_address           geocode_longitude geocode_latitude geocode_confiden…
+## * &lt;chr&gt;                                 &lt;dbl&gt;            &lt;dbl&gt;             &lt;dbl&gt;
+## 1 UC Berkeley, Berkeley, C…             -122.             37.9                 1</code></pre>
 </div>
 <div id="vector-tile-service" class="section level2">
 <h2>Vector tile service</h2>
@@ -327,31 +350,23 @@ ggplot() +
 <div id="sf-and-spatialdataframe-conversion" class="section level2">
 <h2><code>sf</code> and <code>Spatial*DataFrame</code> conversion</h2>
 <p>As some of the above examples illustrate, any object returned by a Mapzen service can be converted to the appropriate <code>Spatial*DataFrame</code> or <code>sf</code> object using the generics <code>as_sp</code> and <code>as_sf</code>, for easy interoperability with other packages. You can also convert most objects directly to data frames, allowing for use within tidy pipelines:</p>
-<pre class="r"><code>as.data.frame(oakland_public) %&gt;%
+<pre class="r"><code>require(dplyr)
+as.data.frame(oakland_public) %&gt;%
     select(name, confidence, region, locality, neighbourhood)</code></pre>
-<pre><code>## # A tibble: 20 x 5
-##    name                        confidence region   locality neighbourhood  
-##    &lt;chr&gt;                            &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;          
-##  1 Montclair Branch Oakland P…          1 Califor… Oakland  Montclair      
-##  2 Rockbridge Branch Oakland …          1 Califor… Oakland  Rockridge      
-##  3 Main Branch Oakland Public…          1 Califor… Oakland  Civic Center   
-##  4 Asian Branch Oakland Publi…          1 Califor… Oakland  Chinatown      
-##  5 Lakeview Branch Oakland Pu…          1 Califor… Oakland  Cleveland Heig…
-##  6 Eastmont Branch Oakland Pu…          1 Califor… Oakland  Havensourt     
-##  7 Rockridge Branch Oakland P…          1 Califor… Oakland  Rockridge      
-##  8 Temescal Branch Oakland Pu…          1 Califor… Oakland  Shafter        
-##  9 Elmhurst Branch Oakland Pu…          1 Califor… Oakland  Webster        
-## 10 Temescal Branch Oakland Pu…          1 Califor… Oakland  Temescal       
-## 11 Dimond Branch Oakland Publ…          1 Califor… Oakland  Upper Dimond   
-## 12 Melrose Branch Oakland Pub…          1 Califor… Oakland  Fremont        
-## 13 Cityline Branch Oakland Pu…          1 Califor… Oakland  Downtown       
-## 14 West Oakland Branch Oaklan…          1 Califor… Oakland  Oak Center     
-## 15 West Oakland Branch Oaklan…          1 Califor… Oakland  Ralph Bunche   
-## 16 Golden Gate Branch Oakland…          1 Califor… Oakland  &lt;NA&gt;           
-## 17 Brookfield Village Branch …          1 Califor… Oakland  Brookfield Vil…
-## 18 Latin American Branch Oakl…          1 Califor… Oakland  St. Elizabeth  
-## 19 Piedmont Avenue Branch Oak…          1 Califor… Oakland  Piedmont Avenue
-## 20 César E. Chávez Branch Oak…          1 Califor… Oakland  Fruitvale Stat…</code></pre>
+<pre><code>## # A tibble: 25 x 5
+##    name                             confidence region    locality neighbourhood 
+##    &lt;chr&gt;                                 &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;    &lt;chr&gt;         
+##  1 Oakland Public Library - Temesc…      0.926 Californ… Oakland  Shafter       
+##  2 Oakland Public Library - Rockri…      0.926 Californ… Oakland  Rockridge     
+##  3 Lakeview Branch Oakland Public …      0.664 Californ… Oakland  &lt;NA&gt;          
+##  4 Golden Gate Branch Oakland Publ…      0.663 Californ… Oakland  Gaskill       
+##  5 Brookfield Village Branch Oakla…      0.663 Californ… Oakland  South Stonehu…
+##  6 West Oakland Branch Oakland Pub…      0.663 Californ… Oakland  Ralph Bunche  
+##  7 Elmhurst Branch Oakland Public …      0.663 Californ… Oakland  Webster       
+##  8 Montclair Branch Oakland Public…      0.663 Californ… Oakland  Montclair     
+##  9 Main Branch Oakland Public Libr…      0.663 Californ… Oakland  Civic Center  
+## 10 Latin American Branch Oakland P…      0.663 Californ… Oakland  St. Elizabeth 
+## # … with 15 more rows</code></pre>
 </div>
 <div id="accessor-methods" class="section level2">
 <h2>Accessor methods</h2>
@@ -394,7 +409,7 @@ ggplot() +
 <h2>Convenience features</h2>
 <p>Several of the search functions take, optionally, the arguments <code>layers</code>, <code>sources</code>, and <code>boundary.country</code> (the latter requires <a href="https://en.wikipedia.org/wiki/ISO_3166">ISO-3166</a> codes). If you’re using an IDE with auto-complete, the objects <code>mz_layers</code>, <code>mz_sources</code>, and <code>mz_countries</code> should make it easier to get the correct codes.</p>
 <div class="figure">
-<img src="fig/mz-countries.png" alt="Easy lookup for ISO-3166 codes" />
+<img src="fig/mz-countries.png" alt="" />
 <p class="caption">Easy lookup for ISO-3166 codes</p>
 </div>
 <p>Similarly, argument constructors are available for easier specifications of isochrone and search requests.</p>
@@ -426,13 +441,56 @@ ggplot() +
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
 });
 
 
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
 </script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
