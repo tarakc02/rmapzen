@@ -48,7 +48,7 @@ mz_geocode <- function(location, ...) {
 #' text, but if your address data has more structure (eg separate columns for
 #' address, city, state, zip), then using the structured search service may
 #' provide more precision. For more information, see
-#' \url{https://mapzen.com/documentation/search/structured-geocoding/}. Note that
+#' \url{https://github.com/pelias/documentation/}. Note that
 #' all of the arguments are optional, but at least one of them must be non-NULL.
 #' Furthermore, \code{postalcode} can not be used by itself.
 #'

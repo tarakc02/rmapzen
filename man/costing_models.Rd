@@ -6,7 +6,11 @@
 \alias{mz_costing}
 \alias{mz_costing_options}
 \title{Costing model constructors and helpers}
-\format{An object of class \code{list} of length 4.}
+\format{
+An object of class \code{list} of length 4.
+
+An object of class \code{list} of length 4.
+}
 \usage{
 mz_costing
 
@@ -15,8 +19,8 @@ mz_costing_options
 \description{
 Mapzen's Isochrone service (\code{\link{mz_isochrone}}) as well as other
 mobility services (currently not implemented in this package, read more at
-\url{https://mapzen.com/documentation/mobility/}) require users to specify a
-"costing model." See \url{https://mapzen.com/documentation/mobility/turn-by-turn/api-reference/#costing-models}
+\url{https://valhalla.readthedocs.io/en/latest/}) require users to specify a
+"costing model." See \url{https://valhalla.readthedocs.io/en/latest/}
 for details. These can be difficult to construct correctly, so the objects
 \code{mz_costing} and \code{mz_costing_options} exist to make that process
 less error-prone and more convenient.

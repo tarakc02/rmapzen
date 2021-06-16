@@ -4,9 +4,18 @@
 \alias{mz_structured_search}
 \title{Structured search}
 \usage{
-mz_structured_search(address = NULL, neighbourhood = NULL,
-  borough = NULL, locality = NULL, county = NULL, region = NULL,
-  postalcode = NULL, country = NULL, api_key = NULL, ...)
+mz_structured_search(
+  address = NULL,
+  neighbourhood = NULL,
+  borough = NULL,
+  locality = NULL,
+  county = NULL,
+  region = NULL,
+  postalcode = NULL,
+  country = NULL,
+  api_key = NULL,
+  ...
+)
 }
 \arguments{
 \item{address}{Can be a numbered street address or just the name of the street}
@@ -40,7 +49,7 @@ the provider information that was set up with `mz_set_host`.}
 text, but if your address data has more structure (eg separate columns for
 address, city, state, zip), then using the structured search service may
 provide more precision. For more information, see
-\url{https://mapzen.com/documentation/search/structured-geocoding/}. Note that
+\url{https://github.com/pelias/documentation}. Note that
 all of the arguments are optional, but at least one of them must be non-NULL.
 Furthermore, \code{postalcode} can not be used by itself.
 }

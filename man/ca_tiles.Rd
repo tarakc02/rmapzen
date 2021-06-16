@@ -4,7 +4,9 @@
 \name{ca_tiles}
 \alias{ca_tiles}
 \title{Vector tiles the contain California}
-\format{An object of class \code{mapzen_vector_tiles} (inherits from \code{list}) of length 9.}
+\format{
+An object of class \code{mapzen_vector_tiles} (inherits from \code{list}) of length 9.
+}
 \source{
 Mapzen, OpenStreetMap contributors, Who's On First, Natural Earth,
 and openstreetmapdata.com

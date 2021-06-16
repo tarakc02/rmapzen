@@ -6,7 +6,7 @@
 #' @format A \code{mapzen_geo_list} with 25 locations
 #'
 #' @source Mapzen, OpenStreetMap, OpenAddresses, GeoNames, WhosOnFirst,
-#' see \url{https://mapzen.com/rights/}
+#' see \url{https://www.mapzen.com/rights/}
 "oakland_public"
 
 #' Pedestrian isochrones from the Berkeley Marina for 10 and 15 minutes

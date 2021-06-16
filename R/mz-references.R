@@ -8,7 +8,7 @@
 #' arguments for the \code{source} argument in \code{\link{mz_search}},
 #' \code{mz_layers} for the \code{layer} argument, and \code{\link{mz_countries}}
 #' for the \code{boundary.country} argument. Mapzen's documentation
-#' (\url{https://mapzen.com/documentation/search/search/}) explains more about
+#' (\url{https://github.com/pelias/documentation/}) explains more about
 #' each of these arguments.
 #'
 #' @examples

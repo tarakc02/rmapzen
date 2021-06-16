@@ -62,7 +62,7 @@ build_search_url <- function(
 #' Mapzen search API
 #'
 #' Functions to access the various endpoints from the Mapzen Search API.
-#' For more details, see \url{https://mapzen.com/documentation/search/}. If your
+#' For more details, see \url{https://github.com/pelias/documentation/}. If your
 #' data is already split up by street, city, state, zip, etc., then you might
 #' find \code{\link{mz_structured_search}} to be more precise. All arguments
 #' besides \code{text} (\code{point} in the case of \code{mz_reverse_geocode}) are
@@ -86,7 +86,7 @@ build_search_url <- function(
 #' @param sources The originating source of the data (to filter/narrow search
 #' results). See \code{\link{mz_sources}}
 #' @param layers Which layers (types of places) to search. See
-#' \url{https://mapzen.com/documentation/search/search/#filter-by-data-type}
+#' \url{https://github.com/pelias/documentation/}
 #' for definitions, and use \code{\link{mz_layers}} for convenience
 #' @param api_key Your Mapzen API key. The default is to look for the key within
 #' the provider information that was set up with `mz_set_host`.

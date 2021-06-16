@@ -7,7 +7,13 @@
 \alias{mz_layers}
 \alias{mz_countries}
 \title{Reference lists}
-\format{An object of class \code{list} of length 8.}
+\format{
+An object of class \code{list} of length 8.
+
+An object of class \code{list} of length 13.
+
+An object of class \code{list} of length 555.
+}
 \usage{
 mz_sources
 
@@ -24,7 +30,7 @@ names for which they are appropriate. So \code{mz_sources} provide acceptable
 arguments for the \code{source} argument in \code{\link{mz_search}},
 \code{mz_layers} for the \code{layer} argument, and \code{\link{mz_countries}}
 for the \code{boundary.country} argument. Mapzen's documentation
-(\url{https://mapzen.com/documentation/search/search/}) explains more about
+(\url{https://github.com/pelias/documentation/}) explains more about
 each of these arguments.
 }
 \examples{

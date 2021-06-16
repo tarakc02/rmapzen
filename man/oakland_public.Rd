@@ -4,10 +4,12 @@
 \name{oakland_public}
 \alias{oakland_public}
 \title{25 search results for "Oakland Public library branch"}
-\format{A \code{mapzen_geo_list} with 25 locations}
+\format{
+A \code{mapzen_geo_list} with 25 locations
+}
 \source{
 Mapzen, OpenStreetMap, OpenAddresses, GeoNames, WhosOnFirst,
-see \url{https://mapzen.com/rights/}
+see \url{https://www.mapzen.com/rights/}
 }
 \usage{
 oakland_public

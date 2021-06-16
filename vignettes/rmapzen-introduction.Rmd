@@ -19,13 +19,13 @@ knitr::opts_chunk$set(
 ```
 ## Introduction
 
-`rmapzen` is a client for any implementation of the Mapzen API. Though Mapzen itself has [gone out of business](https://mapzen.com/blog/shutdown/), `rmapzen` can be set up to work with any provider who hosts Mapzen's open-source software, including [geocode.earth](https://geocode.earth/), [Nextzen](https://www.nextzen.org/), and [NYC GeoSearch from NYC Planning Labs](https://geosearch.planninglabs.nyc/). For more information, see [https://mapzen.com/documentation/](https://mapzen.com/documentation/). The project is [available on github](https://github.com/tarakc02/rmapzen) as well as [CRAN](https://cran.r-project.org/package=rmapzen). 
+`rmapzen` is a client for any implementation of the Mapzen API. Though Mapzen itself has [gone out of business](https://www.mapzen.com/blog/shutdown/), `rmapzen` can be set up to work with any provider who hosts Mapzen's open-source software, including [geocode.earth](https://geocode.earth/), [Nextzen](https://www.nextzen.org/), and [NYC GeoSearch from NYC Planning Labs](https://geosearch.planninglabs.nyc/). For more information, see [https://www.mapzen.com/documentation/](https://www.mapzen.com/documentation/). The project is [available on github](https://github.com/tarakc02/rmapzen) as well as [CRAN](https://cran.r-project.org/package=rmapzen). 
 
 `rmapzen` provides access to the following Mapzen API services:
 
-- [Search](https://mapzen.com/documentation/search/): Structured and unstructured search and geocoding, reverse geocoding, and autocomplete. 
-- [Vector Tiles](https://mapzen.com/documentation/vector-tiles/): Basemap vector data.
-- [Isochrone](https://mapzen.com/documentation/mobility/isochrone/api-reference/): Calculation of areas reachable from a specified locations.
+- [Search](https://github.com/pelias/documentation/): Structured and unstructured search and geocoding, reverse geocoding, and autocomplete. 
+- [Vector Tiles](https://tilezen.readthedocs.io/en/latest/): Basemap vector data.
+- [Isochrone](https://valhalla.readthedocs.io/en/latest/): Calculation of areas reachable from a specified locations.
 
 ## Set-up
 
@@ -39,13 +39,13 @@ As of this writing, there are no public providers offering the Mapzen isochrone 
 
 ## Search
 
-All of the services in [Mapzen search](https://mapzen.com/documentation/search/) have been implemented. Search functions:
+All of the services in [Mapzen search](https://github.com/pelias/documentation/) have been implemented. Search functions:
 
 * `mz_search`
 * `mz_reverse_geocode`
 * `mz_autocomplete`
 * `mz_place`
-* `mz_structured_search` ([what's this?](https://mapzen.com/documentation/search/structured-geocoding/))
+* `mz_structured_search` ([what's this?](https://github.com/pelias/documentation/blob/master/structured-geocoding.md))
 
 Each of those functions returns a `mapzen_geo_list`. The sample dataset `oakland_public` contains the results of `mz_search("Oakland public library branch")` on January 8, 2017:
 
@@ -63,7 +63,7 @@ Search can, optionally, be constrained to a particular country, data layer, boun
 
 ## Vector tile service
 
-`rmapzen` provides an interface to Mapzen's [vector tiles service](https://mapzen.com/documentation/vector-tiles/). Tile requests can be specified using the x, y, zoom coordinates of the tile service, as well as with a lat/long bounding box. Multiple tiles are stitched together and returned as an object of class `mz_vector_tiles`. See `?mz_vector_tiles`. The sample data set `ca_tiles` contains zoomed out vector tile data for all of California as well as parts of neighboring states.
+`rmapzen` provides an interface to Mapzen's [vector tiles service](https://tilezen.readthedocs.io/en/latest/). Tile requests can be specified using the x, y, zoom coordinates of the tile service, as well as with a lat/long bounding box. Multiple tiles are stitched together and returned as an object of class `mz_vector_tiles`. See `?mz_vector_tiles`. The sample data set `ca_tiles` contains zoomed out vector tile data for all of California as well as parts of neighboring states.
 
 ```{r}
 ca_tiles

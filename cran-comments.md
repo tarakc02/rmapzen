@@ -1,3 +1,6 @@
+## Resubmission
+This is a resubmission. I've updated URLs in the vignette, manual pages, and DESCRIPTION that were redirecting.
+
 ## Test environments
 * local Mac OS 11.04, R 4.1.0
 * ubuntu 20.04.2 R 4.1.0

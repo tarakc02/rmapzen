@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-NOTE: [Mapzen has shut down](https://mapzen.com/blog/shutdown/). However, the rmapzen package can be used with [other PELIAS providers](https://mapzen.com/blog/migration/). The specific hosting service can be set up with `mz_set_host`. For known providers, `rmapzen` includes pre-configured API set up functions:
+NOTE: [Mapzen has shut down](https://www.mapzen.com/blog/shutdown/). However, the rmapzen package can be used with [other PELIAS providers](https://www.mapzen.com/blog/migration/). The specific hosting service can be set up with `mz_set_host`. For known providers, `rmapzen` includes pre-configured API set up functions:
 
 - `mz_set_search_host_geocode.earth` to set up [geocode.earth](https://geocode.earth/) as a search (includes geocoding, autocomplete, etc) provider
 - `mz_set_search_host_nyc_geosearch()` to set up  [GeoSearch from NYC Planning Labs](https://geosearch.planninglabs.nyc/) (currently in beta) as a search provider.
@@ -31,4 +31,4 @@ If you know of an API that uses PELIAS that is not included here, [let me know](
 install.packages("rmapzen")
 ```
 
-For more information about the Mapzen API, see [https://mapzen.com/documentation/](https://mapzen.com/documentation/). 
+For more information about the Mapzen API, see [https://www.mapzen.com/documentation/](https://www.mapzen.com/documentation/). 

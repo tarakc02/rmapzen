@@ -9,7 +9,7 @@ Maintainer: Tarak Shah <tarak.shah@gmail.com>
 Description: Provides an interface to 'Mapzen'-based APIs (including 
     geocode.earth, Nextzen, and NYC GeoSearch) for geographic search 
     and geocoding, isochrone calculation, and vector data to draw map tiles. 
-    See <https://mapzen.com/documentation/> for more information. The original 
+    See <https://www.mapzen.com/documentation/> for more information. The original 
     Mapzen has gone out of business, but 'rmapzen' can be set up to work with 
     any provider who implements the Mapzen API. 
 License: MIT + file LICENSE
@@ -29,9 +29,9 @@ Imports:
     rgdal,
     digest,
     maptools,
-    sf (>= 0.6-2),
+    sf (>= 1.0.0),
     utils
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.1
 Suggests: testthat,
     covr,
     knitr,

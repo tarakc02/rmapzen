@@ -4,9 +4,17 @@
 \alias{mz_isochrone}
 \title{Retrieve isochrones}
 \usage{
-mz_isochrone(locations, costing_model, contours, date_time = NULL,
-  polygons = NULL, denoise = NULL, generalize = NULL,
-  id = "my-iso", api_key = NULL)
+mz_isochrone(
+  locations,
+  costing_model,
+  contours,
+  date_time = NULL,
+  polygons = NULL,
+  denoise = NULL,
+  generalize = NULL,
+  id = "my-iso",
+  api_key = NULL
+)
 }
 \arguments{
 \item{locations}{An \code{mz_location}, or something that can be coerced to an
@@ -40,7 +48,7 @@ A \code{mapzen_isochrone_list}, which can be converted to \code{sf}
 or \code{sp} using \code{\link{as_sf}} or \code{\link{as_sp}}.
 }
 \description{
-From \url{https://mapzen.com/documentation/mobility/isochrone/api-reference/}:
+From \url{https://valhalla.readthedocs.io/en/latest/}:
 "An isochrone is a line that connects points of equal travel time about a
 given location, from the Greek roots of 'iso' for equal and 'chrone' for time.
 The Mapzen Isochrone service computes areas that are reachable within

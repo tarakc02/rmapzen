@@ -4,7 +4,9 @@
 \name{marina_walks}
 \alias{marina_walks}
 \title{Pedestrian isochrones from the Berkeley Marina for 10 and 15 minutes}
-\format{An object of class \code{mapzen_isochrone_list} (inherits from \code{geo_list}) of length 3.}
+\format{
+An object of class \code{mapzen_isochrone_list} (inherits from \code{geo_list}) of length 3.
+}
 \source{
 Mapzen, OpenStreetMap, British Oceanographic Data Centre,
 NASA, USGS, and Transitland.

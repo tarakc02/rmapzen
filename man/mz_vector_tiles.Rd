@@ -20,7 +20,7 @@ Each layer is an object of class \code{mapzen_vector_layer}, which can be conver
 to \code{sf} or \code{sp} using \code{\link{as_sf}} or \code{\link{as_sp}}
 }
 \description{
-From \url{https://mapzen.com/documentation/vector-tiles/}: "Vector tiles are
+From \url{https://tilezen.readthedocs.io/en/latest/}: "Vector tiles are
 square-shaped collections of geographic data that contain the map feature
 geometry, such as lines and points."
 }

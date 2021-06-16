@@ -18,7 +18,7 @@ vector_process <- function(response) {
 
 #' Request vector tile data
 #'
-#' From \url{https://mapzen.com/documentation/vector-tiles/}: "Vector tiles are
+#' From \url{https://tilezen.readthedocs.io/en/latest/}: "Vector tiles are
 #' square-shaped collections of geographic data that contain the map feature
 #' geometry, such as lines and points."
 #'

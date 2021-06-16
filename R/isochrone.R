@@ -112,7 +112,7 @@ isochrone_get <- function(url) {
 
 #' Retrieve isochrones
 #'
-#' From \url{https://mapzen.com/documentation/mobility/isochrone/api-reference/}:
+#' From \url{https://valhalla.readthedocs.io/en/latest/}:
 #' "An isochrone is a line that connects points of equal travel time about a
 #' given location, from the Greek roots of 'iso' for equal and 'chrone' for time.
 #' The Mapzen Isochrone service computes areas that are reachable within

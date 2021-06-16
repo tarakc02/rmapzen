@@ -8,16 +8,36 @@
 \alias{mz_search}
 \title{Mapzen search API}
 \usage{
-mz_autocomplete(text, boundary.country = NULL, boundary.rect = NULL,
-  focus.point = NULL, sources = NULL, layers = NULL,
-  api_key = NULL)
+mz_autocomplete(
+  text,
+  boundary.country = NULL,
+  boundary.rect = NULL,
+  focus.point = NULL,
+  sources = NULL,
+  layers = NULL,
+  api_key = NULL
+)
 
-mz_reverse_geocode(point, size = NULL, layers = NULL, sources = NULL,
-  boundary.country = NULL, api_key = NULL)
+mz_reverse_geocode(
+  point,
+  size = NULL,
+  layers = NULL,
+  sources = NULL,
+  boundary.country = NULL,
+  api_key = NULL
+)
 
-mz_search(text, size = 10, boundary.country = NULL,
-  boundary.rect = NULL, boundary.circle = NULL, focus.point = NULL,
-  sources = NULL, layers = NULL, api_key = NULL)
+mz_search(
+  text,
+  size = 10,
+  boundary.country = NULL,
+  boundary.rect = NULL,
+  boundary.circle = NULL,
+  focus.point = NULL,
+  sources = NULL,
+  layers = NULL,
+  api_key = NULL
+)
 }
 \arguments{
 \item{text}{Search string}
@@ -37,7 +57,7 @@ be the result of \code{\link{mz_bbox}}. Should have named elements with names
 results). See \code{\link{mz_sources}}}
 
 \item{layers}{Which layers (types of places) to search. See
-\url{https://mapzen.com/documentation/search/search/#filter-by-data-type}
+\url{https://github.com/pelias/documentation/}
 for definitions, and use \code{\link{mz_layers}} for convenience}
 
 \item{api_key}{Your Mapzen API key. The default is to look for the key within
@@ -54,7 +74,7 @@ with names "lon", "lat", and "radius"}
 }
 \description{
 Functions to access the various endpoints from the Mapzen Search API.
-For more details, see \url{https://mapzen.com/documentation/search/}. If your
+For more details, see \url{https://github.com/pelias/documentation/}. If your
 data is already split up by street, city, state, zip, etc., then you might
 find \code{\link{mz_structured_search}} to be more precise. All arguments
 besides \code{text} (\code{point} in the case of \code{mz_reverse_geocode}) are

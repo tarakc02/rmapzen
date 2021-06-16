@@ -2,7 +2,7 @@
 #'
 #' Search functions (e.g. \code{\link{mz_search}}) return identification numbers,
 #' or \code{gid}s. Use \code{mz_place} to retrieve more details about the place.
-#' See \url{https://mapzen.com/documentation/search/place/} for details. This
+#' See \url{https://github.com/pelias/documentation/} for details. This
 #' function is generic, and can take a character vector of IDs, or a
 #' \code{mapzen_geo_list} as returned by \code{\link{mz_search}} and friends.
 #'

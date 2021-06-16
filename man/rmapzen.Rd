@@ -3,18 +3,17 @@
 \docType{package}
 \name{rmapzen}
 \alias{rmapzen}
-\alias{rmapzen-package}
 \title{rmapzen: A client application for the 'Mapzen' API.}
 \description{
 The rmapzen package provides interfaces to the Search
-(\url{https://mapzen.com/documentation/search/}), Isochrone
-(\url{https://mapzen.com/documentation/mobility/isochrone/api-reference/}),
-and Vector Tile (\url{https://mapzen.com/documentation/vector-tiles/})
+(\url{https://github.com/pelias/documentation/}), Isochrone
+(\url{https://valhalla.readthedocs.io/en/latest/}),
+and Vector Tile (\url{https://tilezen.readthedocs.io/en/latest/})
 services from 'Mapzen', via the following functions:
 }
 \section{Search}{
 
-All functionality described in \url{https://mapzen.com/documentation/search/}
+All functionality described in \url{https://github.com/pelias/documentation/}
 are supported:
 
 \itemize{
@@ -75,6 +74,6 @@ via \code{as.data.frame}.
 \seealso{
 \itemize{
     \item \url{https://tarakc02.github.io/rmapzen/} contains detailed examples
-    \item \url{https://mapzen.com/documentation/} 'Mapzen' documentation
+    \item \url{https://www.mapzen.com/documentation/} 'Mapzen' documentation
 }
 }
