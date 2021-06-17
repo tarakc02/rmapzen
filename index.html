@@ -253,12 +253,12 @@ div.tocify {
 <p><a href="https://travis-ci.org/tarakc02/rmapzen"><img src="https://travis-ci.org/tarakc02/rmapzen.svg?branch=master" alt="Travis-CI Build Status" /></a> <a href="https://codecov.io/github/tarakc02/rmapzen?branch=master"><img src="https://img.shields.io/codecov/c/github/tarakc02/rmapzen/master.svg" alt="Coverage Status" /></a></p>
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
-<p><code>rmapzen</code> is a client for any implementation of the Mapzen API. Though Mapzen itself has <a href="https://mapzen.com/blog/shutdown/">gone out of business</a>, <code>rmapzen</code> can be set up to work with any provider who hosts Mapzen’s open-source software, including <a href="https://geocode.earth/">geocode.earth</a>, <a href="https://www.nextzen.org/">Nextzen</a>, and <a href="https://geosearch.planninglabs.nyc/">NYC GeoSearch from NYC Planning Labs</a>. For more information, see <a href="https://mapzen.com/documentation/">https://mapzen.com/documentation/</a>. The project is <a href="https://github.com/tarakc02/rmapzen">available on github</a> as well as <a href="https://cran.r-project.org/package=rmapzen">CRAN</a>.</p>
+<p><code>rmapzen</code> is a client for any implementation of the Mapzen API. Though Mapzen itself has <a href="https://www.mapzen.com/blog/shutdown/">gone out of business</a>, <code>rmapzen</code> can be set up to work with any provider who hosts Mapzen’s open-source software, including <a href="https://geocode.earth/">geocode.earth</a>, <a href="https://www.nextzen.org/">Nextzen</a>, and <a href="https://geosearch.planninglabs.nyc/">NYC GeoSearch from NYC Planning Labs</a>. For more information, see <a href="https://www.mapzen.com/documentation/">https://www.mapzen.com/documentation/</a>. The project is <a href="https://github.com/tarakc02/rmapzen">available on github</a> as well as <a href="https://cran.r-project.org/package=rmapzen">CRAN</a>.</p>
 <p><code>rmapzen</code> provides access to the following Mapzen API services:</p>
 <ul>
-<li><a href="https://mapzen.com/documentation/search/">Search</a>: Structured and unstructured search and geocoding, reverse geocoding, and autocomplete.</li>
-<li><a href="https://mapzen.com/documentation/vector-tiles/">Vector Tiles</a>: Basemap vector data.</li>
-<li><a href="https://mapzen.com/documentation/mobility/isochrone/api-reference/">Isochrone</a>: Calculation of areas reachable from a specified locations.</li>
+<li><a href="https://github.com/pelias/documentation">Search</a>: Structured and unstructured search and geocoding, reverse geocoding, and autocomplete.</li>
+<li><a href="https://tilezen.readthedocs.io/en/latest/">Vector Tiles</a>: Basemap vector data.</li>
+<li><a href="https://valhalla.readthedocs.io/en/latest/">Isochrone</a>: Calculation of areas reachable from a specified locations.</li>
 </ul>
 </div>
 <div id="installation-and-set-up" class="section level2">
@@ -275,13 +275,13 @@ div.tocify {
 </div>
 <div id="search" class="section level2">
 <h2>Search</h2>
-<p>All of the services in <a href="https://mapzen.com/documentation/search/">Mapzen search</a> have been implemented. Search functions:</p>
+<p>All of the services in <a href="https://github.com/pelias/documentation">Mapzen search</a> have been implemented. Search functions:</p>
 <ul>
 <li><code>mz_search</code></li>
 <li><code>mz_reverse_geocode</code></li>
 <li><code>mz_autocomplete</code></li>
 <li><code>mz_place</code></li>
-<li><code>mz_structured_search</code> (<a href="https://mapzen.com/documentation/search/structured-geocoding/">what’s this?</a>)</li>
+<li><code>mz_structured_search</code> (<a href="https://github.com/pelias/documentation/blob/master/structured-geocoding.md">what’s this?</a>)</li>
 </ul>
 <p>For example, to search for public library branches in Oakland, CA:</p>
 <pre class="r"><code># load rmapzen and run provider set-up functions
@@ -313,7 +313,7 @@ mz_set_search_host_geocode.earth()</code></pre>
 </div>
 <div id="vector-tile-service" class="section level2">
 <h2>Vector tile service</h2>
-<p><code>rmapzen</code> provides an interface to Mapzen’s <a href="https://mapzen.com/documentation/vector-tiles/">vector tiles service</a>. Tile requests can be specified using the x, y, zoom coordinates of the tile service, as well as with a lat/long bounding box. For instance, continuing the previous example:</p>
+<p><code>rmapzen</code> provides an interface to Mapzen’s <a href="https://tilezen.readthedocs.io/en/latest/">vector tiles service</a>. Tile requests can be specified using the x, y, zoom coordinates of the tile service, as well as with a lat/long bounding box. For instance, continuing the previous example:</p>
 <pre class="r"><code>library(tidyverse)
 library(sf)
 
@@ -423,7 +423,7 @@ as.data.frame(oakland_public) %&gt;%
 </div>
 <div id="related-projects" class="section level2">
 <h2>Related projects</h2>
-<p>The package does not yet support <a href="https://mapzen.com/documentation/">other Mapzen API services</a>. But do check out these related R packages:</p>
+<p>The package does not yet support <a href="https://www.mapzen.com/documentation/">other Mapzen API services</a>. But do check out these related R packages:</p>
 <ul>
 <li><a href="https://github.com/jhollist/elevatr">elevatr</a> for accessing elevation data, including Mapzen Terrain and Elevation</li>
 <li><a href="https://github.com/Ironholds/poster">postr</a> for address parsing and normalization using the <a href="https://github.com/openvenues/libpostal">libpostal</a> library</li>

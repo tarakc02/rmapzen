@@ -33,7 +33,7 @@
 * request functions are no longer rate-limited, because Mapzen's service has been updated and only has monthly (not per-second or per-minute) limits
 
 # rmapzen 0.3.1
-* Added support for [structured geocoding](https://mapzen.com/documentation/search/structured-geocoding/)
+* Added support for [structured geocoding](https://github.com/pelias/documentation)
 * Simple print methods for vector tiles and individual vector tile layers
 
 # rmapzen 0.3.0.9007

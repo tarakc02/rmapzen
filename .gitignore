@@ -5,3 +5,5 @@
 README_cache/*
 index_cache/*
 inst/doc
+/doc/
+/Meta/
