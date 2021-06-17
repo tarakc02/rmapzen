@@ -1,5 +1,5 @@
 ## Resubmission
-This is a resubmission. I've updated URLs in the vignette, manual pages, and DESCRIPTION that were redirecting.
+This is a resubmission. I've updated a URL in NEWS.md that was redirecting.
 
 ## Test environments
 * local Mac OS 11.04, R 4.1.0
