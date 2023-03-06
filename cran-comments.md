@@ -1,10 +1,7 @@
-## Resubmission
-This is a resubmission. I've updated a URL in NEWS.md that was redirecting.
-
 ## Test environments
-* local Mac OS 11.04, R 4.1.0
-* ubuntu 20.04.2 R 4.1.0
-* win-builder (devel and release)
+* local Mac OS 13.2.1, R 4.2.2
+* Ubuntu 20.04.1 LTS, R-release, GCC (via R-hub)
+* Windows Server 2022, R-devel, 64 bit (via R-hub)
 
 ## R CMD check results
 
