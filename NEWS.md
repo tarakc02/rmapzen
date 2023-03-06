@@ -1,3 +1,6 @@
+# rmapzen 0.4.4
+* deprecated `as_sp`, see issue #22
+
 # rmapzen 0.4.3
 * fixed for sf switching to s2 backend, see issue #21
 

@@ -1,7 +1,7 @@
 Package: rmapzen
 Type: Package
 Title: Client for 'Mapzen' and Related Map APIs
-Version: 0.4.3
+Version: 0.4.4
 Authors@R: c(
     person("Tarak", "Shah", email = "tarak.shah@gmail.com", role = c("aut", "cre")),
     person("Daniel","Possenriede", role = "ctb"))
@@ -30,8 +30,9 @@ Imports:
     digest,
     maptools,
     sf (>= 1.0.0),
-    utils
-RoxygenNote: 7.1.1
+    utils,
+    rgeos
+RoxygenNote: 7.2.2
 Suggests: testthat,
     covr,
     knitr,
@@ -40,3 +41,4 @@ Suggests: testthat,
 URL: https://tarakc02.github.io/rmapzen/
 BugReports: https://github.com/tarakc02/rmapzen/issues
 VignetteBuilder: knitr
+Encoding: UTF-8

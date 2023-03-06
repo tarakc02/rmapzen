@@ -53,31 +53,7 @@ mz_bbox.mapzen_geo_list <- function(geo) {
 
 #' @rdname mz_bbox
 #' @export
-mz_bbox.mapzen_isochrone_list <- function(geo) {
-    default <- function() {
-        warning("Unable to read bounding box, returning NA")
-        return(tibble::tibble(
-            min_lon = NA_real_,
-            min_lat = NA_real_,
-            max_lon = NA_real_,
-            max_lat = NA_real_
-        ))
-    }
-    features <- geo$features
-    if (is.null(features) || length(features) <= 0L) return(default())
-
-    bbox <- sp::bbox(as_sp(geo))
-    if (!all.equal(dim(bbox), c(2L, 2L)) | !all.equal(rownames(bbox), c("x", "y")))
-        return(default())
-    res <- tibble::tibble(
-        min_lon = bbox["x", "min"],
-        min_lat = bbox["y", "min"],
-        max_lon = bbox["x", "max"],
-        max_lat = bbox["y", "max"]
-    )
-    class(res) <- c("mz_bbox", class(res))
-    res
-}
+mz_bbox.mapzen_isochrone_list <- function(geo)  mz_bbox(as_sf(geo)) 
 
 layer_coords <- function(layer) {
     feature_type <- function(feature) {

@@ -22,8 +22,12 @@ as_json <- function(geo) {
 #' @param ... not currently used
 #'
 #' @name as_sp
+#' @import rgeos
 #' @export
-as_sp <- function(geo, ...) UseMethod("as_sp")
+as_sp <- function(geo, ...) {
+    warning("as_sp has been deprecated as of version 0.4.4 and will be removed from a future version of rmapzen")
+    UseMethod("as_sp")
+}
 
 #' @rdname as_sp
 #' @export
