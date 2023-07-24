@@ -1,3 +1,6 @@
+# rmapzen 0.5.0
+* removed `as_sp`, see issues #22 and #23. Use `as_sf` instead.
+
 # rmapzen 0.4.4
 * deprecated `as_sp`, see issue #22
 
