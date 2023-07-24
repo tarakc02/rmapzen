@@ -52,9 +52,9 @@
 #' }
 #'
 #' @section Data types and conversion:
-#' Objects returned by rmapzen can be converted to both Spatial*DataFrames and
-#' simple features (sf) via the generic functions \code{\link{as_sp}}
-#' (for Spatial*DataFrames) and \code{\link{as_sf}} (for simple features). Search
+#' Objects returned by rmapzen can be converted to
+#' simple features (sf) via the generic function
+#'  \code{\link{as_sf}}. Search
 #' and Isochrone objects can additionally be converted to ordinary data.frames
 #' via \code{as.data.frame}.
 #'

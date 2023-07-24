@@ -56,17 +56,15 @@ mz_layers <- list(
 )
 
 make_mz_countries <- function() {
-    iso3166 <- maps::iso3166
-    ind <- grepl("^[A-Z]+$", iso3166$a2)
+    iso3166 <- ISOcodes::ISO_3166_1
+    ind <- grepl("^[A-Z]+$", iso3166$Alpha_2)
     iso3166 <- iso3166[ind, , drop = FALSE]
 
-    v1 <- data.frame(desc = iso3166$a2, code = iso3166$a2, stringsAsFactors = FALSE)
-    v2 <- v1 <- data.frame(desc = iso3166$a3, code = iso3166$a2, stringsAsFactors = FALSE)
-    v3 <- data.frame(desc = iso3166$ISOname, code = iso3166$a2, stringsAsFactors = FALSE)
-    v4 <- data.frame(desc = iso3166$mapname, code = iso3166$a2, stringsAsFactors = FALSE)
+    v1 <- data.frame(desc = iso3166$Alpha_2, code = iso3166$Alpha_2, stringsAsFactors = FALSE)
+    v2 <- data.frame(desc = iso3166$Alpha_3, code = iso3166$Alpha_2, stringsAsFactors = FALSE)
+    v3 <- data.frame(desc = iso3166$Name, code = iso3166$Alpha_2, stringsAsFactors = FALSE)
 
-    v <- Reduce(dplyr::union, list(v2, v3, v4), init = v1)
-    v <- dplyr::distinct(v)
+    v <- dplyr::distinct(dplyr::bind_rows(v1, v2, v3))
     structure(as.list(v$code), names = v$desc)
 }
 

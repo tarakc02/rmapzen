@@ -17,7 +17,7 @@ that can be coerced to one (including the output of \code{\link{mz_bbox}})}
 \value{
 A list of tile layers (such as "water", "buildings", "roads", etc.).
 Each layer is an object of class \code{mapzen_vector_layer}, which can be converted
-to \code{sf} or \code{sp} using \code{\link{as_sf}} or \code{\link{as_sp}}
+to \code{sf} using \code{\link{as_sf}}
 }
 \description{
 From \url{https://tilezen.readthedocs.io/en/latest/}: "Vector tiles are

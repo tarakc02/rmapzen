@@ -19,20 +19,16 @@ Imports:
     tibble,
     httr,
     jsonlite,
-    maps,
+    ISOcodes,
     dplyr,
     assertthat,
     geojsonio,
     tidyr,
     purrr,
-    sp,
-    rgdal,
     digest,
-    maptools,
     sf (>= 1.0.0),
-    utils,
-    rgeos
-RoxygenNote: 7.2.2
+    utils
+RoxygenNote: 7.2.3
 Suggests: testthat,
     covr,
     knitr,

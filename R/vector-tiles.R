@@ -33,7 +33,7 @@ vector_process <- function(response) {
 #'
 #' @return A list of tile layers (such as "water", "buildings", "roads", etc.).
 #' Each layer is an object of class \code{mapzen_vector_layer}, which can be converted
-#' to \code{sf} or \code{sp} using \code{\link{as_sf}} or \code{\link{as_sp}}
+#' to \code{sf} using \code{\link{as_sf}}
 #'
 #' @examples
 #' \dontrun{

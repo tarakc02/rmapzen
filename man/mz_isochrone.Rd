@@ -45,7 +45,7 @@ the provider information that was set up with `mz_set_host`.}
 }
 \value{
 A \code{mapzen_isochrone_list}, which can be converted to \code{sf}
-or \code{sp} using \code{\link{as_sf}} or \code{\link{as_sp}}.
+using \code{\link{as_sf}}.
 }
 \description{
 From \url{https://valhalla.readthedocs.io/en/latest/}:

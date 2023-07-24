@@ -113,9 +113,9 @@ ggplot() +
     theme(panel.grid.major = element_line(size = 0))
 ```
 
-## `sf` and `Spatial*DataFrame` conversion
+## `sf` conversion
 
-As some of the above examples illustrate, any object returned by a Mapzen service can be converted to the appropriate `Spatial*DataFrame` or `sf` object using the generics `as_sp` and `as_sf`, for easy interoperability with other packages. You can also convert most objects directly to data frames, allowing for use within tidy pipelines:
+As some of the above examples illustrate, any object returned by a Mapzen service can be converted to the appropriate  `sf` object using the generic `as_sf`, for easy interoperability with other packages. You can also convert most objects directly to data frames, allowing for use within tidy pipelines:
 
 ```{r ex-tidy, warning = FALSE, message = FALSE}
 require(dplyr)

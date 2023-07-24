@@ -69,16 +69,16 @@ Search can, optionally, be constrained to a particular country, data layer, boun
 ca_tiles
 ```
 
-Each element of a vector tile response includes point, line, and/or polygon data for an individual map layer, and has class `mapzen_vector_layer`. Like other response types, the `mapzen_vector_layer` can be converted to `sf` and `sp` objects for further processing, using the generic functions `as_sf` and `as_sp`.
+Each element of a vector tile response includes point, line, and/or polygon data for an individual map layer, and has class `mapzen_vector_layer`. Like other response types, the `mapzen_vector_layer` can be converted to `sf` objects for further processing, using the generic function `as_sf`
 
 ```{r}
 # points of interest
 as_sf(ca_tiles$pois)
 ```
 
-## `sf` and `Spatial*DataFrame` conversion
+## `sf` conversion
 
-Any object returned by a Mapzen service can be converted to the appropriate `Spatial*DataFrame` or `sf` object using the generics `as_sp` and `as_sf`, for easy interoperability with other packages. You can also convert most objects directly to data frames, allowing for use within tidy pipelines:
+Any object returned by a Mapzen service can be converted to the appropriate `sf` object using the generic `as_sf`, for easy interoperability with other packages. You can also convert most objects directly to data frames, allowing for use within tidy pipelines:
 
 ```{r ex-tidy, warning = FALSE, message = FALSE}
 library(dplyr)
