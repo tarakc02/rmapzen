@@ -13,3 +13,4 @@ index_files/.*
 ^cran-comments\.md$
 ^doc$
 ^Meta$
+^CRAN-SUBMISSION$
