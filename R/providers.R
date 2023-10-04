@@ -73,7 +73,7 @@ mz_set_search_host_geocode.earth <- function(key = Sys.getenv("GEOCODE.EARTH_KEY
 #' @export
 mz_set_search_host_nyc_geosearch <- function() {
     p <- mz_provider(hostname = "geosearch.planninglabs.nyc",
-                     path = "v1",
+                     path = "v2",
                      key = NULL)
     mz_set_host("search", p)
 }
