@@ -1,3 +1,4 @@
+#' @keywords internal
 #' rmapzen: A client application for the 'Mapzen' API.
 #'
 #' The rmapzen package provides interfaces to the Search
@@ -64,6 +65,4 @@
 #'     \item \url{https://www.mapzen.com/documentation/} 'Mapzen' documentation
 #' }
 #'
-#' @docType package
-#' @name rmapzen
-NULL
+"_PACKAGE"
