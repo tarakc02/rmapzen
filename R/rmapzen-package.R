@@ -1,14 +1,13 @@
-#' @keywords internal
 #' rmapzen: A client application for the 'Mapzen' API.
 #'
 #' The rmapzen package provides interfaces to the Search
-#' (\url{https://github.com/pelias/documentation/}), Isochrone
-#' (\url{https://valhalla.readthedocs.io/en/latest/}),
-#' and Vector Tile (\url{https://tilezen.readthedocs.io/en/latest/})
+#' <https://github.com/pelias/documentation/>, Isochrone
+#' <https://valhalla.readthedocs.io/en/latest/>,
+#' and Vector Tile <https://tilezen.readthedocs.io/en/latest/>
 #' services from 'Mapzen', via the following functions:
 #'
 #' @section Search:
-#' All functionality described in \url{https://github.com/pelias/documentation/}
+#' All functionality described in <https://github.com/pelias/documentation/>
 #' are supported:
 #'
 #' \itemize{
@@ -43,7 +42,7 @@
 #'     object.
 #'     \item \code{\link{mz_tile_coordinates}}: When using \code{\link{mz_vector_tiles}},
 #'     you must specify the geographic area for which you want tile data. One way to do so
-#'     is using the x, y, z tile naming system (see \url{https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames}).
+#'     is using the x, y, z tile naming system (see <https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames>).
 #'     \item \code{\link{mz_rect}}: Alternatively, you can specify the lower left
 #'     and top-right points of a bounding box, which will automatically be converted
 #'     to tile-coordinates when you use \code{\link{mz_vector_tiles}}
@@ -61,8 +60,8 @@
 #'
 #' @seealso
 #' \itemize{
-#'     \item \url{https://tarakc02.github.io/rmapzen/} contains detailed examples
-#'     \item \url{https://www.mapzen.com/documentation/} 'Mapzen' documentation
+#'     \item <https://tarakc02.github.io/rmapzen/> contains detailed examples
+#'     \item <https://www.mapzen.com/documentation/> 'Mapzen' documentation
 #' }
 #'
 "_PACKAGE"

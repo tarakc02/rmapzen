@@ -1,3 +1,7 @@
+# rmapzen 0.5.1
+* updated providers for v2 of nyc geosearch, thanks to @mtreg
+* fixed documentation bug, see issue #24
+
 # rmapzen 0.5.0
 * removed `as_sp`, see issues #22 and #23. Use `as_sf` instead.
 

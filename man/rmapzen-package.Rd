@@ -4,13 +4,17 @@
 \name{rmapzen-package}
 \alias{rmapzen}
 \alias{rmapzen-package}
-\title{rmapzen: Client for 'Mapzen' and Related Map APIs}
+\title{rmapzen: A client application for the 'Mapzen' API.}
 \description{
-Provides an interface to 'Mapzen'-based APIs (including geocode.earth, Nextzen, and NYC GeoSearch) for geographic search and geocoding, isochrone calculation, and vector data to draw map tiles. See \url{https://www.mapzen.com/documentation/} for more information. The original Mapzen has gone out of business, but 'rmapzen' can be set up to work with any provider who implements the Mapzen API.
+The rmapzen package provides interfaces to the Search
+<https://github.com/pelias/documentation/>, Isochrone
+<https://valhalla.readthedocs.io/en/latest/>,
+and Vector Tile <https://tilezen.readthedocs.io/en/latest/>
+services from 'Mapzen', via the following functions:
 }
 \section{Search}{
 
-All functionality described in \url{https://github.com/pelias/documentation/}
+All functionality described in <https://github.com/pelias/documentation/>
 are supported:
 
 \itemize{
@@ -49,7 +53,7 @@ walking, cycling, or multimodal forms of transport:
     object.
     \item \code{\link{mz_tile_coordinates}}: When using \code{\link{mz_vector_tiles}},
     you must specify the geographic area for which you want tile data. One way to do so
-    is using the x, y, z tile naming system (see \url{https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames}).
+    is using the x, y, z tile naming system (see <https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames>).
     \item \code{\link{mz_rect}}: Alternatively, you can specify the lower left
     and top-right points of a bounding box, which will automatically be converted
     to tile-coordinates when you use \code{\link{mz_vector_tiles}}
@@ -70,8 +74,8 @@ via \code{as.data.frame}.
 
 \seealso{
 \itemize{
-    \item \url{https://tarakc02.github.io/rmapzen/} contains detailed examples
-    \item \url{https://www.mapzen.com/documentation/} 'Mapzen' documentation
+    \item <https://tarakc02.github.io/rmapzen/> contains detailed examples
+    \item <https://www.mapzen.com/documentation/> 'Mapzen' documentation
 }
 }
 \author{
@@ -83,32 +87,3 @@ Other contributors:
 }
 
 }
-\keyword{'Mapzen'}
-\keyword{'Mapzen',}
-\keyword{(\url{https://github.com/pelias/documentation/}),}
-\keyword{(\url{https://tilezen.readthedocs.io/en/latest/})}
-\keyword{(\url{https://valhalla.readthedocs.io/en/latest/}),}
-\keyword{A}
-\keyword{API.}
-\keyword{Isochrone}
-\keyword{Search}
-\keyword{The}
-\keyword{Tile}
-\keyword{Vector}
-\keyword{and}
-\keyword{application}
-\keyword{client}
-\keyword{following}
-\keyword{for}
-\keyword{from}
-\keyword{functions:}
-\keyword{interfaces}
-\keyword{internal}
-\keyword{package}
-\keyword{provides}
-\keyword{rmapzen}
-\keyword{rmapzen:}
-\keyword{services}
-\keyword{the}
-\keyword{to}
-\keyword{via}

@@ -1,7 +1,8 @@
 ## Test environments
-* local Mac OS Ventura 13.4.1, R 4.3.1
+* local Mac OS Sonoma 14.0.0, R 4.3.1
 * Ubuntu 20.04.1 LTS, R-release, GCC (via R-hub)
-* Windows Server 2022, R-devel (2023-07-23 r84741 ucrt) (via win-builder)
+* Fedora Linux, R-devel, clang, gfortran (via R-hub)
+* Windows Server 2022, R-devel (4.4.0 Under development) (via win-builder)
 
 ## R CMD check results
 
