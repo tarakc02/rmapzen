@@ -7,3 +7,7 @@ index_cache/*
 inst/doc
 /doc/
 /Meta/
+revdep/checks
+revdep/library.noindex
+revdep/checks.noindex
+revdep/data.sqlite
