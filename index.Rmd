@@ -1,5 +1,5 @@
 ---
-title: "rmapzen: a Mapzen API client for R"
+title: "rmapzen: a mapzen api client for r"
 output: 
     html_document:
       self_contained: no
@@ -8,6 +8,8 @@ output:
       toc_float:
         collapsed: no
         smooth_scroll: yes
+editor_options: 
+  chunk_output_type: console
 ---
 [![Travis-CI Build Status](https://travis-ci.org/tarakc02/rmapzen.svg?branch=master)](https://travis-ci.org/tarakc02/rmapzen)
 [![Coverage Status](https://img.shields.io/codecov/c/github/tarakc02/rmapzen/master.svg)](https://codecov.io/github/tarakc02/rmapzen?branch=master)
@@ -59,7 +61,8 @@ mz_set_search_host_geocode.earth()
 
 ```{r ex-search-2, eval = FALSE}
 oakland_public <- mz_search("Oakland Public Library Branch", 
-                            size = 5,
+                            size = 20,
+                            boundary.rect = mz_bbox(mz_search("Oakland, CA", size=1)),
                             focus.point = mz_geocode("Oakland, CA"),
                             boundary.country = mz_countries$USA)
 ```
@@ -94,14 +97,15 @@ water <- as_sf(oakland_tiles$water)
 labels <- as.data.frame(oakland_public) %>% 
     mutate(name = str_replace_all(
         name, 
-        "(Oakland Public Library)|(Branch)", ""))
+        "(Oakland Public Library)|(Branch)", ""),
+        name = if_else(name == "", "Main", name))
 
 # make a quick static map that includes roads and oceans as reference
 ggplot() +
     geom_sf(data = water, 
-            fill = "lightblue", colour = NA) + 
+            fill = "lightblue") +
     geom_sf(data = roads, 
-            size = .2, colour = "gray30") + 
+            size = .2, colour = "gray80") + 
     geom_sf(data = as_sf(oakland_public), 
             colour = "black", size = 1) + 
     ggrepel::geom_label_repel(

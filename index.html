@@ -11,10 +11,10 @@
 
 
 
-<title>rmapzen: a Mapzen API client for R</title>
+<title>rmapzen: a mapzen api client for r</title>
 
-<script src="index_files/header-attrs-2.8/header-attrs.js"></script>
-<script src="index_files/jquery-1.11.3/jquery.min.js"></script>
+<script src="index_files/header-attrs-2.29/header-attrs.js"></script>
+<script src="index_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="index_files/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="index_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -29,7 +29,7 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="index_files/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<script src="index_files/jqueryui-1.13.2/jquery-ui.min.js"></script>
 <link href="index_files/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="index_files/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="index_files/navigation-1.1/tabsets.js"></script>
@@ -63,6 +63,7 @@ if (window.hljs) {
 
 
 
+
 <style type = "text/css">
 .main-container {
   max-width: 940px;
@@ -84,6 +85,9 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+details > summary > p:only-child {
+  display: inline;
+}
 pre code {
   padding: 0;
 }
@@ -103,8 +107,8 @@ pre code {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -112,16 +116,9 @@ pre code {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -245,51 +242,95 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">rmapzen: a Mapzen API client for R</h1>
+<h1 class="title toc-ignore">rmapzen: a mapzen api client for r</h1>
 
 </div>
 
 
-<p><a href="https://travis-ci.org/tarakc02/rmapzen"><img src="https://travis-ci.org/tarakc02/rmapzen.svg?branch=master" alt="Travis-CI Build Status" /></a> <a href="https://codecov.io/github/tarakc02/rmapzen?branch=master"><img src="https://img.shields.io/codecov/c/github/tarakc02/rmapzen/master.svg" alt="Coverage Status" /></a></p>
+<p><a href="https://travis-ci.org/tarakc02/rmapzen"><img
+src="https://travis-ci.org/tarakc02/rmapzen.svg?branch=master"
+alt="Travis-CI Build Status" /></a> <a
+href="https://codecov.io/github/tarakc02/rmapzen?branch=master"><img
+src="https://img.shields.io/codecov/c/github/tarakc02/rmapzen/master.svg"
+alt="Coverage Status" /></a></p>
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
-<p><code>rmapzen</code> is a client for any implementation of the Mapzen API. Though Mapzen itself has <a href="https://www.mapzen.com/blog/shutdown/">gone out of business</a>, <code>rmapzen</code> can be set up to work with any provider who hosts Mapzen’s open-source software, including <a href="https://geocode.earth/">geocode.earth</a>, <a href="https://www.nextzen.org/">Nextzen</a>, and <a href="https://geosearch.planninglabs.nyc/">NYC GeoSearch from NYC Planning Labs</a>. For more information, see <a href="https://www.mapzen.com/documentation/">https://www.mapzen.com/documentation/</a>. The project is <a href="https://github.com/tarakc02/rmapzen">available on github</a> as well as <a href="https://cran.r-project.org/package=rmapzen">CRAN</a>.</p>
-<p><code>rmapzen</code> provides access to the following Mapzen API services:</p>
+<p><code>rmapzen</code> is a client for any implementation of the Mapzen
+API. Though Mapzen itself has <a
+href="https://www.mapzen.com/blog/shutdown/">gone out of business</a>,
+<code>rmapzen</code> can be set up to work with any provider who hosts
+Mapzen’s open-source software, including <a
+href="https://geocode.earth/">geocode.earth</a>, <a
+href="https://www.nextzen.org/">Nextzen</a>, and <a
+href="https://geosearch.planninglabs.nyc/">NYC GeoSearch from NYC
+Planning Labs</a>. For more information, see <a
+href="https://www.mapzen.com/documentation/">https://www.mapzen.com/documentation/</a>.
+The project is <a href="https://github.com/tarakc02/rmapzen">available
+on github</a> as well as <a
+href="https://cran.r-project.org/package=rmapzen">CRAN</a>.</p>
+<p><code>rmapzen</code> provides access to the following Mapzen API
+services:</p>
 <ul>
-<li><a href="https://github.com/pelias/documentation">Search</a>: Structured and unstructured search and geocoding, reverse geocoding, and autocomplete.</li>
-<li><a href="https://tilezen.readthedocs.io/en/latest/">Vector Tiles</a>: Basemap vector data.</li>
-<li><a href="https://valhalla.readthedocs.io/en/latest/">Isochrone</a>: Calculation of areas reachable from a specified locations.</li>
+<li><a href="https://github.com/pelias/documentation">Search</a>:
+Structured and unstructured search and geocoding, reverse geocoding, and
+autocomplete.</li>
+<li><a href="https://tilezen.readthedocs.io/en/latest/">Vector
+Tiles</a>: Basemap vector data.</li>
+<li><a href="https://valhalla.readthedocs.io/en/latest/">Isochrone</a>:
+Calculation of areas reachable from a specified locations.</li>
 </ul>
 </div>
 <div id="installation-and-set-up" class="section level2">
 <h2>Installation and Set-up</h2>
-<p><code>rmapzen</code> is available <a href="https://cran.r-project.org/package=rmapzen">on CRAN</a>. To install:</p>
+<p><code>rmapzen</code> is available <a
+href="https://cran.r-project.org/package=rmapzen">on CRAN</a>. To
+install:</p>
 <pre class="r"><code>install.packages(&quot;rmapzen&quot;)</code></pre>
-<p>You’ll also need to set up options specific to the API provider you end up using. <code>rmapzen</code> works with API providers who implement the Mapzen API. In order to specify provider information (such as URL and API key), use <code>mz_set_host</code>. There are custom set-up functions for the following providers:</p>
+<p>You’ll also need to set up options specific to the API provider you
+end up using. <code>rmapzen</code> works with API providers who
+implement the Mapzen API. In order to specify provider information (such
+as URL and API key), use <code>mz_set_host</code>. There are custom
+set-up functions for the following providers:</p>
 <ul>
-<li><a href="https://geocode.earth/">geocode.earth</a>, for search services. Use the function <code>mz_set_search_host_geocode.earth</code></li>
-<li><a href="https://www.nextzen.org/">Nextzen</a>, for vector tiles. Use the function <code>mz_set_tile_host_nextzen</code>.</li>
-<li><a href="https://geosearch.planninglabs.nyc/">NYC GeoSearch</a>, for search services using New York City’s Property Address Directory. Use <code>mz_set_search_host_nyc_geosearch</code>.</li>
+<li><a href="https://geocode.earth/">geocode.earth</a>, for search
+services. Use the function
+<code>mz_set_search_host_geocode.earth</code></li>
+<li><a href="https://www.nextzen.org/">Nextzen</a>, for vector tiles.
+Use the function <code>mz_set_tile_host_nextzen</code>.</li>
+<li><a href="https://geosearch.planninglabs.nyc/">NYC GeoSearch</a>, for
+search services using New York City’s Property Address Directory. Use
+<code>mz_set_search_host_nyc_geosearch</code>.</li>
 </ul>
-<p>As of this writing, there are no public providers offering the Mapzen isochrone service, but <code>mz_isochrone</code> and related functions are available. If you know of a provider not listed here, use the more general <code>mz_set_host</code> function, and <a href="https://github.com/tarakc02/rmapzen/issues">submit an issue</a> so we can create a custom set up function for future users.</p>
+<p>As of this writing, there are no public providers offering the Mapzen
+isochrone service, but <code>mz_isochrone</code> and related functions
+are available. If you know of a provider not listed here, use the more
+general <code>mz_set_host</code> function, and <a
+href="https://github.com/tarakc02/rmapzen/issues">submit an issue</a> so
+we can create a custom set up function for future users.</p>
 </div>
 <div id="search" class="section level2">
 <h2>Search</h2>
-<p>All of the services in <a href="https://github.com/pelias/documentation">Mapzen search</a> have been implemented. Search functions:</p>
+<p>All of the services in <a
+href="https://github.com/pelias/documentation">Mapzen search</a> have
+been implemented. Search functions:</p>
 <ul>
 <li><code>mz_search</code></li>
 <li><code>mz_reverse_geocode</code></li>
 <li><code>mz_autocomplete</code></li>
 <li><code>mz_place</code></li>
-<li><code>mz_structured_search</code> (<a href="https://github.com/pelias/documentation/blob/master/structured-geocoding.md">what’s this?</a>)</li>
+<li><code>mz_structured_search</code> (<a
+href="https://github.com/pelias/documentation/blob/master/structured-geocoding.md">what’s
+this?</a>)</li>
 </ul>
-<p>For example, to search for public library branches in Oakland, CA:</p>
+<p>For example, to search for public library branches in Oakland,
+CA:</p>
 <pre class="r"><code># load rmapzen and run provider set-up functions
 library(rmapzen)
 mz_set_tile_host_nextzen()
 mz_set_search_host_geocode.earth()</code></pre>
 <pre class="r"><code>oakland_public &lt;- mz_search(&quot;Oakland Public Library Branch&quot;, 
-                            size = 5,
+                            size = 20,
+                            boundary.rect = mz_bbox(mz_search(&quot;Oakland, CA&quot;, size=1)),
                             focus.point = mz_geocode(&quot;Oakland, CA&quot;),
                             boundary.country = mz_countries$USA)</code></pre>
 <pre class="r"><code>oakland_public</code></pre>
@@ -303,17 +344,26 @@ mz_set_search_host_geocode.earth()</code></pre>
 ##    Golden Gate Branch Oakland Public Library (-122.28, 37.84)
 ##    Brookfield Village Branch Oakland Public Library (-122.19, 37.74)
 ##   ...</code></pre>
-<p>Search can, optionally, be constrained to a particular country, data layer, boundary rectangle, or boundary circle. Furthermore, search can prioritize results near a given “focus” point. See <code>?mz_search</code>.</p>
-<p>Additionally, <code>mz_geocode</code> is a convenient function to geocode an address, utilizing the more general <code>mz_search</code> function.</p>
+<p>Search can, optionally, be constrained to a particular country, data
+layer, boundary rectangle, or boundary circle. Furthermore, search can
+prioritize results near a given “focus” point. See
+<code>?mz_search</code>.</p>
+<p>Additionally, <code>mz_geocode</code> is a convenient function to
+geocode an address, utilizing the more general <code>mz_search</code>
+function.</p>
 <pre class="r"><code>mz_geocode(&quot;UC Berkeley, Berkeley, CA&quot;)</code></pre>
-<pre><code>## # A tibble: 1 x 4
-##   geocode_address           geocode_longitude geocode_latitude geocode_confiden…
-## * &lt;chr&gt;                                 &lt;dbl&gt;            &lt;dbl&gt;             &lt;dbl&gt;
-## 1 UC Berkeley, Berkeley, C…             -122.             37.9                 1</code></pre>
+<pre><code>## # A tibble: 1 × 4
+##   geocode_address          geocode_longitude geocode_latitude geocode_confidence
+## * &lt;chr&gt;                                &lt;dbl&gt;            &lt;dbl&gt;              &lt;dbl&gt;
+## 1 UC Berkeley, Berkeley, …             -122.             37.9                  1</code></pre>
 </div>
 <div id="vector-tile-service" class="section level2">
 <h2>Vector tile service</h2>
-<p><code>rmapzen</code> provides an interface to Mapzen’s <a href="https://tilezen.readthedocs.io/en/latest/">vector tiles service</a>. Tile requests can be specified using the x, y, zoom coordinates of the tile service, as well as with a lat/long bounding box. For instance, continuing the previous example:</p>
+<p><code>rmapzen</code> provides an interface to Mapzen’s <a
+href="https://tilezen.readthedocs.io/en/latest/">vector tiles
+service</a>. Tile requests can be specified using the x, y, zoom
+coordinates of the tile service, as well as with a lat/long bounding
+box. For instance, continuing the previous example:</p>
 <pre class="r"><code>library(tidyverse)
 library(sf)
 
@@ -328,14 +378,15 @@ water &lt;- as_sf(oakland_tiles$water)
 labels &lt;- as.data.frame(oakland_public) %&gt;% 
     mutate(name = str_replace_all(
         name, 
-        &quot;(Oakland Public Library)|(Branch)&quot;, &quot;&quot;))
+        &quot;(Oakland Public Library)|(Branch)&quot;, &quot;&quot;),
+        name = if_else(name == &quot;&quot;, &quot;Main&quot;, name))
 
 # make a quick static map that includes roads and oceans as reference
 ggplot() +
     geom_sf(data = water, 
-            fill = &quot;lightblue&quot;, colour = NA) + 
+            fill = &quot;lightblue&quot;) +
     geom_sf(data = roads, 
-            size = .2, colour = &quot;gray30&quot;) + 
+            size = .2, colour = &quot;gray80&quot;) + 
     geom_sf(data = as_sf(oakland_public), 
             colour = &quot;black&quot;, size = 1) + 
     ggrepel::geom_label_repel(
@@ -347,72 +398,81 @@ ggplot() +
     theme(panel.grid.major = element_line(size = 0))</code></pre>
 <p><img src="index_files/figure-html/vector-tile-example-1.png" width="2100" /></p>
 </div>
-<div id="sf-and-spatialdataframe-conversion" class="section level2">
-<h2><code>sf</code> and <code>Spatial*DataFrame</code> conversion</h2>
-<p>As some of the above examples illustrate, any object returned by a Mapzen service can be converted to the appropriate <code>Spatial*DataFrame</code> or <code>sf</code> object using the generics <code>as_sp</code> and <code>as_sf</code>, for easy interoperability with other packages. You can also convert most objects directly to data frames, allowing for use within tidy pipelines:</p>
+<div id="sf-conversion" class="section level2">
+<h2><code>sf</code> conversion</h2>
+<p>As some of the above examples illustrate, any object returned by a
+Mapzen service can be converted to the appropriate <code>sf</code>
+object using the generic <code>as_sf</code>, for easy interoperability
+with other packages. You can also convert most objects directly to data
+frames, allowing for use within tidy pipelines:</p>
 <pre class="r"><code>require(dplyr)
 as.data.frame(oakland_public) %&gt;%
     select(name, confidence, region, locality, neighbourhood)</code></pre>
-<pre><code>## # A tibble: 25 x 5
-##    name                             confidence region    locality neighbourhood 
-##    &lt;chr&gt;                                 &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;    &lt;chr&gt;         
-##  1 Oakland Public Library - Temesc…      0.926 Californ… Oakland  Shafter       
-##  2 Oakland Public Library - Rockri…      0.926 Californ… Oakland  Rockridge     
-##  3 Lakeview Branch Oakland Public …      0.664 Californ… Oakland  &lt;NA&gt;          
-##  4 Golden Gate Branch Oakland Publ…      0.663 Californ… Oakland  Gaskill       
-##  5 Brookfield Village Branch Oakla…      0.663 Californ… Oakland  South Stonehu…
-##  6 West Oakland Branch Oakland Pub…      0.663 Californ… Oakland  Ralph Bunche  
-##  7 Elmhurst Branch Oakland Public …      0.663 Californ… Oakland  Webster       
-##  8 Montclair Branch Oakland Public…      0.663 Californ… Oakland  Montclair     
-##  9 Main Branch Oakland Public Libr…      0.663 Californ… Oakland  Civic Center  
-## 10 Latin American Branch Oakland P…      0.663 Californ… Oakland  St. Elizabeth 
-## # … with 15 more rows</code></pre>
+<pre><code>## # A tibble: 25 × 5
+##    name                                 confidence region locality neighbourhood
+##    &lt;chr&gt;                                     &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;        
+##  1 Oakland Public Library - Temescal B…      0.926 Calif… Oakland  Shafter      
+##  2 Oakland Public Library - Rockridge …      0.926 Calif… Oakland  Rockridge    
+##  3 Lakeview Branch Oakland Public Libr…      0.664 Calif… Oakland  &lt;NA&gt;         
+##  4 Golden Gate Branch Oakland Public L…      0.663 Calif… Oakland  Gaskill      
+##  5 Brookfield Village Branch Oakland P…      0.663 Calif… Oakland  South Stoneh…
+##  6 West Oakland Branch Oakland Public …      0.663 Calif… Oakland  Ralph Bunche 
+##  7 Elmhurst Branch Oakland Public Libr…      0.663 Calif… Oakland  Webster      
+##  8 Montclair Branch Oakland Public Lib…      0.663 Calif… Oakland  Montclair    
+##  9 Main Branch Oakland Public Library        0.663 Calif… Oakland  Civic Center 
+## 10 Latin American Branch Oakland Publi…      0.663 Calif… Oakland  St. Elizabeth
+## # ℹ 15 more rows</code></pre>
 </div>
 <div id="accessor-methods" class="section level2">
 <h2>Accessor methods</h2>
-<p>Currently, the following methods are available to pull out commonly used pieces of a response:</p>
+<p>Currently, the following methods are available to pull out commonly
+used pieces of a response:</p>
 <ul>
-<li><code>mz_coordinates</code> (only available for search results): extracts lat/lon coordinates from search results, and returns them as a <code>data.frame</code>.</li>
-<li><code>mz_bbox</code>: returns the bounding box of an object as a <code>data.frame</code> with columns <code>min_lon</code>, <code>min_lat</code>, <code>max_lon</code>, and <code>max_lat</code>.</li>
+<li><code>mz_coordinates</code> (only available for search results):
+extracts lat/lon coordinates from search results, and returns them as a
+<code>data.frame</code>.</li>
+<li><code>mz_bbox</code>: returns the bounding box of an object as a
+<code>data.frame</code> with columns <code>min_lon</code>,
+<code>min_lat</code>, <code>max_lon</code>, and
+<code>max_lat</code>.</li>
 </ul>
 <pre class="r"><code>mz_coordinates(oakland_public)</code></pre>
-<pre><code>## # A tibble: 20 x 2
+<pre><code>## # A tibble: 25 × 2
 ##      lon   lat
 ##    &lt;dbl&gt; &lt;dbl&gt;
 ##  1 -122.  37.8
 ##  2 -122.  37.8
 ##  3 -122.  37.8
 ##  4 -122.  37.8
-##  5 -122.  37.8
+##  5 -122.  37.7
 ##  6 -122.  37.8
 ##  7 -122.  37.8
 ##  8 -122.  37.8
 ##  9 -122.  37.8
 ## 10 -122.  37.8
-## 11 -122.  37.8
-## 12 -122.  37.8
-## 13 -122.  37.8
-## 14 -122.  37.8
-## 15 -122.  37.8
-## 16 -122.  37.8
-## 17 -122.  37.7
-## 18 -122.  37.8
-## 19 -122.  37.8
-## 20 -122.  37.8</code></pre>
+## # ℹ 15 more rows</code></pre>
 <pre class="r"><code>mz_bbox(oakland_tiles)</code></pre>
-<pre><code>## # A tibble: 1 x 4
+<pre><code>## # A tibble: 1 × 4
 ##   min_lon min_lat max_lon max_lat
 ## *   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
 ## 1   -122.    37.7   -122.    37.9</code></pre>
 </div>
 <div id="convenience-features" class="section level2">
 <h2>Convenience features</h2>
-<p>Several of the search functions take, optionally, the arguments <code>layers</code>, <code>sources</code>, and <code>boundary.country</code> (the latter requires <a href="https://en.wikipedia.org/wiki/ISO_3166">ISO-3166</a> codes). If you’re using an IDE with auto-complete, the objects <code>mz_layers</code>, <code>mz_sources</code>, and <code>mz_countries</code> should make it easier to get the correct codes.</p>
-<div class="figure">
-<img src="fig/mz-countries.png" alt="" />
-<p class="caption">Easy lookup for ISO-3166 codes</p>
+<p>Several of the search functions take, optionally, the arguments
+<code>layers</code>, <code>sources</code>, and
+<code>boundary.country</code> (the latter requires <a
+href="https://en.wikipedia.org/wiki/ISO_3166">ISO-3166</a> codes). If
+you’re using an IDE with auto-complete, the objects
+<code>mz_layers</code>, <code>mz_sources</code>, and
+<code>mz_countries</code> should make it easier to get the correct
+codes.</p>
+<div class="float">
+<img src="fig/mz-countries.png" alt="Easy lookup for ISO-3166 codes" />
+<div class="figcaption">Easy lookup for ISO-3166 codes</div>
 </div>
-<p>Similarly, argument constructors are available for easier specifications of isochrone and search requests.</p>
+<p>Similarly, argument constructors are available for easier
+specifications of isochrone and search requests.</p>
 <ul>
 <li><code>mz_costing</code></li>
 <li><code>mz_costing_options</code></li>
@@ -423,10 +483,16 @@ as.data.frame(oakland_public) %&gt;%
 </div>
 <div id="related-projects" class="section level2">
 <h2>Related projects</h2>
-<p>The package does not yet support <a href="https://www.mapzen.com/documentation/">other Mapzen API services</a>. But do check out these related R packages:</p>
+<p>The package does not yet support <a
+href="https://www.mapzen.com/documentation/">other Mapzen API
+services</a>. But do check out these related R packages:</p>
 <ul>
-<li><a href="https://github.com/jhollist/elevatr">elevatr</a> for accessing elevation data, including Mapzen Terrain and Elevation</li>
-<li><a href="https://github.com/Ironholds/poster">postr</a> for address parsing and normalization using the <a href="https://github.com/openvenues/libpostal">libpostal</a> library</li>
+<li><a href="https://github.com/jhollist/elevatr">elevatr</a> for
+accessing elevation data, including Mapzen Terrain and Elevation</li>
+<li><a href="https://github.com/Ironholds/poster">postr</a> for address
+parsing and normalization using the <a
+href="https://github.com/openvenues/libpostal">libpostal</a>
+library</li>
 </ul>
 </div>
 
@@ -468,6 +534,9 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
 
     // move toc-ignore selectors from section div to header
     $('div.section.toc-ignore')
